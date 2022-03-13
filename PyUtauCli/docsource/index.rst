@@ -10,6 +10,7 @@ Welcome to PyUtauCli's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   voicebank.rst
    settings.rst
 
 
