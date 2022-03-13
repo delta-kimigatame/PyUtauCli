@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>settings module &mdash; PyUtauCli 1.0.0 ドキュメント</title>
+  <title>settings package &mdash; PyUtauCli 1.0.0 ドキュメント</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,8 @@
         <script src="_static/translations.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
-    <link rel="search" title="検索" href="search.html" /> 
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="Welcome to PyUtauCli&#39;s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,11 +37,17 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">settings module</a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">settings package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-settings.settings">settings.settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-settings.win_utau">settings.win_utau module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-settings">Module contents</a></li>
 </ul>
-</div>
+</li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -55,7 +62,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>settings module</li>
+      <li>settings package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/settings.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -65,30 +72,143 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-settings">
-<span id="settings-module"></span><h1>settings module<a class="headerlink" href="#module-settings" title="このヘッドラインへのパーマリンク"></a></h1>
+  <section id="settings-package">
+<h1>settings package<a class="headerlink" href="#settings-package" title="このヘッドラインへのパーマリンク"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="このヘッドラインへのパーマリンク"></a></h2>
+</section>
+<section id="module-settings.settings">
+<span id="settings-settings-module"></span><h2>settings.settings module<a class="headerlink" href="#module-settings.settings" title="このヘッドラインへのパーマリンク"></a></h2>
 <p>Settins
 各種定数や初期値の設定</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="settings.VOICE_ROOT">
-<span class="sig-prename descclassname"><span class="pre">settings.</span></span><span class="sig-name descname"><span class="pre">VOICE_ROOT</span></span><a class="headerlink" href="#settings.VOICE_ROOT" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="settings.settings.UTAU_IS_INSTALLED">
+<span class="sig-prename descclassname"><span class="pre">settings.settings.</span></span><span class="sig-name descname"><span class="pre">UTAU_IS_INSTALLED</span></span><a class="headerlink" href="#settings.settings.UTAU_IS_INSTALLED" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">UTAUがインストール済みか否か</div>
+<div class="line">windows以外の環境では自動的にFalseになる。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="settings.settings.UTAU_ROOT">
+<span class="sig-prename descclassname"><span class="pre">settings.settings.</span></span><span class="sig-name descname"><span class="pre">UTAU_ROOT</span></span><a class="headerlink" href="#settings.settings.UTAU_ROOT" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">UTAUがインストールされたフォルダのパス</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, default &quot;&quot;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="settings.settings.UTAU_SETTINGS">
+<span class="sig-prename descclassname"><span class="pre">settings.settings.</span></span><span class="sig-name descname"><span class="pre">UTAU_SETTINGS</span></span><a class="headerlink" href="#settings.settings.UTAU_SETTINGS" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">UTAUのsetting.iniの内容を読み込んだ辞書ファイル</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict, default {}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="settings.settings.VOICE_ROOT">
+<span class="sig-prename descclassname"><span class="pre">settings.settings.</span></span><span class="sig-name descname"><span class="pre">VOICE_ROOT</span></span><a class="headerlink" href="#settings.settings.VOICE_ROOT" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
 <div class="line">音源フォルダのルート</div>
 <div class="line">windows環境では、UTAU.exeと同じ階層のsetting.iniに記載あり</div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
+<section id="module-settings.win_utau">
+<span id="settings-win-utau-module"></span><h2>settings.win_utau module<a class="headerlink" href="#module-settings.win_utau" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>windows版UTAUの情報を取得します。</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="settings.win_utau.get_utau_root">
+<span class="sig-prename descclassname"><span class="pre">settings.win_utau.</span></span><span class="sig-name descname"><span class="pre">get_utau_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#settings.win_utau.get_utau_root" title="この定義へのパーマリンク"></a></dt>
+<dd><p>UTAU.exeの場所を返します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>dir_name</strong> -- | UTAU.exeの場所
+| レジストリのHKEY_CLASSES_ROOT\UTAUSequenceText\shell\open\commandから取得します。
+| UTAUがインストールされていない場合、&quot;&quot;を返します。
+| windows以外の環境では&quot;&quot;を返します。</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="settings.win_utau.get_utau_settings">
+<span class="sig-prename descclassname"><span class="pre">settings.win_utau.</span></span><span class="sig-name descname"><span class="pre">get_utau_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utau_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#settings.win_utau.get_utau_settings" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">UTAUのsetting.iniを読み込みます。</div>
+<div class="line">読み込む優先順位は下記のとおりです。</div>
+</div>
+<ol class="arabic simple">
+<li><p>(UTAUが program files(x86)にインストールされている場合) %LOCALAPPDATA%\VirtualStore\program files(x86)\UTAU\setting.ini</p></li>
+<li><p>(ほかのフォルダにインストールされているか、上記のフォルダになければ) {UTAU_ROOT}\setting.ini</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>utau_root</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) -- UTAUのパス
+初期値の場合、<em>get_utau_root</em> を呼び出します。</p>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p><strong>utau_settings</strong> -- UTAUのsetting.iniの内容を読み込んだ辞書ファイル
+見つからなければ空の辞書を返します。</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="settings.win_utau.is_utau_installed">
+<span class="sig-prename descclassname"><span class="pre">settings.win_utau.</span></span><span class="sig-name descname"><span class="pre">is_utau_installed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#settings.win_utau.is_utau_installed" title="この定義へのパーマリンク"></a></dt>
+<dd><p>UTAUがインストールされているか確認します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>is_utau_installed</strong> -- | レジストリのHKEY_CLASSES_ROOT\UTAUSequenceTextが存在すれば、インストール済みとみなしTrueを返します。
+| windows以外の環境ではFalseを返します。</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-settings">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-settings" title="このヘッドラインへのパーマリンク"></a></h2>
+</section>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PyUtauCli&#39;s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

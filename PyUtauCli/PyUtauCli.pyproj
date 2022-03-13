@@ -24,7 +24,13 @@
   <ItemGroup>
     <Compile Include="docsource\conf.py" />
     <Compile Include="PyUtauCli.py" />
-    <Compile Include="settings.py">
+    <Compile Include="settings\settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="settings\win_utau.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="settings\__init__.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -45,6 +51,7 @@
     <Folder Include="docs\_static\" />
     <Folder Include="docs\_templates\" />
     <Folder Include="docsource\" />
+    <Folder Include="settings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="docsource\index.rst" />

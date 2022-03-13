@@ -10,7 +10,7 @@ Welcome to PyUtauCli's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   settins.rst
+   settings.rst
 
 
 Indices and tables
