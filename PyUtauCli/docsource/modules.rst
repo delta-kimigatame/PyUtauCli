@@ -6,4 +6,5 @@ PyUtauCli
 
    PyUtauCli
    settings
+   tests
    voicebank

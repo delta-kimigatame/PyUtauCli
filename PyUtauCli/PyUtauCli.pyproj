@@ -12,6 +12,9 @@
     <Name>PyUtauCli</Name>
     <RootNamespace>PyUtauCli</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>unittest</TestFramework>
+    <UnitTestPattern>test*.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +34,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="settings\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="voicebank\character.py">
@@ -62,6 +71,7 @@
     <Folder Include="docsource\" />
     <Folder Include="voicebank\" />
     <Folder Include="settings\" />
+    <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="docsource\index.rst" />
