@@ -1,4 +1,9 @@
-﻿import unittest
+﻿'''
+settingsモジュールのうち、環境に応じて自動で値が代入されるもののテスト
+'''
+
+
+import unittest
 from unittest import mock
 
 import os
@@ -7,6 +12,9 @@ import os.path
 import settings
 
 class WinUtauSettingsTest(unittest.TestCase):
+    '''
+    windowsの環境変数やUTAUの導入状況に応じて値の替わるsettingsのテスト
+    '''
     @mock.patch("platform.platform")
     def test_is_utau_installed_not_windows(self, mock_platform):
         '''settings.win_utau.is_utau_installedは非windows環境でFalse
