@@ -52,7 +52,7 @@ def get_utau_root() -> str:
     reg_value: str
     with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,"UTAUSequenceText\\shell\\open\\command") as key:
         reg_value = winreg.EnumValue(key, 0)
-    return os.path.dirname(reg_value[1].split(" ")[0].replace("\"",""))
+    return os.path.dirname(" ".join(reg_value[1].split(" ")[:-1]).replace("\"",""))
 
 def get_utau_settings(utau_root: str="") -> dict:
     '''
@@ -86,7 +86,7 @@ def get_utau_settings(utau_root: str="") -> dict:
     utau_settings: dict = {}
     if "program files(x86)" in utau_root:
         path_tail: str = utau_root.split("program files(x86)")[1].replace("\\","")
-        if os.isfile(os.path.join(os.environ["localappdata"],"VirtualStore","program files(x86)",path_tail,"setting.ini")):
+        if os.path.isfile(os.path.join(os.environ["localappdata"],"VirtualStore","program files(x86)",path_tail,"setting.ini")):
             settings_path = os.path.join(os.environ["localappdata"],"VirtualStore","program files(x86)",path_tail,"setting.ini")
 
     with open(settings_path, "r") as fr:
