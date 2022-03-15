@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="settings package" href="settings.html" />
+    <link rel="next" title="common package" href="common.html" />
     <link rel="prev" title="Welcome to PyUtauCli&#39;s documentation!" href="index.html" /> 
 </head>
 
@@ -43,10 +43,12 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">voicebank package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank.character">voicebank.character module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-voicebank.prefixmap">voicebank.prefixmap module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank.voicebank">voicebank.voicebank module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">common package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">settings package</a></li>
 </ul>
 
@@ -239,6 +241,90 @@
 </dd></dl>
 
 </section>
+<section id="module-voicebank.prefixmap">
+<span id="voicebank-prefixmap-module"></span><h2>voicebank.prefixmap module<a class="headerlink" href="#module-voicebank.prefixmap" title="このヘッドラインへのパーマリンク"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="voicebank.prefixmap.MapRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.prefixmap.</span></span><span class="sig-name descname"><span class="pre">MapRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.prefixmap.MapRecord" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>PrefixMapの各行のデータを扱います。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.prefixmap.MapRecord.key">
+<span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#voicebank.prefixmap.MapRecord.key" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">音名。C4,D#3,Ab5など</div>
+<div class="line">この値は、loadしたprefix.mapをsaveするときに活用します。</div>
+<div class="line">参照には活用しません。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.prefixmap.MapRecord.prefix">
+<span class="sig-name descname"><span class="pre">prefix</span></span><a class="headerlink" href="#voicebank.prefixmap.MapRecord.prefix" title="この定義へのパーマリンク"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.prefixmap.MapRecord.suffix">
+<span class="sig-name descname"><span class="pre">suffix</span></span><a class="headerlink" href="#voicebank.prefixmap.MapRecord.suffix" title="この定義へのパーマリンク"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id7" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id8" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">suffix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id9" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="voicebank.prefixmap.PrefixMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.prefixmap.</span></span><span class="sig-name descname"><span class="pre">PrefixMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.prefixmap.PrefixMap" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>prefix.mapのデータを扱います。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="voicebank.prefixmap.PrefixMap.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.prefixmap.PrefixMap.load" title="この定義へのパーマリンク"></a></dt>
+<dd><p><em>dirpath\prefix.map</em> を読み込んでself._valueを更新する。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>dirpath</strong> -- 音源のルートディレクトリのパス</p>
+</dd>
+<dt class="field-even">例外</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> -- prefix.mapが見つからなかった場合</p></li>
+<li><p><strong>UnicodeDecodeError</strong> -- ファイルがcp932でもutf-8でもなかった場合</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-voicebank.voicebank">
 <span id="voicebank-voicebank-module"></span><h2>voicebank.voicebank module<a class="headerlink" href="#module-voicebank.voicebank" title="このヘッドラインへのパーマリンク"></a></h2>
 <dl class="py class">
@@ -269,13 +355,13 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id7">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#voicebank.character.Character" title="voicebank.character.Character"><span class="pre">voicebank.character.Character</span></a></em><a class="headerlink" href="#id7" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#voicebank.character.Character" title="voicebank.character.Character"><span class="pre">voicebank.character.Character</span></a></em><a class="headerlink" href="#id10" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id8">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dirpath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id8" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id11">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dirpath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id11" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -314,7 +400,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PyUtauCli&#39;s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="settings.html" class="btn btn-neutral float-right" title="settings package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="common.html" class="btn btn-neutral float-right" title="common package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

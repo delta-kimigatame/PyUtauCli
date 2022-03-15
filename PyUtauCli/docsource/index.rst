@@ -11,6 +11,7 @@ Welcome to PyUtauCli's documentation!
    :caption: Contents:
 
    voicebank.rst
+   common.rst
    settings.rst
 
 

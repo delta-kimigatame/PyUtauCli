@@ -38,6 +38,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="voicebank.html">voicebank package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">common package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">settings package</a></li>
 </ul>
 
@@ -73,7 +74,9 @@
  | <a href="#D"><strong>D</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -97,16 +100,30 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="voicebank.html#voicebank.character.Character">Character (voicebank.character のクラス)</a>
 </li>
-      <li><a href="voicebank.html#id7">character (voicebank.voicebank.VoiceBank のプロパティ)</a>
+      <li><a href="voicebank.html#id10">character (voicebank.voicebank.VoiceBank のプロパティ)</a>
 
       <ul>
         <li><a href="voicebank.html#voicebank.voicebank.VoiceBank.character">(voicebank.voicebank.VoiceBank の属性)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.html#tests.test_character.CharacterReadTest">CharacterReadTest (tests.test_character のクラス)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    common
+
+      <ul>
+        <li><a href="common.html#module-common">モジュール</a>
+</li>
+      </ul></li>
+      <li>
+    common.convert_notenum
+
+      <ul>
+        <li><a href="common.html#module-common.convert_notenum">モジュール</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -116,7 +133,7 @@
       <li><a href="voicebank.html#id1">dirpath (voicebank.character.Character の属性)</a>, <a href="voicebank.html#voicebank.character.Character.dirpath">[1]</a>
 
       <ul>
-        <li><a href="voicebank.html#id8">(voicebank.voicebank.VoiceBank のプロパティ)</a>
+        <li><a href="voicebank.html#id11">(voicebank.voicebank.VoiceBank のプロパティ)</a>
 </li>
         <li><a href="voicebank.html#voicebank.voicebank.VoiceBank.dirpath">(voicebank.voicebank.VoiceBank の属性)</a>
 </li>
@@ -150,10 +167,30 @@
   </ul></td>
 </tr></table>
 
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="voicebank.html#id7">key (voicebank.prefixmap.MapRecord の属性)</a>, <a href="voicebank.html#voicebank.prefixmap.MapRecord.key">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="voicebank.html#voicebank.character.Character.load">load() (voicebank.character.Character のメソッド)</a>
+
+      <ul>
+        <li><a href="voicebank.html#voicebank.prefixmap.PrefixMap.load">(voicebank.prefixmap.PrefixMap のメソッド)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="voicebank.html#voicebank.prefixmap.MapRecord">MapRecord (voicebank.prefixmap のクラス)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -172,6 +209,12 @@
 
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="voicebank.html#id8">prefix (voicebank.prefixmap.MapRecord の属性)</a>, <a href="voicebank.html#voicebank.prefixmap.MapRecord.prefix">[1]</a>
+</li>
+      <li><a href="voicebank.html#voicebank.prefixmap.PrefixMap">PrefixMap (voicebank.prefixmap のクラス)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     PyUtauCli
@@ -213,6 +256,8 @@
         <li><a href="settings.html#module-settings.win_utau">モジュール</a>
 </li>
       </ul></li>
+      <li><a href="voicebank.html#id9">suffix (voicebank.prefixmap.MapRecord の属性)</a>, <a href="voicebank.html#voicebank.prefixmap.MapRecord.suffix">[1]</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -245,10 +290,10 @@
 </li>
       <li><a href="tests.html#tests.test_settings.WinUtauSettingsTest.test_is_utau_installed_windows_no_installed">test_is_utau_installed_windows_no_installed() (tests.test_settings.WinUtauSettingsTest のメソッド)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.html#tests.test_character.CharacterReadTest.test_load_colon">test_load_colon() (tests.test_character.CharacterReadTest のメソッド)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.html#tests.test_character.CharacterReadTest.test_load_equal">test_load_equal() (tests.test_character.CharacterReadTest のメソッド)</a>
 </li>
       <li><a href="tests.html#tests.test_character.CharacterReadTest.test_load_init_with_load">test_load_init_with_load() (tests.test_character.CharacterReadTest のメソッド)</a>
@@ -284,6 +329,10 @@
         <li><a href="tests.html#module-tests.test_settings">モジュール</a>
 </li>
       </ul></li>
+      <li><a href="common.html#common.convert_notenum.toInt">toInt() (common.convert_notenum モジュール)</a>
+</li>
+      <li><a href="common.html#common.convert_notenum.toStr">toStr() (common.convert_notenum モジュール)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -315,15 +364,22 @@
         <li><a href="voicebank.html#module-voicebank">モジュール</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="voicebank.html#voicebank.voicebank.VoiceBank">VoiceBank (voicebank.voicebank のクラス)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     voicebank.character
 
       <ul>
         <li><a href="voicebank.html#module-voicebank.character">モジュール</a>
+</li>
+      </ul></li>
+      <li>
+    voicebank.prefixmap
+
+      <ul>
+        <li><a href="voicebank.html#module-voicebank.prefixmap">モジュール</a>
 </li>
       </ul></li>
       <li>
@@ -355,6 +411,10 @@
     モジュール
 
       <ul>
+        <li><a href="common.html#module-common">common</a>
+</li>
+        <li><a href="common.html#module-common.convert_notenum">common.convert_notenum</a>
+</li>
         <li><a href="PyUtauCli.html#module-PyUtauCli">PyUtauCli</a>
 </li>
         <li><a href="settings.html#module-settings">settings</a>
@@ -372,6 +432,8 @@
         <li><a href="voicebank.html#module-voicebank">voicebank</a>
 </li>
         <li><a href="voicebank.html#module-voicebank.character">voicebank.character</a>
+</li>
+        <li><a href="voicebank.html#module-voicebank.prefixmap">voicebank.prefixmap</a>
 </li>
         <li><a href="voicebank.html#module-voicebank.voicebank">voicebank.voicebank</a>
 </li>

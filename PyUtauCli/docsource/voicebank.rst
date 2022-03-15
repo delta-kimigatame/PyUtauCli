@@ -12,6 +12,14 @@ voicebank.character module
    :undoc-members:
    :show-inheritance:
 
+voicebank.prefixmap module
+--------------------------
+
+.. automodule:: voicebank.prefixmap
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 voicebank.voicebank module
 --------------------------
 

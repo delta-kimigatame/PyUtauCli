@@ -28,7 +28,7 @@ if errorlevel 9009 (
 
 
 :html
-%SPHINXBUILD% -b html %SOURCEDIR% "../docs" %SPHINXOPTS% %O%
+%SPHINXBUILD% -b html %SOURCEDIR% "../docs" %SPHINXOPTS% %O% -E
 goto end
 
 :apidoc
