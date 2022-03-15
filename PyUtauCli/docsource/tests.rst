@@ -4,6 +4,14 @@ tests package
 Submodules
 ----------
 
+tests.test\_character module
+----------------------------
+
+.. automodule:: tests.test_character
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_settings module
 ---------------------------
 

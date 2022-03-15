@@ -71,6 +71,80 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="このヘッドラインへのパーマリンク"></a></h2>
 </section>
+<section id="module-tests.test_character">
+<span id="tests-test-character-module"></span><h2>tests.test_character module<a class="headerlink" href="#module-tests.test_character" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>voicebank.characterモジュールのテスト</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_character.</span></span><span class="sig-name descname"><span class="pre">CharacterReadTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>character.txt読み込みに関するテスト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_init">
+<span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_init" title="この定義へのパーマリンク"></a></dt>
+<dd><p>初期化に関するテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_colon">
+<span class="sig-name descname"><span class="pre">test_load_colon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_colon" title="この定義へのパーマリンク"></a></dt>
+<dd><p>&quot;:&quot;区切りのcharacter.txtを読み込んだ際のテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_equal">
+<span class="sig-name descname"><span class="pre">test_load_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_equal" title="この定義へのパーマリンク"></a></dt>
+<dd><p>&quot;=&quot;区切りのcharacter.txtを読み込んだ際のテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_init_with_load">
+<span class="sig-name descname"><span class="pre">test_load_init_with_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_init_with_load" title="この定義へのパーマリンク"></a></dt>
+<dd><p>&quot;=&quot;区切りのcharacter.txtを読み込んだ際のテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_mixture">
+<span class="sig-name descname"><span class="pre">test_load_mixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_mixture" title="この定義へのパーマリンク"></a></dt>
+<dd><p>区切り文字が混在したのcharacter.txtを読み込んだ際のテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_no_value">
+<span class="sig-name descname"><span class="pre">test_load_no_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_no_value" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">空のcharacter.txtを読み込んだ際のテスト</div>
+<div class="line">名前が存在しないとき、フォルダ名の末尾になる。</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_raise_not_found">
+<span class="sig-name descname"><span class="pre">test_load_raise_not_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_raise_not_found" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">character.txtが存在しなかったときのテスト</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_raise_unicode_decode_error">
+<span class="sig-name descname"><span class="pre">test_load_raise_unicode_decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_raise_unicode_decode_error" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">character.txtシステムデフォルトでもcp932でも開けなかったとき</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_character.CharacterReadTest.test_load_raise_unicode_decode_error_once">
+<span class="sig-name descname"><span class="pre">test_load_raise_unicode_decode_error_once</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_character.CharacterReadTest.test_load_raise_unicode_decode_error_once" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">character.txtシステムデフォルトで開けなかったがcp932で開けたとき</div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-tests.test_settings">
 <span id="tests-test-settings-module"></span><h2>tests.test_settings module<a class="headerlink" href="#module-tests.test_settings" title="このヘッドラインへのパーマリンク"></a></h2>
 <p>settingsモジュールのうち、環境に応じて自動で値が代入されるもののテスト</p>

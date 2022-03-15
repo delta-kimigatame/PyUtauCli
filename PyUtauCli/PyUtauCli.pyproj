@@ -36,6 +36,9 @@
     <Compile Include="settings\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_character.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_settings.py">
       <SubType>Code</SubType>
     </Compile>
