@@ -60,7 +60,7 @@ class Character:
             self.load(dirpath)
 
 
-    def load(dirpath: str):
+    def load(self, dirpath: str):
         '''
         *dirpath\\\\character.txt* を読み込んで各パラメータを更新する。
 
@@ -102,7 +102,8 @@ class Character:
             if "=" in line:
                 key, value = line.split("=")
             else:
-                key, value = line.split(":")
+                key = line.split(":")[0]
+                value = ":".join(line.split(":")[1:])
 
             if key.lower() == "name":
                 self._name = value
