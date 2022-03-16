@@ -11,6 +11,7 @@ import os.path
 
 import voicebank.character
 
+
 class CharacterReadTest(unittest.TestCase):
     '''
     character.txt読み込みに関するテスト
@@ -33,12 +34,12 @@ class CharacterReadTest(unittest.TestCase):
         "="区切りのcharacter.txtを読み込んだ際のテスト
         '''
         mock_isfile.return_value = True
-        lines=["name=名前",
-               "image=画像",
-               "sample=サンプル音声",
-               "author=管理者",
-               "web=https://sample.co.jp/",
-               "version=単独音1"]
+        lines = ["name=名前",
+                 "image=画像",
+                 "sample=サンプル音声",
+                 "author=管理者",
+                 "web=https://sample.co.jp/",
+                 "version=単独音1"]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         with mock.patch("builtins.open", mock_io):
@@ -56,12 +57,12 @@ class CharacterReadTest(unittest.TestCase):
         ":"区切りのcharacter.txtを読み込んだ際のテスト
         '''
         mock_isfile.return_value = True
-        lines=["name:名前",
-               "image:画像",
-               "sample:サンプル音声",
-               "author:管理者",
-               "web:https://sample.co.jp/",
-               "version:単独音1"]
+        lines = ["name:名前",
+                 "image:画像",
+                 "sample:サンプル音声",
+                 "author:管理者",
+                 "web:https://sample.co.jp/",
+                 "version:単独音1"]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         with mock.patch("builtins.open", mock_io):
@@ -79,12 +80,12 @@ class CharacterReadTest(unittest.TestCase):
         区切り文字が混在したのcharacter.txtを読み込んだ際のテスト
         '''
         mock_isfile.return_value = True
-        lines=["name=名前",
-               "image:画像",
-               "sample:サンプル音声",
-               "author=管理者",
-               "web:https://sample.co.jp/",
-               "version:単独音1"]
+        lines = ["name=名前",
+                 "image:画像",
+                 "sample:サンプル音声",
+                 "author=管理者",
+                 "web:https://sample.co.jp/",
+                 "version:単独音1"]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         with mock.patch("builtins.open", mock_io):
@@ -103,11 +104,11 @@ class CharacterReadTest(unittest.TestCase):
         | 名前が存在しないとき、フォルダ名の末尾になる。
         '''
         mock_isfile.return_value = True
-        lines=[""]
+        lines = [""]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         with mock.patch("builtins.open", mock_io):
-            character.load(os.path.join("voice","sample1"))
+            character.load(os.path.join("voice", "sample1"))
         self.assertEqual(character.name, "sample1")
         self.assertEqual(character.image, "")
         self.assertEqual(character.sample, "")
@@ -121,13 +122,13 @@ class CharacterReadTest(unittest.TestCase):
         | character.txtが存在しなかったときのテスト
         '''
         mock_isfile.return_value = False
-        lines=[""]
+        lines = [""]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         
         with self.assertRaises(FileNotFoundError) as cm:
-            character.load(os.path.join("voice","sample1"))
-        self.assertEqual(cm.exception.args[0],"{} is not found.".format(os.path.join("voice","sample1","character.txt")))
+            character.load(os.path.join("voice", "sample1"))
+        self.assertEqual(cm.exception.args[0], "{} is not found.".format(os.path.join("voice", "sample1", "character.txt")))
         
     @mock.patch("os.path.isfile")
     def test_load_raise_unicode_decode_error(self, mock_isfile):
@@ -135,15 +136,15 @@ class CharacterReadTest(unittest.TestCase):
         | character.txtシステムデフォルトでもcp932でも開けなかったとき
         '''
         mock_isfile.return_value = True
-        lines=[""]
+        lines = [""]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         
         with self.assertRaises(UnicodeDecodeError) as cm:
             with mock.patch("builtins.open", mock_io) as mocked_open:
-                mocked_open.side_effect=UnicodeDecodeError("cp932",b"\x00\x00",1,2,"reason")
-                character.load(os.path.join("voice","sample1"))
-        self.assertEqual(cm.exception.reason,"can't read character.txt. because required character encoding is system default or cp932")
+                mocked_open.side_effect = UnicodeDecodeError("cp932", b"\x00\x00", 1, 2, "reason")
+                character.load(os.path.join("voice", "sample1"))
+        self.assertEqual(cm.exception.reason, "can't read character.txt. because required character encoding is system default or cp932")
         
     @mock.patch("os.path.isfile")
     def test_load_raise_unicode_decode_error_once(self, mock_isfile):
@@ -151,18 +152,18 @@ class CharacterReadTest(unittest.TestCase):
         | character.txtシステムデフォルトで開けなかったがcp932で開けたとき
         '''
         mock_isfile.return_value = True
-        lines=["name=名前",
-               "image=画像",
-               "sample=サンプル音声",
-               "author=管理者",
-               "web=https://sample.co.jp/",
-               "version=単独音1"]
+        lines = ["name=名前",
+                 "image=画像",
+                 "sample=サンプル音声",
+                 "author=管理者",
+                 "web=https://sample.co.jp/",
+                 "version=単独音1"]
         character = voicebank.character.Character()
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         
         with mock.patch("builtins.open", mock_io) as mocked_open:
-            mocked_open.side_effect=[UnicodeDecodeError("cp932",b"\x00\x00",1,2,"reason"), mock.DEFAULT]
-            character.load(os.path.join("voice","sample1"))
+            mocked_open.side_effect = [UnicodeDecodeError("cp932", b"\x00\x00", 1, 2, "reason"), mock.DEFAULT]
+            character.load(os.path.join("voice", "sample1"))
         self.assertEqual(character.name, "名前")
         self.assertEqual(character.image, "画像")
         self.assertEqual(character.sample, "サンプル音声")
@@ -176,12 +177,12 @@ class CharacterReadTest(unittest.TestCase):
         "="区切りのcharacter.txtを読み込んだ際のテスト
         '''
         mock_isfile.return_value = True
-        lines=["name=名前",
-               "image=画像",
-               "sample=サンプル音声",
-               "author=管理者",
-               "web=https://sample.co.jp/",
-               "version=単独音1"]
+        lines = ["name=名前",
+                 "image=画像",
+                 "sample=サンプル音声",
+                 "author=管理者",
+                 "web=https://sample.co.jp/",
+                 "version=単独音1"]
         mock_io = mock.mock_open(read_data="\r\n".join(lines))
         with mock.patch("builtins.open", mock_io):
             character = voicebank.character.Character("samplepath")

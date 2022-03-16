@@ -11,6 +11,7 @@ import os.path
 
 import settings
 
+
 class WinUtauSettingsTest(unittest.TestCase):
     '''
     windowsの環境変数やUTAUの導入状況に応じて値の替わるsettingsのテスト
@@ -29,7 +30,7 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''settings.win_utau.is_utau_installedはwindows環境ではHKEY_CLASSES_ROOT\\\\UTAUSequenceTextが存在しなければFalse
         '''
         mock_platform.return_value = "Windows-10-10.0.22000-SP0"
-        mock_QueryInfoKey.return_value = [1,1,1]
+        mock_QueryInfoKey.return_value = [1, 1, 1]
         mock_enumkey.return_value = ""
         self.assertFalse(settings.win_utau.is_utau_installed())
         
@@ -40,10 +41,9 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''settings.win_utau.is_utau_installedはwindows環境ではHKEY_CLASSES_ROOT\\\\UTAUSequenceTextが存在すればTrue
         '''
         mock_platform.return_value = "Windows-10-10.0.22000-SP0"
-        mock_QueryInfoKey.return_value = [1,1,1]
+        mock_QueryInfoKey.return_value = [1, 1, 1]
         mock_enumkey.return_value = "UTAUSequenceText"
         self.assertTrue(settings.win_utau.is_utau_installed())
-
         
     @mock.patch("platform.platform")
     def test_get_utau_root_not_windows(self, mock_platform):
@@ -61,7 +61,6 @@ class WinUtauSettingsTest(unittest.TestCase):
         mock_isInstalled.return_value = False
         self.assertEqual(settings.win_utau.get_utau_root(), "")
         
-        
     @mock.patch("winreg.EnumValue")
     @mock.patch("settings.win_utau.is_utau_installed")
     @mock.patch("platform.platform")
@@ -70,7 +69,7 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''
         mock_platform.return_value = "Windows-10-10.0.22000-SP0"
         mock_isInstalled.return_value = True
-        mock_enumkey.return_value = (0,'"C:\\program files(x86)\\UTAU\\utau.exe %1"',1)
+        mock_enumkey.return_value = (0, '"C:\\program files(x86)\\UTAU\\utau.exe %1"', 1)
         self.assertEqual(settings.win_utau.get_utau_root(), 'C:\\program files(x86)\\UTAU')
         
     @mock.patch("winreg.EnumValue")
@@ -81,7 +80,7 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''
         mock_platform.return_value = "Windows-10-10.0.22000-SP0"
         mock_isInstalled.return_value = True
-        mock_enumkey.return_value = (0,'"C:\\UTAU\\utau.exe %1"',1)
+        mock_enumkey.return_value = (0, '"C:\\UTAU\\utau.exe %1"', 1)
         self.assertEqual(settings.win_utau.get_utau_root(), 'C:\\UTAU')
 
     @mock.patch("settings.win_utau.get_utau_root")
@@ -100,7 +99,7 @@ class WinUtauSettingsTest(unittest.TestCase):
         with mock.patch("builtins.open", mock_io):
             result = settings.win_utau.get_utau_settings()
             mock_io.assert_called_once_with("C:\\UTAU\\setting.ini", "r")
-        self.assertEqual(result, {"text1":"value1", "text2":"value2", "text3":"value3"})
+        self.assertEqual(result, {"text1": "value1", "text2": "value2", "text3": "value3"})
         
     @mock.patch("os.path.isfile")
     @mock.patch("settings.win_utau.get_utau_root")
@@ -111,12 +110,12 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''
         mock_utauroot.return_value = "C:\\program files(x86)\\UTAU4"
         mock_isfile.return_value = True
-        os.environ["localappdata"] = os.path.join("C:\\Users","username","Appdata","Local")
+        os.environ["localappdata"] = os.path.join("C:\\Users", "username", "Appdata", "Local")
         mock_io = mock.mock_open(read_data="text1=value1\r\ntext2=value2\r\ntext3=value3\r\n\r\n")
         with mock.patch("builtins.open", mock_io):
             result = settings.win_utau.get_utau_settings()
-            mock_io.assert_called_once_with(os.path.join(os.environ["localappdata"],"VirtualStore","program files(x86)","UTAU4","setting.ini"), "r")
-        self.assertEqual(result, {"text1":"value1", "text2":"value2", "text3":"value3"})
+            mock_io.assert_called_once_with(os.path.join(os.environ["localappdata"], "VirtualStore", "program files(x86)", "UTAU4", "setting.ini"), "r")
+        self.assertEqual(result, {"text1": "value1", "text2": "value2", "text3": "value3"})
         
     @mock.patch("os.path.isfile")
     @mock.patch("settings.win_utau.get_utau_root")
@@ -127,12 +126,12 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''
         mock_utauroot.return_value = "C:\\program files(x86)\\UTAU4"
         mock_isfile.return_value = False
-        os.environ["localappdata"] = os.path.join("C:\\Users","username","Appdata","Local")
+        os.environ["localappdata"] = os.path.join("C:\\Users", "username", "Appdata", "Local")
         mock_io = mock.mock_open(read_data="text1=value1\r\ntext2=value2\r\ntext3=value3\r\n\r\n")
         with mock.patch("builtins.open", mock_io):
             result = settings.win_utau.get_utau_settings()
-            mock_io.assert_called_once_with(os.path.join("C:\\program files(x86)","UTAU4","setting.ini"), "r")
-        self.assertEqual(result, {"text1":"value1", "text2":"value2", "text3":"value3"})
+            mock_io.assert_called_once_with(os.path.join("C:\\program files(x86)", "UTAU4", "setting.ini"), "r")
+        self.assertEqual(result, {"text1": "value1", "text2": "value2", "text3": "value3"})
         
     @mock.patch("os.path.isfile")
     @mock.patch("settings.win_utau.get_utau_root")
@@ -142,9 +141,9 @@ class WinUtauSettingsTest(unittest.TestCase):
         '''
         mock_utauroot.return_value = "C:\\program files(x86)\\UTAU4"
         mock_isfile.return_value = False
-        os.environ["localappdata"] = os.path.join("C:\\Users","username","Appdata","Local")
+        os.environ["localappdata"] = os.path.join("C:\\Users", "username", "Appdata", "Local")
         mock_io = mock.mock_open(read_data="text1=value1\r\ntext2=value2\r\ntext3=value3\r\n\r\n")
         with mock.patch("builtins.open", mock_io):
             result = settings.win_utau.get_utau_settings("C:\\UTAU")
-            mock_io.assert_called_once_with(os.path.join("C:\\UTAU","setting.ini"), "r")
-        self.assertEqual(result, {"text1":"value1", "text2":"value2", "text3":"value3"})
+            mock_io.assert_called_once_with(os.path.join("C:\\UTAU", "setting.ini"), "r")
+        self.assertEqual(result, {"text1": "value1", "text2": "value2", "text3": "value3"})
