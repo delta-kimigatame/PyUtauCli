@@ -1,4 +1,6 @@
 ﻿import os.path
+
+
 class Character:
     '''Character.txtを扱います
 
@@ -60,10 +62,9 @@ class Character:
         UnicodeDecodeError
             read実行時ファイルがcp932でも環境の文字コードでもなかった場合
         '''
-        if dirpath!="":
+        if dirpath != "":
             self.load(dirpath)
-
-
+            
     def load(self, dirpath: str):
         '''
         *dirpath\\\\character.txt* を読み込んで各パラメータを更新する。
@@ -80,7 +81,7 @@ class Character:
         UnicodeDecodeError
             ファイルがcp932でも環境の文字コードでもなかった場合
         '''
-        filepath: str = os.path.join(dirpath,"character.txt")
+        filepath: str = os.path.join(dirpath, "character.txt")
         lines: list
         self.dirpath = dirpath
         if not os.path.isfile(filepath):
@@ -88,18 +89,18 @@ class Character:
 
         try:
             with open(filepath, "r") as fr:
-                lines = fr.read().replace("\r","").split("\n")
+                lines = fr.read().replace("\r", "").split("\n")
         except:
             try:
                 with open(filepath, "r", encoding="cp932") as fr:
-                    lines = fr.read().replace("\r","").split("\n")
+                    lines = fr.read().replace("\r", "").split("\n")
             except UnicodeDecodeError as e:
                 e.reason = "can't read character.txt. because required character encoding is system default or cp932"
                 raise e
         key: str
         value: str
         for line in lines:
-            if line=="":
+            if line == "":
                 continue
             if "=" not in line and ":" not in line:
                 continue

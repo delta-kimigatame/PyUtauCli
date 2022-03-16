@@ -3,6 +3,7 @@ import os.path
 
 from .character import Character
 
+
 class VoiceBank:
     '''VoiceBank
     UTAUの音源データを扱います。
@@ -26,7 +27,6 @@ class VoiceBank:
     @property
     def character(self) -> Character:
         return self._character
-
 
     def __init__(self, dirpath: str):
         '''
