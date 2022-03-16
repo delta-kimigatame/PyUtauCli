@@ -42,6 +42,10 @@ class Character:
         else:
             return os.path.split(self.dirpath)[1]
 
+    @name.setter
+    def name(self, value):
+        self._name = value
+
     def __init__(self, dirpath: str = ""):
         '''
         Parameters
@@ -136,8 +140,8 @@ class Character:
         UnicodeDecodeError
             パラメータをcp932に変換できなかったとき
         '''
-        filepath: str = os.path.join(dirpath,"character.txt")
-        with open(filepath, "w", encoding="cp932") as fw:
+        filepath: str = os.path.join(self.dirpath, "character.txt")
+        with open(filepath, "w", encoding=encoding) as fw:
             if self._name != "":
                 fw.write("name=" + self._name + "\r\n")
             if self.image != "":

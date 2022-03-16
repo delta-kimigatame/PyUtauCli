@@ -191,3 +191,46 @@ class CharacterReadTest(unittest.TestCase):
         self.assertEqual(character.author, "管理者")
         self.assertEqual(character.web, "https://sample.co.jp/")
         self.assertEqual(character.version, "単独音1")
+
+    def test_save_simple(self):
+        '''
+        | character.txtのsave。設定されている項目のみ保存されることを確認する。
+        | nameにdirpathが出力されないことを確認する。
+        '''
+        character = voicebank.character.Character()
+        character.image = "画像"
+        character.dirpath = "samplepath"
+        mock_io = mock.mock_open()
+        
+        with mock.patch("builtins.open", mock_io):
+            character.save()
+
+        self.assertEqual(len(mock_io().write.call_args_list), 1)
+        self.assertEqual(mock_io().write.call_args_list[0][0][0], "image=画像\r\n")
+        
+    def test_save_all(self):
+        '''
+        | character.txtのsave。全ての項目が出力されることを確認する。
+        | 設定した順番に関わらず、name,image,sample.author,web,versionになることを確認する。
+        '''
+        character = voicebank.character.Character()
+        character.name = "名前"
+        character.image = "画像"
+        character.sample = "サンプル音声"
+        character.author = "管理者"
+        character.version = "単独音1"
+        character.web = "https://sample.co.jp/"
+
+        character.dirpath = "samplepath"
+        mock_io = mock.mock_open()
+        
+        with mock.patch("builtins.open", mock_io):
+            character.save()
+
+        self.assertEqual(len(mock_io().write.call_args_list), 6)
+        self.assertEqual(mock_io().write.call_args_list[0][0][0], "name=名前\r\n")
+        self.assertEqual(mock_io().write.call_args_list[1][0][0], "image=画像\r\n")
+        self.assertEqual(mock_io().write.call_args_list[2][0][0], "sample=サンプル音声\r\n")
+        self.assertEqual(mock_io().write.call_args_list[3][0][0], "Author=管理者\r\n")
+        self.assertEqual(mock_io().write.call_args_list[4][0][0], "Web=https://sample.co.jp/\r\n")
+        self.assertEqual(mock_io().write.call_args_list[5][0][0], "Version=単独音1\r\n")
