@@ -307,16 +307,44 @@
 <p>prefix.mapのデータを扱います。</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="voicebank.prefixmap.PrefixMap.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.prefixmap.PrefixMap.load" title="この定義へのパーマリンク"></a></dt>
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'prefix.map'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.prefixmap.PrefixMap.load" title="この定義へのパーマリンク"></a></dt>
 <dd><p><em>dirpath\prefix.map</em> を読み込んでself._valueを更新する。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><p><strong>dirpath</strong> -- 音源のルートディレクトリのパス</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dirpath</strong> (<em>str</em>) -- 音源のルートディレクトリのパス</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>default &quot;prefix.map&quot;</em>) -- ファイル名。UTAU本体の仕様では指定不要ですが、複数のprefix.mapを読み込む仕様を想定</p></li>
+</ul>
 </dd>
 <dt class="field-even">例外</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>FileNotFoundError</strong> -- prefix.mapが見つからなかった場合</p></li>
 <li><p><strong>UnicodeDecodeError</strong> -- ファイルがcp932でもutf-8でもなかった場合</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="voicebank.prefixmap.PrefixMap.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'prefix.map'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cp932'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.prefixmap.PrefixMap.save" title="この定義へのパーマリンク"></a></dt>
+<dd><p><em>dirpath\prefix.map</em> を <em>encoding</em> で保存する。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dirpath</strong> (<em>str</em>) -- 音源のルートディレクトリのパス</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>default &quot;prefix.map&quot;</em>) -- ファイル名。UTAU本体の仕様では指定不要ですが、複数のprefix.mapを読み込む仕様を想定</p></li>
+<li><p><strong>encoding</strong> (<em>str</em><em>, </em><em>default &quot;cp932&quot;</em>) -- <div class="line-block">
+<div class="line">保存する際の文字コード</div>
+<div class="line">UTAU本体のGUIを考えるとcp932が無難</div>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">例外</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>OSError</strong> -- character.txtに書き込み権限がないとき</p></li>
+<li><p><strong>UnicodeDecodeError</strong> -- パラメータをcp932に変換できなかったとき</p></li>
 </ul>
 </dd>
 </dl>

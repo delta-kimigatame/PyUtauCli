@@ -25,6 +25,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="common\convert_notenum.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="common\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="docsource\conf.py" />
     <Compile Include="PyUtauCli.py" />
     <Compile Include="settings\settings.py">
@@ -46,6 +52,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="voicebank\character.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="voicebank\prefixmap.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="voicebank\voicebank.py">
@@ -72,11 +81,13 @@
     <Folder Include="docs\_static\" />
     <Folder Include="docs\_templates\" />
     <Folder Include="docsource\" />
+    <Folder Include="common\" />
     <Folder Include="voicebank\" />
     <Folder Include="settings\" />
     <Folder Include="tests\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".pep8" />
     <Content Include="docsource\index.rst" />
     <Content Include="docsource\make.bat" />
     <Content Include="docsource\Makefile" />
