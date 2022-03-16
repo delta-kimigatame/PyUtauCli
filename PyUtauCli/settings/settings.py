@@ -37,10 +37,7 @@ if UTAU_IS_INSTALLED:
     UTAU_SETTINGS = win_utau.get_utau_settings()
     if "VoiceRoot" in UTAU_SETTINGS:
         VOICE_ROOT.append(UTAU_SETTINGS["VoiceRoot"])
-    VOICE_ROOT.append(os.path.join(os.environ["appdata"],"UTAU","voice"))
-    VOICE_ROOT.append(os.path.join(UTAU_ROOT,"voice"))
+    VOICE_ROOT.append(os.path.join(os.environ["appdata"], "UTAU", "voice"))
+    VOICE_ROOT.append(os.path.join(UTAU_ROOT, "voice"))
 else:
     UTAU_ROOT: str = ""
-
-
-

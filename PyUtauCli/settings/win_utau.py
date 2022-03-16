@@ -8,6 +8,7 @@ import winreg
 import os
 import os.path
 
+
 def is_utau_installed() -> bool:
     '''
     UTAUがインストールされているか確認します。
@@ -15,7 +16,7 @@ def is_utau_installed() -> bool:
     Returns
     -------
     is_utau_installed: bool
-            
+
         | レジストリのHKEY_CLASSES_ROOT\\\\UTAUSequenceTextが存在すれば、インストール済みとみなしTrueを返します。
         | windows以外の環境ではFalseを返します。
     '''
@@ -23,12 +24,13 @@ def is_utau_installed() -> bool:
         return False
 
     subkeys: list = []
-    with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,"") as key:
+    with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, "") as key:
         subKeyNum: int = winreg.QueryInfoKey(key)[0]
         for i in range(subKeyNum):
             subkeys.append(winreg.EnumKey(key, i))
 
     return "UTAUSequenceText" in subkeys
+
 
 def get_utau_root() -> str:
     '''
@@ -37,22 +39,23 @@ def get_utau_root() -> str:
     Returns
     -------
     dir_name: str
-    
+
         | UTAU.exeの場所
         | レジストリのHKEY_CLASSES_ROOT\\\\UTAUSequenceText\\\\shell\\\\open\\\\commandから取得します。
         | UTAUがインストールされていない場合、""を返します。
         | windows以外の環境では""を返します。
 
     '''
-    
+
     if not platform.platform().startswith("Windows"):
         return ""
     if not is_utau_installed():
         return ""
     reg_value: str
-    with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,"UTAUSequenceText\\shell\\open\\command") as key:
+    with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, "UTAUSequenceText\\shell\\open\\command") as key:
         reg_value = winreg.EnumValue(key, 0)
-    return os.path.dirname(" ".join(reg_value[1].split(" ")[:-1]).replace("\"",""))
+    return os.path.dirname(" ".join(reg_value[1].split(" ")[:-1]).replace("\"", ""))
+
 
 def get_utau_settings(utau_root: str="") -> dict:
     '''
@@ -77,20 +80,20 @@ def get_utau_settings(utau_root: str="") -> dict:
     '''
     if utau_root == "":
         utau_root = get_utau_root()
-        
+
     if utau_root == "":
         return {}
 
-    settings_path: str = os.path.join(utau_root,"setting.ini")
+    settings_path: str = os.path.join(utau_root, "setting.ini")
     read_datas: list
     utau_settings: dict = {}
     if "program files(x86)" in utau_root:
-        path_tail: str = utau_root.split("program files(x86)")[1].replace("\\","")
-        if os.path.isfile(os.path.join(os.environ["localappdata"],"VirtualStore","program files(x86)",path_tail,"setting.ini")):
-            settings_path = os.path.join(os.environ["localappdata"],"VirtualStore","program files(x86)",path_tail,"setting.ini")
+        path_tail: str = utau_root.split("program files(x86)")[1].replace("\\", "")
+        if os.path.isfile(os.path.join(os.environ["localappdata"], "VirtualStore", "program files(x86)", path_tail, "setting.ini")):
+            settings_path = os.path.join(os.environ["localappdata"], "VirtualStore", "program files(x86)", path_tail, "setting.ini")
 
     with open(settings_path, "r") as fr:
-        read_datas = fr.read().replace("\r","").split("\n")
+        read_datas = fr.read().replace("\r", "").split("\n")
 
     for data in read_datas:
         if "=" not in data:
