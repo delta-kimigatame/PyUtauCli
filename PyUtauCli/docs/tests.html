@@ -164,6 +164,84 @@
 </dd></dl>
 
 </section>
+<section id="module-tests.test_prefixmap">
+<span id="tests-test-prefixmap-module"></span><h2>tests.test_prefixmap module<a class="headerlink" href="#module-tests.test_prefixmap" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>voicebank.prefixmapモジュールのテスト</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_prefixmap.MapRecordTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_prefixmap.</span></span><span class="sig-name descname"><span class="pre">MapRecordTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.MapRecordTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>PrefixMapの各行の値に関するテスト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.MapRecordTest.test_init">
+<span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.MapRecordTest.test_init" title="この定義へのパーマリンク"></a></dt>
+<dd><p>正常に初期化できる場合のテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.MapRecordTest.test_init_bad_format">
+<span class="sig-name descname"><span class="pre">test_init_bad_format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.MapRecordTest.test_init_bad_format" title="この定義へのパーマリンク"></a></dt>
+<dd><p>不正な値で初期化しようとした際のテスト</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_prefixmap.</span></span><span class="sig-name descname"><span class="pre">PrefixMapTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>prefix.mapの読み書きに関するテスト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_default_init">
+<span class="sig-name descname"><span class="pre">test_default_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_default_init" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">引数無しでprefix.mapを初期化する場合。</div>
+<div class="line">同一のrecordに音高番号と音高名どちらでもアクセスできることを確認する。</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_load">
+<span class="sig-name descname"><span class="pre">test_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_load" title="この定義へのパーマリンク"></a></dt>
+<dd><p>prefix.mapが開けたとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_load_raise_file_not_found_error">
+<span class="sig-name descname"><span class="pre">test_load_raise_file_not_found_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_load_raise_file_not_found_error" title="この定義へのパーマリンク"></a></dt>
+<dd><p>prefix.mapが存在しなかったときのテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_load_raise_file_not_found_error_with_set_path">
+<span class="sig-name descname"><span class="pre">test_load_raise_file_not_found_error_with_set_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_load_raise_file_not_found_error_with_set_path" title="この定義へのパーマリンク"></a></dt>
+<dd><p>標準以外のファイル名を指定したとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_load_raise_unicode_decode_error">
+<span class="sig-name descname"><span class="pre">test_load_raise_unicode_decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_load_raise_unicode_decode_error" title="この定義へのパーマリンク"></a></dt>
+<dd><p>prefix.mapがutf-8でもcp932でも開けなかったとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_load_raise_unicode_decode_error_once">
+<span class="sig-name descname"><span class="pre">test_load_raise_unicode_decode_error_once</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_load_raise_unicode_decode_error_once" title="この定義へのパーマリンク"></a></dt>
+<dd><p>prefix.mapがcp932で開けなかったがutf-8で開けたとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_prefixmap.PrefixMapTest.test_save">
+<span class="sig-name descname"><span class="pre">test_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_prefixmap.PrefixMapTest.test_save" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">prefix.mapの保存を確認する。</div>
+<div class="line">値がない項目はprefixとsuffixが空欄で保存されることを確認する。</div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-tests.test_settings">
 <span id="tests-test-settings-module"></span><h2>tests.test_settings module<a class="headerlink" href="#module-tests.test_settings" title="このヘッドラインへのパーマリンク"></a></h2>
 <p>settingsモジュールのうち、環境に応じて自動で値が代入されるもののテスト</p>

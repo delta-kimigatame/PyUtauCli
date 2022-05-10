@@ -57,6 +57,9 @@
     <Compile Include="voicebank\character.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="voicebank\oto.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="voicebank\prefixmap.py">
       <SubType>Code</SubType>
     </Compile>
