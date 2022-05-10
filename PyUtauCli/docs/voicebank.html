@@ -43,6 +43,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">voicebank package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank.character">voicebank.character module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-voicebank.oto">voicebank.oto module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank.prefixmap">voicebank.prefixmap module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank.voicebank">voicebank.voicebank module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-voicebank">Module contents</a></li>
@@ -241,6 +242,169 @@
 </dd></dl>
 
 </section>
+<section id="module-voicebank.oto">
+<span id="voicebank-oto-module"></span><h2>voicebank.oto module<a class="headerlink" href="#module-voicebank.oto" title="このヘッドラインへのパーマリンク"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.oto.</span></span><span class="sig-name descname"><span class="pre">OtoRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">otopath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consonant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.OtoRecord" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>oto.iniの各行のデータを扱います。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.otopath">
+<span class="sig-name descname"><span class="pre">otopath</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.otopath" title="この定義へのパーマリンク"></a></dt>
+<dd><p>oto.iniのパス。voicedirからの相対パスで与えられる</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.filename" title="この定義へのパーマリンク"></a></dt>
+<dd><p>wavファイルのファイル名</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.alias" title="この定義へのパーマリンク"></a></dt>
+<dd><p>エイリアス</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.offset" title="この定義へのパーマリンク"></a></dt>
+<dd><p>オフセット(setparamでいうところの左ブランク)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.pre">
+<span class="sig-name descname"><span class="pre">pre</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.pre" title="この定義へのパーマリンク"></a></dt>
+<dd><p>先行発声</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.ove">
+<span class="sig-name descname"><span class="pre">ove</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.ove" title="この定義へのパーマリンク"></a></dt>
+<dd><p>オーバーラップ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.consonant">
+<span class="sig-name descname"><span class="pre">consonant</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.consonant" title="この定義へのパーマリンク"></a></dt>
+<dd><p>子音部(setparamでいうところの固定範囲)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.blank">
+<span class="sig-name descname"><span class="pre">blank</span></span><a class="headerlink" href="#voicebank.oto.OtoRecord.blank" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">ブランク(setparamでいうところの右ブランク)</div>
+<div class="line">正の値のときはwav末尾からのmsを表す。</div>
+<div class="line">負の値のときはオフセットからのmsの絶対値に-1をかけたものを表す。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id7" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">blank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id8" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">consonant</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id9" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id10" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="voicebank.oto.OtoRecord.invert_blank">
+<span class="sig-name descname"><span class="pre">invert_blank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.OtoRecord.invert_blank" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">self.blank値の正負を反転します。</div>
+<div class="line">blankは正の数の時、ノート末尾からの長さms</div>
+<div class="line">負の数の時、その絶対値がoffsetからの長さmsを表します。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>dirpath</strong> (<em>str</em>) -- 音源のルートディレクトリのパス。</p>
+</dd>
+<dt class="field-even">例外</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> -- os.path.join(dirpath, self.otopath, self.filename)のwavファイルが見つからなかったとき</p></li>
+<li><p><strong>wave.Error</strong> -- os.path.join(dirpath, self.otopath, self.filename)がwavファイルではなかったとき</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id11" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">otopath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id12" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">ove</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id13" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">pre</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id14" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-voicebank.prefixmap">
 <span id="voicebank-prefixmap-module"></span><h2>voicebank.prefixmap module<a class="headerlink" href="#module-voicebank.prefixmap" title="このヘッドラインへのパーマリンク"></a></h2>
 <dl class="py class">
@@ -284,18 +448,18 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id7">
-<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id7" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id15" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id8">
-<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id8" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id16" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id9">
-<span class="sig-name descname"><span class="pre">suffix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id9" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">suffix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id17" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -383,13 +547,13 @@
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id10">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#voicebank.character.Character" title="voicebank.character.Character"><span class="pre">voicebank.character.Character</span></a></em><a class="headerlink" href="#id10" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id18">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#voicebank.character.Character" title="voicebank.character.Character"><span class="pre">voicebank.character.Character</span></a></em><a class="headerlink" href="#id18" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id11">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dirpath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id11" title="この定義へのパーマリンク"></a></dt>
+<dt class="sig sig-object py" id="id19">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dirpath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id19" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
