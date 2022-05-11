@@ -102,7 +102,7 @@ class PrefixMap:
                 with open(filepath, "r", encoding="utf-8") as fr:
                     lines = fr.read().replace("\r", "").split("\n")
             except UnicodeDecodeError as e:
-                e.reason = "can't read character.txt. because required character encoding is utf-8 or cp932"
+                e.reason = "can't read prefix.map. because required character encoding is utf-8 or cp932"
                 raise e
 
         for line in lines:

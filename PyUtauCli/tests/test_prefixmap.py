@@ -90,7 +90,7 @@ class PrefixMapTest(unittest.TestCase):
             with mock.patch("builtins.open", mock_io) as mocked_open:
                 mocked_open.side_effect = UnicodeDecodeError("cp932", b"\x00\x00", 1, 2, "reason")
                 prefix = voicebank.prefixmap.PrefixMap(os.path.join("voice", "sample"))
-        self.assertEqual(cm.exception.reason, "can't read character.txt. because required character encoding is utf-8 or cp932")
+        self.assertEqual(cm.exception.reason, "can't read prefix.map. because required character encoding is utf-8 or cp932")
 
     @mock.patch("os.path.isfile")
     def test_load(self, mock_isfile):
