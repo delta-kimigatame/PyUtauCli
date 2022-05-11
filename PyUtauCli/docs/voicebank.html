@@ -245,6 +245,40 @@
 <section id="module-voicebank.oto">
 <span id="voicebank-oto-module"></span><h2>voicebank.oto module<a class="headerlink" href="#module-voicebank.oto" title="このヘッドラインへのパーマリンク"></a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="voicebank.oto.Oto">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.oto.</span></span><span class="sig-name descname"><span class="pre">Oto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.Oto" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>oto.iniのデータを扱います。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="voicebank.oto.Oto.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.Oto.load" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">dirpathおよびその子フォルダのoto.iniを読み込みself._datas_by_fileとself._valuesを更新する。</div>
+<div class="line">self._datas_by_filesはdirpathからの相対パスをキーに持つ辞書で、OtoRecord形式のlistを格納する。</div>
+<div class="line">self._valuesはaliasをkeyとする辞書で、self._datas_by_filesを参照する。</div>
+<div class="line">aliasの衝突が起きた場合、ファイル名が若いものを参照する。</div>
+<div class="line">同一ファイル内でaliasの衝突が起きた場合、offset値の小さいものを参照する。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dirpath</strong> (<em>str</em>) -- 音源のルートディレクトリのパス</p></li>
+<li><p><strong>recursive</strong> (<em>bool</em><em>, </em><em>default False</em>) -- <div class="line-block">
+<div class="line">Trueにすると孫フォルダ以下のoto.iniも探索する。</div>
+</div>
+</p></li>
+<li><p><strong>relative</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) -- 音源ルートディレクトリからの相対パス</p></li>
+</ul>
+</dd>
+<dt class="field-even">例外</dt>
+<dd class="field-even"><p><strong>UnicodeDecodeError</strong> -- ファイルがcp932でもutf-8でもなかった場合</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="voicebank.oto.OtoRecord">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.oto.</span></span><span class="sig-name descname"><span class="pre">OtoRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">otopath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ove</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consonant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.OtoRecord" title="この定義へのパーマリンク"></a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
