@@ -91,8 +91,8 @@ class OtoRecord:
         wave.Error
             os.path.join(dirpath, self.otopath, self.filename)がwavファイルではなかったとき
         '''
-        if os.path.isfile(os.path.join(dirpath, self.otopath, self.filename)):
-            raise FileNotFoundError("{} is not found.".format(filepath))
+        if not os.path.isfile(os.path.join(dirpath, self.otopath, self.filename)):
+            raise FileNotFoundError("{} is not found.".format(os.path.join(dirpath, self.otopath, self.filename)))
         with wave.open(os.path.join(dirpath, self.otopath, self.filename), "rb") as wr:
             wav_length = wr.getnframes() / wr.getframerate() * 1000
         if self.blank >= 0:
