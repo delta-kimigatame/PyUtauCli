@@ -251,11 +251,11 @@
 <p>oto.iniのデータを扱います。</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="voicebank.oto.Oto.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.Oto.load" title="この定義へのパーマリンク"></a></dt>
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.Oto.load" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
 <div class="line">dirpathおよびその子フォルダのoto.iniを読み込みself._datas_by_fileとself._valuesを更新する。</div>
-<div class="line">self._datas_by_filesはdirpathからの相対パスをキーに持つ辞書で、OtoRecord形式のlistを格納する。</div>
-<div class="line">self._valuesはaliasをkeyとする辞書で、self._datas_by_filesを参照する。</div>
+<div class="line">self._datas_by_fileはdirpathからの相対パスをキーに持つ辞書で、OtoRecord形式のlistを格納する。</div>
+<div class="line">self._valuesはaliasをkeyとする辞書で、self._datas_by_fileを参照する。</div>
 <div class="line">aliasの衝突が起きた場合、ファイル名が若いものを参照する。</div>
 <div class="line">同一ファイル内でaliasの衝突が起きた場合、offset値の小さいものを参照する。</div>
 </div>
@@ -267,7 +267,7 @@
 <div class="line">Trueにすると孫フォルダ以下のoto.iniも探索する。</div>
 </div>
 </p></li>
-<li><p><strong>relative</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) -- 音源ルートディレクトリからの相対パス</p></li>
+<li><p><strong>subdir</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) -- 音源ルートディレクトリからの相対パス</p></li>
 </ul>
 </dd>
 <dt class="field-even">例外</dt>

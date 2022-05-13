@@ -12,6 +12,14 @@ tests.test\_character module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_oto module
+----------------------
+
+.. automodule:: tests.test_oto
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_prefixmap module
 ----------------------------
 

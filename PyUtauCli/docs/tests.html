@@ -164,6 +164,122 @@
 </dd></dl>
 
 </section>
+<section id="module-tests.test_oto">
+<span id="tests-test-oto-module"></span><h2>tests.test_oto module<a class="headerlink" href="#module-tests.test_oto" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>voicebanks.otoモジュールのテスト</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_oto.</span></span><span class="sig-name descname"><span class="pre">OtoRecordTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>otoの各行の値に関するテスト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest.test_init">
+<span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest.test_init" title="この定義へのパーマリンク"></a></dt>
+<dd><p>初期化に関するテスト</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest.test_init_alias_is_blank">
+<span class="sig-name descname"><span class="pre">test_init_alias_is_blank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest.test_init_alias_is_blank" title="この定義へのパーマリンク"></a></dt>
+<dd><p>初期化時エイリアスが&quot;&quot;の場合</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest.test_invert_file_not_found_error">
+<span class="sig-name descname"><span class="pre">test_invert_file_not_found_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest.test_invert_file_not_found_error" title="この定義へのパーマリンク"></a></dt>
+<dd><p>invert_blank時wavファイルが見つからない場合</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest.test_invert_wave">
+<span class="sig-name descname"><span class="pre">test_invert_wave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest.test_invert_wave" title="この定義へのパーマリンク"></a></dt>
+<dd><p>invert_blank成功。元のblankが負の場合</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest.test_invert_wave_error">
+<span class="sig-name descname"><span class="pre">test_invert_wave_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest.test_invert_wave_error" title="この定義へのパーマリンク"></a></dt>
+<dd><p>invert_blank時指定したファイルがwavファイル出なかった場合</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoRecordTest.test_invert_wave_positive">
+<span class="sig-name descname"><span class="pre">test_invert_wave_positive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoRecordTest.test_invert_wave_positive" title="この定義へのパーマリンク"></a></dt>
+<dd><p>invert_blank成功。元のblankが正の場合</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_oto.</span></span><span class="sig-name descname"><span class="pre">OtoTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>oto.iniの読み書きに関するテスト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_init">
+<span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_init" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">引数無しでoto.iniを初期化する場合</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_init_with_load_single">
+<span class="sig-name descname"><span class="pre">test_init_with_load_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_init_with_load_single" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_loadFile">
+<span class="sig-name descname"><span class="pre">test_loadFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_loadFile" title="この定義へのパーマリンク"></a></dt>
+<dd><p>oto.iniが正常に開けたとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_file_unicode_decode_error">
+<span class="sig-name descname"><span class="pre">test_load_file_unicode_decode_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_file_unicode_decode_error" title="この定義へのパーマリンク"></a></dt>
+<dd><p>oto.iniがutf-8でもcp932でも開けなかったとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_file_unicode_decode_error_once">
+<span class="sig-name descname"><span class="pre">test_load_file_unicode_decode_error_once</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_file_unicode_decode_error_once" title="この定義へのパーマリンク"></a></dt>
+<dd><p>oto.iniがcp932で開けなかったがutf-8で開けたとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_nest">
+<span class="sig-name descname"><span class="pre">test_load_nest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_nest" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_nest_recursive">
+<span class="sig-name descname"><span class="pre">test_load_nest_recursive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_nest_recursive" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_nest_recursive_without_root_oto">
+<span class="sig-name descname"><span class="pre">test_load_nest_recursive_without_root_oto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_nest_recursive_without_root_oto" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_nest_without_root_oto">
+<span class="sig-name descname"><span class="pre">test_load_nest_without_root_oto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_nest_without_root_oto" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_load_single">
+<span class="sig-name descname"><span class="pre">test_load_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_load_single" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_oto.OtoTest.test_setValue">
+<span class="sig-name descname"><span class="pre">test_setValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_oto.OtoTest.test_setValue" title="この定義へのパーマリンク"></a></dt>
+<dd><p>_setValueに関するテスト</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-tests.test_prefixmap">
 <span id="tests-test-prefixmap-module"></span><h2>tests.test_prefixmap module<a class="headerlink" href="#module-tests.test_prefixmap" title="このヘッドラインへのパーマリンク"></a></h2>
 <p>voicebank.prefixmapモジュールのテスト</p>
