@@ -12,6 +12,14 @@ voicebank.character module
    :undoc-members:
    :show-inheritance:
 
+voicebank.frq module
+--------------------
+
+.. automodule:: voicebank.frq
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 voicebank.oto module
 --------------------
 

@@ -60,6 +60,9 @@
     <Compile Include="voicebank\character.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="voicebank\frq.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="voicebank\oto.py">
       <SubType>Code</SubType>
     </Compile>
