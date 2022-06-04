@@ -6,6 +6,7 @@ PyUtauCli
 
    PyUtauCli
    common
+   projects
    settings
    tests
    voicebank

@@ -32,6 +32,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="docsource\conf.py" />
+    <Compile Include="projects\EntryBase.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="projects\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PyUtauCli.py" />
     <Compile Include="settings\settings.py">
       <SubType>Code</SubType>
@@ -94,6 +100,7 @@
     <Folder Include="docs\_templates\" />
     <Folder Include="docsource\" />
     <Folder Include="common\" />
+    <Folder Include="projects\" />
     <Folder Include="voicebank\" />
     <Folder Include="settings\" />
     <Folder Include="tests\" />
