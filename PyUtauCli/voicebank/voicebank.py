@@ -2,6 +2,8 @@
 import os.path
 
 from .character import Character
+from .prefixmap import PrefixMap
+from .oto import Oto
 
 
 class VoiceBank:
@@ -15,10 +17,18 @@ class VoiceBank:
 
     character: Character
         character.txt
+
+    oto: Oto
+        oto.ini
+
+    prefix: PrefixMap
+        prefix.map
     '''
 
     _dirpath: str
     _character: Character
+    _oto: Oto
+    _prefix: PrefixMap
 
     @property
     def dirpath(self) -> str:
@@ -27,6 +37,14 @@ class VoiceBank:
     @property
     def character(self) -> Character:
         return self._character
+
+    @property
+    def oto(self) -> Oto:
+        return self._oto
+
+    @property
+    def prefix(self) -> PrefixMap:
+        return self._prefix
 
     def __init__(self, dirpath: str):
         '''
@@ -45,6 +63,10 @@ class VoiceBank:
         '''
         if not VoiceBank.is_utau_voicebank(dirpath):
             raise ValueError("{} is not utau voicebanks".format(dirpath))
+        self._dirpath = dirpath
+        self._character = Character(dirpath)
+        self._oto = Oto(dirpath)
+        self._prefix = PrefixMap(dirpath)
 
     @staticmethod
     def is_utau_voicebank(dirpath: str) -> bool:
@@ -78,3 +100,4 @@ class VoiceBank:
             return True
         else:
             return False
+
