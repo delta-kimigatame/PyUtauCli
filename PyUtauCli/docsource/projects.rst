@@ -4,6 +4,14 @@ projects package
 Submodules
 ----------
 
+projects.Entry module
+---------------------
+
+.. automodule:: projects.Entry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 projects.EntryBase module
 -------------------------
 

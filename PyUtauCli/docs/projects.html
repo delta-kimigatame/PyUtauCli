@@ -43,8 +43,9 @@
 <li class="toctree-l1"><a class="reference internal" href="voicebank.html">voicebank package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">projects package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#projects-entrybase-module">projects.EntryBase module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#projects-entry-module">projects.Entry module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-projects.EntryBase">projects.EntryBase module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-projects">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="common.html">common package</a></li>
@@ -80,11 +81,150 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="このヘッドラインへのパーマリンク"></a></h2>
 </section>
-<section id="projects-entrybase-module">
-<h2>projects.EntryBase module<a class="headerlink" href="#projects-entrybase-module" title="このヘッドラインへのパーマリンク"></a></h2>
+<section id="projects-entry-module">
+<h2>projects.Entry module<a class="headerlink" href="#projects-entry-module" title="このヘッドラインへのパーマリンク"></a></h2>
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="このヘッドラインへのパーマリンク"></a></h2>
+<section id="module-projects.EntryBase">
+<span id="projects-entrybase-module"></span><h2>projects.EntryBase module<a class="headerlink" href="#module-projects.EntryBase" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>EntryBase
+各ノートパラメータ設定用のベースクラスを定義します。</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.EntryBase.BoolEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.EntryBase.</span></span><span class="sig-name descname"><span class="pre">BoolEntry</span></span><a class="headerlink" href="#projects.EntryBase.BoolEntry" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#projects.EntryBase.EntryBase" title="projects.EntryBase.EntryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.EntryBase.EntryBase</span></code></a></p>
+<p>bool型のvalueをもつエントリー用のベースクラスです。
+継承して使います。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.BoolEntry.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.BoolEntry.init" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.EntryBase.BoolEntry.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#projects.EntryBase.BoolEntry.value" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.EntryBase.EntryBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.EntryBase.</span></span><span class="sig-name descname"><span class="pre">EntryBase</span></span><a class="headerlink" href="#projects.EntryBase.EntryBase" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>エントリー用のベースクラスです。
+継承して使います。</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.EntryBase.EntryBase.hasValue">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hasValue</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#projects.EntryBase.EntryBase.hasValue" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.EntryBase.FloatEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.EntryBase.</span></span><span class="sig-name descname"><span class="pre">FloatEntry</span></span><a class="headerlink" href="#projects.EntryBase.FloatEntry" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#projects.EntryBase.EntryBase" title="projects.EntryBase.EntryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.EntryBase.EntryBase</span></code></a></p>
+<p>float型のvalueをもつエントリー用のベースクラスです。
+継承して使います。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.FloatEntry.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.FloatEntry.init" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.EntryBase.FloatEntry.point">
+<span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#projects.EntryBase.FloatEntry.point" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.EntryBase.FloatEntry.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#projects.EntryBase.FloatEntry.value" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.EntryBase.IntEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.EntryBase.</span></span><span class="sig-name descname"><span class="pre">IntEntry</span></span><a class="headerlink" href="#projects.EntryBase.IntEntry" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#projects.EntryBase.EntryBase" title="projects.EntryBase.EntryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.EntryBase.EntryBase</span></code></a></p>
+<p>int型のvalueをもつエントリー用のベースクラスです。
+継承して使います。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.IntEntry.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.IntEntry.init" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.EntryBase.IntEntry.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#projects.EntryBase.IntEntry.value" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.EntryBase.</span></span><span class="sig-name descname"><span class="pre">ListEntry</span></span><a class="headerlink" href="#projects.EntryBase.ListEntry" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#projects.EntryBase.EntryBase" title="projects.EntryBase.EntryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.EntryBase.EntryBase</span></code></a></p>
+<p>list型のvalueをもつエントリー用のベースクラスです。
+継承して使います。
+各パラメータのフォーマットが適切かは、self._checl_valueを継承して定義します。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.ListEntry.append" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.ListEntry.init" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.init_from_str">
+<span class="sig-name descname"><span class="pre">init_from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.ListEntry.init_from_str" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.ListEntry.insert" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.ListEntry.pop" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.separater">
+<span class="sig-name descname"><span class="pre">separater</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">','</span></em><a class="headerlink" href="#projects.EntryBase.ListEntry.separater" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.EntryBase.ListEntry.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#projects.EntryBase.ListEntry.value" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.EntryBase.StringEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.EntryBase.</span></span><span class="sig-name descname"><span class="pre">StringEntry</span></span><a class="headerlink" href="#projects.EntryBase.StringEntry" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#projects.EntryBase.EntryBase" title="projects.EntryBase.EntryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.EntryBase.EntryBase</span></code></a></p>
+<p>Str型のvalueをもつエントリー用のベースクラスです。
+継承して使います。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.EntryBase.StringEntry.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.EntryBase.StringEntry.init" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.EntryBase.StringEntry.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#projects.EntryBase.StringEntry.value" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-projects">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-projects" title="このヘッドラインへのパーマリンク"></a></h2>
 </section>
 </section>
 

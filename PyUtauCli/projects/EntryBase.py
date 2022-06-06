@@ -9,24 +9,14 @@ class EntryBase:
     '''
     _isUpdate: bool = False
     _hasValue: bool = False
-
+    
     def _set_update(self):
-        pass
+        self._isUpdate = True
 
     @property
     def hasValue(self) -> bool:
         return self._hasValue
-
-class UpdatableEntry:
-    '''
-    プラグイン等、パラメータの更新管理が必要なエントリー用のベースクラスです。
-    継承して使います。
-    '''
-    _isUpdate: bool = False
-
-    def _set_update(self):
-        self._isUpdate = True
-
+    
 class StringEntry(EntryBase):
     '''
     Str型のvalueをもつエントリー用のベースクラスです。
@@ -40,7 +30,7 @@ class StringEntry(EntryBase):
 
     @value.setter
     def value(self, value: str):
-        self.value = str(value)
+        self._value = str(value)
         self._set_update()
         self._hasValue = True
 
@@ -66,7 +56,7 @@ class IntEntry(EntryBase):
     @value.setter
     def value(self, value: int):
         try:
-            self.value = int(value)
+            self._value = int(value)
             self._set_update()
             self._hasValue = True
         except:
@@ -75,7 +65,7 @@ class IntEntry(EntryBase):
 
     def init(self, value: int):
         try:
-            self.value = int(value)
+            self._value = int(value)
             self._hasValue = True
         except:
             raise ValueError("{} is not int".format(value))
@@ -98,7 +88,7 @@ class FloatEntry(EntryBase):
     @value.setter
     def value(self, value: float):
         try:
-            self.value = float(value)
+            self._value = float(value)
             self._set_update()
             self._hasValue = True
         except:
@@ -107,7 +97,7 @@ class FloatEntry(EntryBase):
 
     def init(self, value: float):
         try:
-            self.value = float(value)
+            self._value = float(value)
             self._hasValue = True
         except:
             raise ValueError("{} is not float".format(value))
@@ -128,7 +118,7 @@ class BoolEntry(EntryBase):
 
     @value.setter
     def value(self, value: bool):
-        self.value = value
+        self._value = value
         self._set_update()
         self._hasValue = True
 
@@ -156,7 +146,7 @@ class ListEntry(EntryBase):
     def value(self, value: list):
         for v in value:
             self._check_value(v)
-        self.value = value
+        self._value = value
         self._set_update()
         self._hasValue = True
         
