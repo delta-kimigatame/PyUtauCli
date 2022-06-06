@@ -1,5 +1,6 @@
 ﻿import os
 import os.path
+import traceback
 from logging import Logger
 
 import settings.logger
@@ -68,12 +69,28 @@ class VoiceBank:
         '''
         self.logger = logger or default_logger
         if not VoiceBank.is_utau_voicebank(dirpath):
-            logger.error("{} is not utau voicebanks".format(dirpath))
+            self.logger.error("{} is not utau voicebanks".format(dirpath))
             raise ValueError("{} is not utau voicebanks".format(dirpath))
         self._dirpath = dirpath
-        self._character = Character(dirpath)
-        self._oto = Oto(dirpath)
-        self._prefix = PrefixMap(dirpath)
+        try:
+            self._character = Character(dirpath)
+            self.logger.info("character.txt is loaded. VBName:{}".format(self._character.name))
+        except Exception as e:
+            self.logger.warn(traceback.format_exception_only(type(e), e)[0].rstrip('\n'))
+            self._character = Character()
+            
+        try:
+            self._oto = Oto(dirpath)
+            self.logger.info("oto.ini is loaded.files {}, records {}".format(self._oto.files(), self._oto.records()))
+        except Exception as e:
+            self.logger.warn(traceback.format_exception_only(type(e), e)[0].rstrip('\n'))
+
+        try:
+            self._prefix = PrefixMap(dirpath)
+            self.logger.info("prefix.map is loaded")
+        except Exception as e:
+            self.logger.warn(traceback.format_exception_only(type(e), e)[0].rstrip('\n'))
+            self._prefix = PrefixMap()
 
     @staticmethod
     def is_utau_voicebank(dirpath: str, *, logger:Logger = None) -> bool:
