@@ -123,8 +123,29 @@ class Oto:
         '''
 
         self._values = {}
+        self._datas_by_file = {}
         if dirpath != "":
             self.load(dirpath)
+
+    def files(self) -> int:
+        '''
+        読み込んだoto.iniファイルの数を返す
+
+        Return
+        ------
+        len(self._datas_by_file): int
+        '''
+        return len(self._datas_by_file)
+
+    def records(self) -> int:
+        '''
+        読み込んだoto.iniの合計行数を返す
+
+        Return
+        ------
+        len(self._values): int
+        '''
+        return len(self._values)
 
     def __getitem__(self, key) -> OtoRecord:
         return self._values[key]
