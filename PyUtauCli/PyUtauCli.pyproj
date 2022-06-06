@@ -39,6 +39,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PyUtauCli.py" />
+    <Compile Include="settings\logger.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="settings\settings.py">
       <SubType>Code</SubType>
     </Compile>

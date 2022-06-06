@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /PyUtauCli/env
 /PyUtauCli/docs/_sources
 /PyUtauCli/docs/.doctrees
+/PyUtauCli/log.txt
