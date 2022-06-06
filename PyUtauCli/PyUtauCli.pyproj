@@ -63,6 +63,9 @@
     <Compile Include="tests\test_settings.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_voicebank.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
