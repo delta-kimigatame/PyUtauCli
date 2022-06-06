@@ -4,6 +4,14 @@ settings package
 Submodules
 ----------
 
+settings.logger module
+----------------------
+
+.. automodule:: settings.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 settings.settings module
 ------------------------
 

@@ -397,6 +397,20 @@
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>oto.iniのデータを扱います。</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="voicebank.oto.Oto.files">
+<span class="sig-name descname"><span class="pre">files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#voicebank.oto.Oto.files" title="この定義へのパーマリンク"></a></dt>
+<dd><p>読み込んだoto.iniファイルの数を返す</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>len(self._datas_by_file)</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="voicebank.oto.Oto.load">
 <span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.oto.Oto.load" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
@@ -419,6 +433,20 @@
 </dd>
 <dt class="field-even">例外</dt>
 <dd class="field-even"><p><strong>UnicodeDecodeError</strong> -- ファイルがcp932でもutf-8でもなかった場合</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="voicebank.oto.Oto.records">
+<span class="sig-name descname"><span class="pre">records</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#voicebank.oto.Oto.records" title="この定義へのパーマリンク"></a></dt>
+<dd><p>読み込んだoto.iniの合計行数を返す</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>len(self._values)</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -702,7 +730,7 @@
 <span id="voicebank-voicebank-module"></span><h2>voicebank.voicebank module<a class="headerlink" href="#module-voicebank.voicebank" title="このヘッドラインへのパーマリンク"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="voicebank.voicebank.VoiceBank">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.voicebank.</span></span><span class="sig-name descname"><span class="pre">VoiceBank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.voicebank.VoiceBank" title="この定義へのパーマリンク"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">voicebank.voicebank.</span></span><span class="sig-name descname"><span class="pre">VoiceBank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">logging.Logger</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voicebank.voicebank.VoiceBank" title="この定義へのパーマリンク"></a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>UTAUの音源データを扱います。</p>
 <dl class="py attribute">
@@ -761,7 +789,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="voicebank.voicebank.VoiceBank.is_utau_voicebank">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_utau_voicebank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#voicebank.voicebank.VoiceBank.is_utau_voicebank" title="この定義へのパーマリンク"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_utau_voicebank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">logging.Logger</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#voicebank.voicebank.VoiceBank.is_utau_voicebank" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
 <div class="line">渡されたパスがUTAU音源フォルダか判定する。</div>
 <div class="line">character.txt、oto.ini、.wavのいずれかがあればUTAU音源フォルダと判定する。</div>

@@ -450,6 +450,83 @@
 </dd></dl>
 
 </section>
+<section id="module-tests.test_voicebank">
+<span id="tests-test-voicebank-module"></span><h2>tests.test_voicebank module<a class="headerlink" href="#module-tests.test_voicebank" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>voicebankモジュールのテスト</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankInitTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_voicebank.</span></span><span class="sig-name descname"><span class="pre">VoiceBankInitTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankInitTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankInitTest.test_dirpath_is_not_utau">
+<span class="sig-name descname"><span class="pre">test_dirpath_is_not_utau</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_is_utau</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankInitTest.test_dirpath_is_not_utau" title="この定義へのパーマリンク"></a></dt>
+<dd><p>指定したフォルダがUTAU音源ではないとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankInitTest.test_loadfile_found_character_txt">
+<span class="sig-name descname"><span class="pre">test_loadfile_found_character_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_is_utau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankInitTest.test_loadfile_found_character_txt" title="この定義へのパーマリンク"></a></dt>
+<dd><p>指定したフォルダがUTAU音源で、character.txtのみ見つかったとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankInitTest.test_loadfile_found_oto_ini">
+<span class="sig-name descname"><span class="pre">test_loadfile_found_oto_ini</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_is_utau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankInitTest.test_loadfile_found_oto_ini" title="この定義へのパーマリンク"></a></dt>
+<dd><p>指定したフォルダがUTAU音源で、oto.iniのみ見つかったとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankInitTest.test_loadfile_found_prefix_map">
+<span class="sig-name descname"><span class="pre">test_loadfile_found_prefix_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_is_utau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_isfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankInitTest.test_loadfile_found_prefix_map" title="この定義へのパーマリンク"></a></dt>
+<dd><p>指定したフォルダがUTAU音源で、prefix.mapのみ見つかったとき</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankInitTest.test_loadfile_is_not_found">
+<span class="sig-name descname"><span class="pre">test_loadfile_is_not_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_is_utau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankInitTest.test_loadfile_is_not_found" title="この定義へのパーマリンク"></a></dt>
+<dd><p>指定したフォルダがUTAU音源で、character.txt,oto.ini,prefix.mapが見つからないとき</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankStaticTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_voicebank.</span></span><span class="sig-name descname"><span class="pre">VoiceBankStaticTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankStaticTest" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<p>staticmethodのテスト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_in_charactertxt">
+<span class="sig-name descname"><span class="pre">test_is_utau_voicebank_in_charactertxt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_in_charactertxt" title="この定義へのパーマリンク"></a></dt>
+<dd><p>dirpathが存在し、直下にcharacter.txtがある場合True</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_in_otoini">
+<span class="sig-name descname"><span class="pre">test_is_utau_voicebank_in_otoini</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_in_otoini" title="この定義へのパーマリンク"></a></dt>
+<dd><p>dirpathが存在し、直下にoto.iniがある場合True</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_in_wav">
+<span class="sig-name descname"><span class="pre">test_is_utau_voicebank_in_wav</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_in_wav" title="この定義へのパーマリンク"></a></dt>
+<dd><p>dirpathが存在し、直下にwavファイルがある場合True</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_is_false">
+<span class="sig-name descname"><span class="pre">test_is_utau_voicebank_is_false</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_is_false" title="この定義へのパーマリンク"></a></dt>
+<dd><p>dirpathが存在し、直下にcharacter.txt,oto.ini,wavファイルのいずれもが存在しない場合</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_is_not_found">
+<span class="sig-name descname"><span class="pre">test_is_utau_voicebank_is_not_found</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mock_isdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mock_listdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_voicebank.VoiceBankStaticTest.test_is_utau_voicebank_is_not_found" title="この定義へのパーマリンク"></a></dt>
+<dd><p>dirpathがディレクトリでない場合、FileNotFoundErrorを返す</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-tests">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests" title="このヘッドラインへのパーマリンク"></a></h2>
 </section>

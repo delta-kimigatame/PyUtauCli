@@ -36,6 +36,14 @@ tests.test\_settings module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_voicebank module
+----------------------------
+
+.. automodule:: tests.test_voicebank
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
