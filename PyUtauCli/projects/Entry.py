@@ -34,7 +34,7 @@ class OveEntry(FloatEntry):
 class AtOveEntry(FloatEntry):
     pass
 
-class SttpEntry(FloatEntry):
+class StpEntry(FloatEntry):
     pass
 
 class AtStpEntry(FloatEntry):
@@ -58,7 +58,7 @@ class ModurationEntry(IntEntry):
 class PitchesEntry(ListEntry):
     def _check_value(self, value):
         try:
-            int(value)
+            return int(value)
         except:
             raise ValueError("{} is not int".format(value))
 
@@ -159,21 +159,21 @@ class PBSEntry(EntryBase):
 class PBYEntry(ListEntry):
     def _check_value(self, value):
         try:
-            float(value)
+            return float(value)
         except:
             raise ValueError("{} is not float".format(value))
         
 class PBWEntry(ListEntry):
     def _check_value(self, value):
         try:
-            float(value)
+            return float(value)
         except:
             raise ValueError("{} is not float".format(value))
         
 class PBMEntry(ListEntry):
     def _check_value(self, value):
         if value in ["", "s", "r", "j"]:
-            str(value)
+            return str(value)
         else:
             raise ValueError("{} is not '',s,r,j".format(value))
 

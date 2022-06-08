@@ -14,6 +14,10 @@ class EntryBase:
         self._isUpdate = True
 
     @property
+    def isUpdate(self) -> bool:
+        return self._isUpdate
+
+    @property
     def hasValue(self) -> bool:
         return self._hasValue
     
@@ -103,7 +107,7 @@ class FloatEntry(EntryBase):
             raise ValueError("{} is not float".format(value))
 
     def __str__(self) -> str:
-        return ("{:."+ str(self.point) +"}").format(value)
+        return ("{:."+ str(self.point) +"f}").format(self._value)
     
 class BoolEntry(EntryBase):
     '''
@@ -114,11 +118,11 @@ class BoolEntry(EntryBase):
 
     @property
     def value(self) -> bool:
-        return self._value
+        return bool(self._value)
 
     @value.setter
     def value(self, value: bool):
-        self._value = value
+        self._value = bool(value)
         self._set_update()
         self._hasValue = True
 
@@ -127,7 +131,7 @@ class BoolEntry(EntryBase):
         self._hasValue = True
 
     def __str__(self) -> str:
-        return self.value
+        return str(self.value)
 
 class ListEntry(EntryBase):
     '''
@@ -135,9 +139,9 @@ class ListEntry(EntryBase):
     継承して使います。
     各パラメータのフォーマットが適切かは、self._checl_valueを継承して定義します。
     '''
-    _value: list
+    _value: list = []
     separater: str = ","
-    
+
     @property
     def value(self) -> list:
         return self._value
@@ -157,31 +161,31 @@ class ListEntry(EntryBase):
         ValueError
             値が不適切な時
         '''
-        pass
+        return value
 
     def init(self, value: list):
         for v in value:
-            self._check_value(v)
-        self._value = value
+            v = self._check_value(v)
+        self._value = value[:]
         self._hasValue = True
 
     def init_from_str(self, value: str):
         values: list = value.split(self.separater)
-        for v in values:
-            self._check_value(v)
-        self._value = values
+        for i in range(len(values)):
+            values[i] = self._check_value(values[i])
+        self._value = values[:]
         self._hasValue = True
 
     def __str__(self) -> str:
-        return self.separater.join(self.value)
+        return self.separater.join(map(str,self.value))
 
     def append(self, value):
-        self._check_value(value)
+        value = self._check_value(value)
         self._value.append(value)
         self._isUpdate = True
 
     def insert(self, pos: int, value):
-        self._check_value(value)
+        value = self._check_value(value)
         self._value.insert(pos, value)
         self._isUpdate = True
 
@@ -190,6 +194,6 @@ class ListEntry(EntryBase):
         self._isUpdate = True
 
     def set(self, pos: int, value):
-        self._check_value(value)
+        value = self._check_value(value)
         self._value[pos] = value
         self._isUpdate = True

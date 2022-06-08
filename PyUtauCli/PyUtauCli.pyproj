@@ -55,6 +55,9 @@
     <Compile Include="tests\test_character.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_entry.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_oto.py">
       <SubType>Code</SubType>
     </Compile>
