@@ -32,6 +32,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="docsource\conf.py" />
+    <Compile Include="projects\Entry.py" />
     <Compile Include="projects\EntryBase.py">
       <SubType>Code</SubType>
     </Compile>

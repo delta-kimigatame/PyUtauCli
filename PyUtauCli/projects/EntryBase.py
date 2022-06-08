@@ -188,3 +188,8 @@ class ListEntry(EntryBase):
     def pop(self, pos: int):
         self._value.pop(pos)
         self._isUpdate = True
+
+    def set(self, pos: int, value):
+        self._check_value(value)
+        self._value[pos] = value
+        self._isUpdate = True
