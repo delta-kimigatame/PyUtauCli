@@ -121,6 +121,7 @@ class PBSEntry(EntryBase):
         else:
             try:
                 self._time = float(value)
+                self._height = 0
             except:
                 raise ValueError("{} is not float".format(value))
             self._value = value
@@ -144,6 +145,7 @@ class PBSEntry(EntryBase):
         else:
             try:
                 self._time = float(value)
+                self._height = 0
             except:
                 raise ValueError("{} is not float".format(value))
             self._value = value
@@ -185,22 +187,22 @@ class EnvelopeEntry(EntryBase):
     
     @property
     def value(self) -> str:
-        if len(p) == 3:
-            return "{:.2f},{:.2f},{:.2f},{},{},{},{}".format(p[0], p[1], p[2], v[0], v[1], v[2], v[3])
-        elif len(p) == 4:
-            return "{:.2f},{:.2f},{:.2f},{},{},{},{},%,{:.2f}".format(p[0], p[1], p[2], v[0], v[1], v[2], v[3], p[3])
-        elif len(p) == 5:
-            return "{:.2f},{:.2f},{:.2f},{},{},{},{},%,{:.2f},{:.2f},{}".format(p[0], p[1], p[2], v[0], v[1], v[2], v[3], p[3], p[4], v[4])
+        if len(self._p) == 3:
+            return "{:.2f},{:.2f},{:.2f},{},{},{},{}".format(self._p[0], self._p[1], self._p[2], self._v[0], self._v[1], self._v[2], self._v[3])
+        elif len(self._p) == 4:
+            return "{:.2f},{:.2f},{:.2f},{},{},{},{},%,{:.2f}".format(self._p[0], self._p[1], self._p[2], self._v[0], self._v[1], self._v[2], self._v[3], self._p[3])
+        elif len(self._p) == 5:
+            return "{:.2f},{:.2f},{:.2f},{},{},{},{},%,{:.2f},{:.2f},{}".format(self._p[0], self._p[1], self._p[2], self._v[0], self._v[1], self._v[2], self._v[3], self._p[3], self._p[4], self._v[4])
 
         return self._value
 
     @property
     def p(self) -> list:
-        return self._p
+        return self._p[:]
     
     @property
     def v(self) -> list:
-        return self._v
+        return self._v[:]
     
     @value.setter
     def value(self, value: str):
