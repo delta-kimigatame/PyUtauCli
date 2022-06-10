@@ -150,6 +150,9 @@ class Oto:
     def __getitem__(self, key) -> OtoRecord:
         return self._values[key]
 
+    def haskey(self, key) -> bool:
+        return key in self._values
+
     def load(self, dirpath: str, recursive: bool = False, subdir: str = ""):
         '''
         | dirpathおよびその子フォルダのoto.iniを読み込みself._datas_by_fileとself._valuesを更新する。

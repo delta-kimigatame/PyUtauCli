@@ -165,6 +165,8 @@ class OtoTest(unittest.TestCase):
         self.assertEqual(len(oto._datas_by_file["subdir"]), 1)
         self.assertEqual(oto["bar"].offset, 100)
         self.assertEqual(oto["subdir\\foo"].pre, 600)
+        self.assertTrue(oto.haskey("bar"))
+        self.assertTrue(oto.haskey("subdir\\foo"))
 
     def test_load_file_unicode_decode_error_once(self):
         '''
