@@ -1,17 +1,23 @@
 ﻿from .EntryBase import EntryBase, IntEntry, StringEntry, FloatEntry, BoolEntry, ListEntry
 import common.convert_notenum
 
+
 class NumberEntry(StringEntry):
     pass
 
+
 class LengthEntry(IntEntry):
-    pass
+    _value = 480
+
 
 class LyricEntry(StringEntry):
     pass
 
+
 class NoteNumEntry(IntEntry):
-    def set_from_str(self, value:str):
+    _value = 60
+
+    def set_from_str(self, value: str):
         self.value = common.convert_notenum.toInt(value)
         self._set_update()
         self._hasValue = True
@@ -19,41 +25,55 @@ class NoteNumEntry(IntEntry):
     def get_tone_name(self) -> str:
         return common.convert_notenum.toStr(self.value)
 
+
 class TempoEntry(FloatEntry):
+    _value = 120
     point = 2
+
 
 class PreEntry(FloatEntry):
     pass
 
+
 class AtPreEntry(FloatEntry):
     pass
+
 
 class OveEntry(FloatEntry):
     pass
 
+
 class AtOveEntry(FloatEntry):
     pass
+
 
 class StpEntry(FloatEntry):
     pass
 
+
 class AtStpEntry(FloatEntry):
     pass
+
 
 class AtFileNameEntry(StringEntry):
     pass
 
+
 class AtAliasEntry(StringEntry):
     pass
 
+
 class VelocityEntry(IntEntry):
-    pass
+    _value = 100
+
 
 class IntensityEntry(IntEntry):
-    pass
+    _value = 100
+
 
 class ModulationEntry(IntEntry):
-    pass
+    _value = 100
+
 
 class PitchesEntry(ListEntry):
     def _check_value(self, value):
@@ -62,8 +82,10 @@ class PitchesEntry(ListEntry):
         except:
             raise ValueError("{} is not int".format(value))
 
+
 class PBStartEntry(FloatEntry):
     pass
+
 
 class PBSEntry(EntryBase):
     _time: float
@@ -164,14 +186,16 @@ class PBYEntry(ListEntry):
             return float(value)
         except:
             raise ValueError("{} is not float".format(value))
-        
+
+
 class PBWEntry(ListEntry):
     def _check_value(self, value):
         try:
             return float(value)
         except:
             raise ValueError("{} is not float".format(value))
-        
+
+
 class PBMEntry(ListEntry):
     def _check_value(self, value):
         if value in ["", "s", "r", "j"]:
@@ -179,12 +203,13 @@ class PBMEntry(ListEntry):
         else:
             raise ValueError("{} is not '',s,r,j".format(value))
 
+
 class EnvelopeEntry(EntryBase):
     _value: str
     _p: list
     _v: list
     separater: str = ","
-    
+
     @property
     def value(self) -> str:
         if len(self._p) == 3:
@@ -199,11 +224,11 @@ class EnvelopeEntry(EntryBase):
     @property
     def p(self) -> list:
         return self._p[:]
-    
+
     @property
     def v(self) -> list:
         return self._v[:]
-    
+
     @value.setter
     def value(self, value: str):
         self._set_value(value)
@@ -216,26 +241,25 @@ class EnvelopeEntry(EntryBase):
         self._v = []
         try:
             for i in range(len(tmp)):
-                if i in [0,1,2,8,9]:
+                if i in [0, 1, 2, 8, 9]:
                     self._p.append(float(tmp[i]))
-                elif i in [3,4,5,6,10]:
+                elif i in [3, 4, 5, 6, 10]:
                     self._v.append(int(tmp[i]))
         except:
             raise ValueError("{} is not envelope pattern".format(value))
         self._value = value
-        
+
     def init(self, value: list):
         self._set_value(value)
         self._hasValue = True
 
-        
     def __str__(self) -> str:
         return self.value
 
     def set_p(self, pos: int, value: float):
         self._p[pos] = float(value)
         self._set_update()
-        
+
     def set_v(self, pos: int, value: int):
         self._v[pos] = int(value)
         self._set_update()
@@ -271,7 +295,7 @@ class VibratoEntry(EntryBase):
     @property
     def fadeOutTime(self) -> float:
         return self._fadeOutTime
-    
+
     @property
     def phase(self) -> float:
         return self._phase
@@ -297,7 +321,7 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
-        
+
     @cycle.setter
     def cycle(self, value: float):
         try:
@@ -305,7 +329,7 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
-        
+
     @depth.setter
     def depth(self, value: float):
         try:
@@ -313,7 +337,7 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
-        
+
     @fadeInTime.setter
     def fadeInTime(self, value: float):
         try:
@@ -321,7 +345,7 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
-        
+
     @fadeOutTime.setter
     def fadeOutTime(self, value: float):
         try:
@@ -329,7 +353,7 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
-        
+
     @phase.setter
     def phase(self, value: float):
         try:
@@ -337,7 +361,7 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
-        
+
     @height.setter
     def height(self, value: float):
         try:
@@ -365,8 +389,10 @@ class VibratoEntry(EntryBase):
     def __str__(self) -> str:
         return self.value
 
+
 class LabelEntry(StringEntry):
     pass
+
 
 class DirectEntry(BoolEntry):
     pass
@@ -378,6 +404,7 @@ class RegionEntry(StringEntry):
 
 class RegionEndEntry(StringEntry):
     pass
+
 
 class FlagsEntry(StringEntry):
     pass
