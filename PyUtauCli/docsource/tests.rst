@@ -12,6 +12,14 @@ tests.test\_character module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_entry module
+------------------------
+
+.. automodule:: tests.test_entry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_oto module
 ----------------------
 

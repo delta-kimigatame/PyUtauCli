@@ -326,8 +326,8 @@ class TestVelocityEntry(TestIntEntry):
 class TestIntensityEntry(TestIntEntry):
     TestClass = IntensityEntry
     
-class TestModurationEntry(TestIntEntry):
-    TestClass = ModurationEntry
+class TestModulationEntry(TestIntEntry):
+    TestClass = ModulationEntry
     
 class TestTempoEntry(TestFloatEntry):
     TestClass = TempoEntry
@@ -983,3 +983,7 @@ class TestVibratoEntry(TestEntryBase):
                 e.init(tmp)
             self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
+
+        
+class TestFlagsEntry(TestStringEntry):
+    TestClass = FlagsEntry

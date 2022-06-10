@@ -36,6 +36,9 @@
     <Compile Include="projects\EntryBase.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="projects\Note.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="projects\__init__.py">
       <SubType>Code</SubType>
     </Compile>

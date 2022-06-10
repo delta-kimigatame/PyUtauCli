@@ -52,7 +52,7 @@ class VelocityEntry(IntEntry):
 class IntensityEntry(IntEntry):
     pass
 
-class ModurationEntry(IntEntry):
+class ModulationEntry(IntEntry):
     pass
 
 class PitchesEntry(ListEntry):
@@ -377,4 +377,7 @@ class RegionEntry(StringEntry):
 
 
 class RegionEndEntry(StringEntry):
+    pass
+
+class FlagsEntry(StringEntry):
     pass
