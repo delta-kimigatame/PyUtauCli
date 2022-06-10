@@ -20,6 +20,14 @@ projects.EntryBase module
    :undoc-members:
    :show-inheritance:
 
+projects.Note module
+--------------------
+
+.. automodule:: projects.Note
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
