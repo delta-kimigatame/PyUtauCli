@@ -1,7 +1,9 @@
-﻿
+﻿import sys
+sys.path.append('../')
+
 from .Entry import *
-from ..voicebank.prefixmap import PrefixMap
-from ..voicebank.oto import Oto
+from voicebank.prefixmap import PrefixMap
+from voicebank.oto import Oto
 
 
 class Note:
@@ -37,9 +39,12 @@ class Note:
     atPre: AtPreEntry
         | UTAUのパラメータ自動調整適用後の先行発声値
         | 前の音が休符以外の場合
-        | AtPre = pre / (pre -ove) * prev.msLength/2
+
+            >>> AtPre = pre / (pre -ove) * prev.msLength/2
+
         | 前の音が休符の場合
-        | AtPre = pre / (pre -ove) * prev.msLength
+
+            >>> AtPre = pre / (pre -ove) * prev.msLength
 
     ove: OveEntry
         ノートのオーバーラップ値。
@@ -50,16 +55,20 @@ class Note:
     atOve: AtOveEntry
         | UTAUのパラメータ自動調整適用後のオーバーラップ値
         | 前の音が休符以外の場合
-        | AtOve = ove / (pre -ove) * prev.msLength/2
+
+            >>> AtOve = ove / (pre -ove) * prev.msLength/2
+
         | 前の音が休符の場合
-        | AtOve = ove / (pre -ove) * prev.msLength
+
+            >>> AtOve = ove / (pre -ove) * prev.msLength
 
     stp: StpEntry
         ノートのstp値
 
     atStp: AtStpEntry
         | UTAUのパラメータ自動調整適用後のオーバーラップ値
-        | atStp = Pre - atPre + stp で与えられる。
+
+            >>> atStp = Pre - atPre + stp
 
     atFileName: AtFileNameEntry
         このノートが参照しているファイルの音源ルートからの相対パス
@@ -70,7 +79,8 @@ class Note:
     velocity: VelocityEntry
         | このノートの子音速度。
         | 音源を再生するとき、固定範囲、先行発声、オーバーラップに以下の係数がかかる。
-        | rate = 2 ** ((100-velocity)/100)
+
+            >>> rate = 2 ** ((100-velocity)/100)
 
     intensity: IntensityEntry
         | このノートの音量。
@@ -88,9 +98,11 @@ class Note:
 
     pbs: PBSEntry
         | mode2のピッチの開始点。以下のいずれかの書式で与えられる。
-        | time;height
-        | time,height
-        | time
+
+            >>> time;height
+            >>> time,height
+            >>> time
+
         | timeの単位はms、heightの単位はcent
 
     pby: PBYEntry
@@ -108,10 +120,11 @@ class Note:
 
     envelope: EnvelopeEntry
         | このノートの音量の変化。以下のいずれかの書式で与えられる。pはfloat(ms)、vはint
-        | p1,p2,p3,v1,v2,v3,v4
-        | p1,p2,p3,v1,v2,v3,v4,%,p4
-        | p1,p2,p3,v1,v2,v3,v4,%,p4,p5,v5
-        |
+
+            >>> p1,p2,p3,v1,v2,v3,v4
+            >>> p1,p2,p3,v1,v2,v3,v4,%,p4
+            >>> p1,p2,p3,v1,v2,v3,v4,%,p4,p5,v5
+
         | p1はノート頭からのms
         | p2はp1からのms
         | p3はp4から前向きのms
@@ -245,15 +258,15 @@ class Note:
         '''
         alias: str
         if not self.lyric.hasValue:
-            raise ValueError "lyric is not initial"
+            raise ValueError ("lyric is not initial")
         if not self.notenum.hasValue:
-            raise ValueError "notenum is not initial"
+            raise ValueError ("notenum is not initial")
 
         alias = self._init_alias(oto, prefix)
         self._apply_oto_to_pre(alias, oto)
         self._apply_oto_to_ove(alias, oto)
-        ### TODO 
-        #self.autofit_atparam()
+        # TODO
+        # self.autofit_atparam()
 
     def _init_alias(self, oto: Oto, prefix: PrefixMap) -> str:
         '''
@@ -286,7 +299,7 @@ class Note:
         else:
             return ""
 
-    def _apply_oto_to_pre(self, alias: str, oto:Oto):
+    def _apply_oto_to_pre(self, alias: str, oto: Oto):
         '''
         | 原音設定値を読み込んで、preを更新します。
         | もしalias=""の場合、0で更新します。
@@ -300,12 +313,12 @@ class Note:
         '''
         if self.pre.hasValue:
             return
-        if alias = "":
+        if alias == "":
             self.pre.value = 0
         else:
             self.pre.value = oto[alias].pre
 
-    def _apply_oto_to_ove(self, alias: str, oto:Oto):
+    def _apply_oto_to_ove(self, alias: str, oto: Oto):
         '''
         | 原音設定値を読み込んで、oveを更新します。
         | もしalias=""の場合、0で更新します。
@@ -319,7 +332,67 @@ class Note:
         '''
         if self.ove.hasValue:
             return
-        if alias = "":
+        if alias == "":
             self.ove.value = 0
         else:
             self.ove.value = oto[alias].ove
+
+    def autofit_atparam(self):
+        '''
+        pre,ove,stp,velocity,prev.length,prev.tempoを勘案して、atpre,atove,atstpを更新します。
+
+        Raises
+        ------
+        ValueError
+            prev.lengthがNone出ないにもかかわらず、lyric,length,tempoの値が与えられていないとき。
+        '''
+        if self.prev is None:
+            # 前のノートが存在しない場合、自動調整は不要。
+            self.atPre.value = self.pre.value
+            self.atOve.value = self.ove.value
+            self.atStp.value = self.stp.value
+            return
+
+        if not self.prev.lyric.hasValue:
+            raise ValueError("prev lyric is not initial")
+
+        prevMsLength: int = self.prev.msLength
+        realPre: float = self.pre.value * self.velocity.rate
+        realOve: float = self.ove.value * self.velocity.rate
+        realStp: float = self.stp.value * self.velocity.rate
+        atPre: float
+        atOve: float
+        atStp: float
+        if self.prev.lyric.value == "R":
+            prevMsLength /= 2
+
+        if prevMsLength < (realPre - realOve):
+            self.atPre.value = realPre / (realPre - realOve) * prevMsLength
+            self.atOve.value = realOve / (realPre - realOve) * prevMsLength
+            self.atStp.value = realPre - atPre.value + realStp
+        else:
+            self.atPre.value = realPre
+            self.atOve.value = realOve
+            self.atStp.value = realStp
+
+    @property
+    def msLength(self) -> int:
+        '''
+        tempoとlengthからmsを計算して返します。
+
+        Returns
+        -------
+        msLength: int
+
+        Raises
+        ------
+        ValueError
+            tempoもしくはlengthが初期化されていないとき。
+        '''
+        if not self.length.hasValue:
+            raise ValueError ("length is not initial")
+
+        if not self.tempo.hasValue:
+            raise ValueError ("tempo is not initial")
+
+        return int(60 / self.tempo.value * self.length.value / 480 * 1000)

@@ -320,6 +320,11 @@
 <dt class="sig sig-object py" id="projects.Entry.VelocityEntry">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.Entry.</span></span><span class="sig-name descname"><span class="pre">VelocityEntry</span></span><a class="headerlink" href="#projects.Entry.VelocityEntry" title="この定義へのパーマリンク"></a></dt>
 <dd><p>ベースクラス: <a class="reference internal" href="#projects.EntryBase.IntEntry" title="projects.EntryBase.IntEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.EntryBase.IntEntry</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.Entry.VelocityEntry.rate">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#projects.Entry.VelocityEntry.rate" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -629,9 +634,15 @@
 <dd><div class="line-block">
 <div class="line">UTAUのパラメータ自動調整適用後の先行発声値</div>
 <div class="line">前の音が休符以外の場合</div>
-<div class="line">AtPre = pre / (pre -ove) * prev.msLength/2</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">AtPre</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">/</span> <span class="p">(</span><span class="n">pre</span> <span class="o">-</span><span class="n">ove</span><span class="p">)</span> <span class="o">*</span> <span class="n">prev</span><span class="o">.</span><span class="n">msLength</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="line-block">
 <div class="line">前の音が休符の場合</div>
-<div class="line">AtPre = pre / (pre -ove) * prev.msLength</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">AtPre</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">/</span> <span class="p">(</span><span class="n">pre</span> <span class="o">-</span><span class="n">ove</span><span class="p">)</span> <span class="o">*</span> <span class="n">prev</span><span class="o">.</span><span class="n">msLength</span>
+</pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -668,9 +679,15 @@
 <dd><div class="line-block">
 <div class="line">UTAUのパラメータ自動調整適用後のオーバーラップ値</div>
 <div class="line">前の音が休符以外の場合</div>
-<div class="line">AtOve = ove / (pre -ove) * prev.msLength/2</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">AtOve</span> <span class="o">=</span> <span class="n">ove</span> <span class="o">/</span> <span class="p">(</span><span class="n">pre</span> <span class="o">-</span><span class="n">ove</span><span class="p">)</span> <span class="o">*</span> <span class="n">prev</span><span class="o">.</span><span class="n">msLength</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="line-block">
 <div class="line">前の音が休符の場合</div>
-<div class="line">AtOve = ove / (pre -ove) * prev.msLength</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">AtOve</span> <span class="o">=</span> <span class="n">ove</span> <span class="o">/</span> <span class="p">(</span><span class="n">pre</span> <span class="o">-</span><span class="n">ove</span><span class="p">)</span> <span class="o">*</span> <span class="n">prev</span><span class="o">.</span><span class="n">msLength</span>
+</pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -695,7 +712,9 @@
 <span class="sig-name descname"><span class="pre">atStp</span></span><a class="headerlink" href="#projects.Note.Note.atStp" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
 <div class="line">UTAUのパラメータ自動調整適用後のオーバーラップ値</div>
-<div class="line">atStp = Pre - atPre + stp で与えられる。</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">atStp</span> <span class="o">=</span> <span class="n">Pre</span> <span class="o">-</span> <span class="n">atPre</span> <span class="o">+</span> <span class="n">stp</span>
+</pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -732,7 +751,9 @@
 <dd><div class="line-block">
 <div class="line">このノートの子音速度。</div>
 <div class="line">音源を再生するとき、固定範囲、先行発声、オーバーラップに以下の係数がかかる。</div>
-<div class="line">rate = 2 ** ((100-velocity)/100)</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rate</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">((</span><span class="mi">100</span><span class="o">-</span><span class="n">velocity</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -796,9 +817,13 @@
 <span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#projects.Note.Note.pbs" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
 <div class="line">mode2のピッチの開始点。以下のいずれかの書式で与えられる。</div>
-<div class="line">time;height</div>
-<div class="line">time,height</div>
-<div class="line">time</div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="p">;</span><span class="n">height</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="p">,</span><span class="n">height</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span>
+</pre></div>
+</div>
+<div class="line-block">
 <div class="line">timeの単位はms、heightの単位はcent</div>
 </div>
 <dl class="field-list simple">
@@ -852,10 +877,13 @@
 <span class="sig-name descname"><span class="pre">envelope</span></span><a class="headerlink" href="#projects.Note.Note.envelope" title="この定義へのパーマリンク"></a></dt>
 <dd><div class="line-block">
 <div class="line">このノートの音量の変化。以下のいずれかの書式で与えられる。pはfloat(ms)、vはint</div>
-<div class="line">p1,p2,p3,v1,v2,v3,v4</div>
-<div class="line">p1,p2,p3,v1,v2,v3,v4,%,p4</div>
-<div class="line">p1,p2,p3,v1,v2,v3,v4,%,p4,p5,v5</div>
-<div class="line"><br /></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span><span class="p">,</span><span class="n">v4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span><span class="p">,</span><span class="n">v4</span><span class="p">,</span><span class="o">%</span><span class="p">,</span><span class="n">p4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span><span class="p">,</span><span class="n">v4</span><span class="p">,</span><span class="o">%</span><span class="p">,</span><span class="n">p4</span><span class="p">,</span><span class="n">p5</span><span class="p">,</span><span class="n">v5</span>
+</pre></div>
+</div>
+<div class="line-block">
 <div class="line">p1はノート頭からのms</div>
 <div class="line">p2はp1からのms</div>
 <div class="line">p3はp4から前向きのms</div>
@@ -977,14 +1005,227 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.Note.Note.apply_oto">
+<span class="sig-name descname"><span class="pre">apply_oto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oto</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="voicebank.html#voicebank.oto.Oto" title="voicebank.oto.Oto"><span class="pre">voicebank.oto.Oto</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="voicebank.html#voicebank.prefixmap.PrefixMap" title="voicebank.prefixmap.PrefixMap"><span class="pre">voicebank.prefixmap.PrefixMap</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.Note.Note.apply_oto" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">原音設定値を読み込んで、pre,oveを更新します。</div>
+<div class="line">もし、パラメータが初期化されていない場合、atPre,atOve,atStp,atAlias,atFileNameも更新します。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oto</strong> (<a class="reference internal" href="voicebank.html#voicebank.oto.Oto" title="voicebank.oto.Oto"><em>Oto</em></a>) -- 原音設定ファイル</p></li>
+<li><p><strong>prefix</strong> (<em>prefixMap</em>) -- エイリアスの推定に使用します。</p></li>
+</ul>
+</dd>
+<dt class="field-even">例外</dt>
+<dd class="field-even"><p><strong>ValueError</strong> -- lyricもしくはnotenumが初期化されていない場合</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">next</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id0" title="この定義へのパーマリンク"></a></dt>
+<span class="sig-name descname"><span class="pre">atAlias</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.AtAliasEntry" title="projects.Entry.AtAliasEntry"><span class="pre">projects.Entry.AtAliasEntry</span></a></em><a class="headerlink" href="#id0" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">prev</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id1" title="この定義へのパーマリンク"></a></dt>
+<span class="sig-name descname"><span class="pre">atFileName</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.AtFileNameEntry" title="projects.Entry.AtFileNameEntry"><span class="pre">projects.Entry.AtFileNameEntry</span></a></em><a class="headerlink" href="#id1" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">atOve</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.AtOveEntry" title="projects.Entry.AtOveEntry"><span class="pre">projects.Entry.AtOveEntry</span></a></em><a class="headerlink" href="#id2" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">atPre</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.AtPreEntry" title="projects.Entry.AtPreEntry"><span class="pre">projects.Entry.AtPreEntry</span></a></em><a class="headerlink" href="#id3" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">atStp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.AtStpEntry" title="projects.Entry.AtStpEntry"><span class="pre">projects.Entry.AtStpEntry</span></a></em><a class="headerlink" href="#id4" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.Note.Note.autofit_atparam">
+<span class="sig-name descname"><span class="pre">autofit_atparam</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#projects.Note.Note.autofit_atparam" title="この定義へのパーマリンク"></a></dt>
+<dd><p>pre,ove,stp,velocity,prev.length,prev.tempoを勘案して、atpre,atove,atstpを更新します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">例外</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> -- prev.lengthがNone出ないにもかかわらず、lyric,length,tempoの値が与えられていないとき。</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">direct</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.DirectEntry" title="projects.Entry.DirectEntry"><span class="pre">projects.Entry.DirectEntry</span></a></em><a class="headerlink" href="#id5" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">envelope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.EnvelopeEntry" title="projects.Entry.EnvelopeEntry"><span class="pre">projects.Entry.EnvelopeEntry</span></a></em><a class="headerlink" href="#id6" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">flags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.FlagsEntry" title="projects.Entry.FlagsEntry"><span class="pre">projects.Entry.FlagsEntry</span></a></em><a class="headerlink" href="#id7" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">hasFlags</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id8" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">hasOve</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id9" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">hasPre</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id10" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">hasTempo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id11" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.IntensityEntry" title="projects.Entry.IntensityEntry"><span class="pre">projects.Entry.IntensityEntry</span></a></em><a class="headerlink" href="#id12" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.LabelEntry" title="projects.Entry.LabelEntry"><span class="pre">projects.Entry.LabelEntry</span></a></em><a class="headerlink" href="#id13" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.LengthEntry" title="projects.Entry.LengthEntry"><span class="pre">projects.Entry.LengthEntry</span></a></em><a class="headerlink" href="#id14" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">lyric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.LyricEntry" title="projects.Entry.LyricEntry"><span class="pre">projects.Entry.LyricEntry</span></a></em><a class="headerlink" href="#id15" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">modulation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.ModulationEntry" title="projects.Entry.ModulationEntry"><span class="pre">projects.Entry.ModulationEntry</span></a></em><a class="headerlink" href="#id16" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="projects.Note.Note.msLength">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">msLength</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#projects.Note.Note.msLength" title="この定義へのパーマリンク"></a></dt>
+<dd><p>tempoとlengthからmsを計算して返します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>msLength</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">例外</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> -- tempoもしくはlengthが初期化されていないとき。</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">next</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id17" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">notenum</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.NoteNumEntry" title="projects.Entry.NoteNumEntry"><span class="pre">projects.Entry.NoteNumEntry</span></a></em><a class="headerlink" href="#id18" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">num</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.NumberEntry" title="projects.Entry.NumberEntry"><span class="pre">projects.Entry.NumberEntry</span></a></em><a class="headerlink" href="#id19" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">ove</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.OveEntry" title="projects.Entry.OveEntry"><span class="pre">projects.Entry.OveEntry</span></a></em><a class="headerlink" href="#id20" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">pbStart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PBStartEntry" title="projects.Entry.PBStartEntry"><span class="pre">projects.Entry.PBStartEntry</span></a></em><a class="headerlink" href="#id21" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">pbm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PBMEntry" title="projects.Entry.PBMEntry"><span class="pre">projects.Entry.PBMEntry</span></a></em><a class="headerlink" href="#id22" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id23">
+<span class="sig-name descname"><span class="pre">pbs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PBSEntry" title="projects.Entry.PBSEntry"><span class="pre">projects.Entry.PBSEntry</span></a></em><a class="headerlink" href="#id23" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id24">
+<span class="sig-name descname"><span class="pre">pbw</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PBWEntry" title="projects.Entry.PBWEntry"><span class="pre">projects.Entry.PBWEntry</span></a></em><a class="headerlink" href="#id24" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id25">
+<span class="sig-name descname"><span class="pre">pby</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PBYEntry" title="projects.Entry.PBYEntry"><span class="pre">projects.Entry.PBYEntry</span></a></em><a class="headerlink" href="#id25" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id26">
+<span class="sig-name descname"><span class="pre">pitches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PitchesEntry" title="projects.Entry.PitchesEntry"><span class="pre">projects.Entry.PitchesEntry</span></a></em><a class="headerlink" href="#id26" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id27">
+<span class="sig-name descname"><span class="pre">pre</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.PreEntry" title="projects.Entry.PreEntry"><span class="pre">projects.Entry.PreEntry</span></a></em><a class="headerlink" href="#id27" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id28">
+<span class="sig-name descname"><span class="pre">prev</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id28" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id29">
+<span class="sig-name descname"><span class="pre">region</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.RegionEntry" title="projects.Entry.RegionEntry"><span class="pre">projects.Entry.RegionEntry</span></a></em><a class="headerlink" href="#id29" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id30">
+<span class="sig-name descname"><span class="pre">region_end</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.RegionEndEntry" title="projects.Entry.RegionEndEntry"><span class="pre">projects.Entry.RegionEndEntry</span></a></em><a class="headerlink" href="#id30" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id31">
+<span class="sig-name descname"><span class="pre">stp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.StpEntry" title="projects.Entry.StpEntry"><span class="pre">projects.Entry.StpEntry</span></a></em><a class="headerlink" href="#id31" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id32">
+<span class="sig-name descname"><span class="pre">tempo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.TempoEntry" title="projects.Entry.TempoEntry"><span class="pre">projects.Entry.TempoEntry</span></a></em><a class="headerlink" href="#id32" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id33">
+<span class="sig-name descname"><span class="pre">velocity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.VelocityEntry" title="projects.Entry.VelocityEntry"><span class="pre">projects.Entry.VelocityEntry</span></a></em><a class="headerlink" href="#id33" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id34">
+<span class="sig-name descname"><span class="pre">vibrato</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.VibratoEntry" title="projects.Entry.VibratoEntry"><span class="pre">projects.Entry.VibratoEntry</span></a></em><a class="headerlink" href="#id34" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
