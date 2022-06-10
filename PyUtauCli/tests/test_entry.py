@@ -12,8 +12,10 @@ import os.path
 from projects.Entry import *
 from projects.EntryBase import *
 
+
 class TestEntryBase(unittest.TestCase):
     TestClass = EntryBase
+
     def test_set_update(self):
         e = self.TestClass()
         self.assertFalse(e.isUpdate)
@@ -24,8 +26,10 @@ class TestEntryBase(unittest.TestCase):
         e = self.TestClass()
         self.assertFalse(e.hasValue)
 
+
 class TestStringEntry(TestEntryBase):
     TestClass = StringEntry
+
     def test_init(self):
         e = self.TestClass()
         e.init("test")
@@ -33,7 +37,7 @@ class TestStringEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), e.value)
-        
+
     def test_change_value(self):
         e = self.TestClass()
         e.init("test")
@@ -46,7 +50,7 @@ class TestStringEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), e.value)
-        
+
     def test_set_value(self):
         e = self.TestClass()
         e.value = "test2"
@@ -55,9 +59,10 @@ class TestStringEntry(TestEntryBase):
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), e.value)
 
-        
+
 class TestIntEntry(TestEntryBase):
     TestClass = IntEntry
+
     def test_init(self):
         e = self.TestClass()
         e.init("1")
@@ -68,13 +73,13 @@ class TestIntEntry(TestEntryBase):
 
     def test_init_bad_value(self):
         e = self.TestClass()
-        
+
         with self.assertRaises(ValueError) as cm:
             e.init("a")
         self.assertEqual(cm.exception.args[0], "{} is not int".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_value(self):
         e = self.TestClass()
         e.init("1")
@@ -87,7 +92,7 @@ class TestIntEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), str(e.value))
-        
+
     def test_set_value(self):
         e = self.TestClass()
         e.value = "3"
@@ -95,7 +100,7 @@ class TestIntEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), str(e.value))
-        
+
     def test_set_bad_value(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -103,10 +108,12 @@ class TestIntEntry(TestEntryBase):
         self.assertEqual(cm.exception.args[0], "{} is not int".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
+
 class TestFloatEntry(TestEntryBase):
     TestClass = FloatEntry
     point = 3
+
     def test_init(self):
         e = self.TestClass()
         e.init("1")
@@ -114,38 +121,38 @@ class TestFloatEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         print(self.point)
-        self.assertEqual(str(e), ("{:."+str(self.point) + "f}").format(1))
+        self.assertEqual(str(e), ("{:." + str(self.point) + "f}").format(1))
 
     def test_init_bad_value(self):
         e = self.TestClass()
-        
+
         with self.assertRaises(ValueError) as cm:
             e.init("a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_value(self):
         e = self.TestClass()
         e.init("1")
         self.assertEqual(1.000, e.value)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        self.assertEqual(str(e), ("{:."+str(self.point) + "f}").format(1))
+        self.assertEqual(str(e), ("{:." + str(self.point) + "f}").format(1))
         e.value = "3"
         self.assertEqual(3, e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        self.assertEqual(str(e), ("{:."+str(self.point) + "f}").format(3))
-        
+        self.assertEqual(str(e), ("{:." + str(self.point) + "f}").format(3))
+
     def test_set_value(self):
         e = self.TestClass()
         e.value = "3"
         self.assertEqual(3, e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        self.assertEqual(str(e), ("{:."+str(self.point) + "f}").format(3))
-        
+        self.assertEqual(str(e), ("{:." + str(self.point) + "f}").format(3))
+
     def test_set_bad_value(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -154,9 +161,10 @@ class TestFloatEntry(TestEntryBase):
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
 
-        
+
 class TestBoolEntry(TestEntryBase):
     TestClass = BoolEntry
+
     def test_init(self):
         e = self.TestClass()
         e.init(True)
@@ -164,7 +172,7 @@ class TestBoolEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), "True")
-        
+
     def test_change_value(self):
         e = self.TestClass()
         e.init(True)
@@ -183,7 +191,7 @@ class TestBoolEntry(TestEntryBase):
         self.assertEqual(str(e), "False")
         e.value = "a"
         self.assertEqual(str(e), "True")
-        
+
     def test_set_value(self):
         e = self.TestClass()
         e.value = False
@@ -192,10 +200,11 @@ class TestBoolEntry(TestEntryBase):
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), "False")
 
+
 class TestListEntry(TestEntryBase):
     TestClass = ListEntry
-    baselist = ["1","2","3"]
-    changelist = ["4","5","6"]
+    baselist = ["1", "2", "3"]
+    changelist = ["4", "5", "6"]
     base_str = "1,2,3"
     change_str = "4,5,6"
     add_value = "4"
@@ -203,10 +212,11 @@ class TestListEntry(TestEntryBase):
     insert_result = "1,2,4,3"
     set_result = "1,2,4"
     pop_result = "1,3"
-    append_result_list = ["1","2","3","4"]
-    insert_result_list = ["1","2","4","3"]
-    set_result_list = ["1","2","4"]
-    pop_result_list = ["1","3"]
+    append_result_list = ["1", "2", "3", "4"]
+    insert_result_list = ["1", "2", "4", "3"]
+    set_result_list = ["1", "2", "4"]
+    pop_result_list = ["1", "3"]
+
     def test_init(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -214,7 +224,7 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), self.base_str)
-        
+
     def test_init_from_str(self):
         e = self.TestClass()
         e.init_from_str(self.base_str)
@@ -222,7 +232,7 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), self.base_str)
-        
+
     def test_change(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -235,7 +245,7 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), self.change_str)
-        
+
     def test_setvalues(self):
         e = self.TestClass()
         e.value = self.changelist
@@ -243,7 +253,7 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), self.change_str)
-        
+
     def test_append(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -252,7 +262,7 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), self.append_result)
-        
+
     def test_insert(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -261,16 +271,16 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), self.insert_result)
-        
+
     def test_set(self):
         e = self.TestClass()
         e.init(self.baselist)
-        e.set(2,self.add_value)
+        e.set(2, self.add_value)
         self.assertListEqual(e.value, self.set_result_list)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), self.set_result)
-        
+
     def test_pop(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -280,32 +290,42 @@ class TestListEntry(TestEntryBase):
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), self.pop_result)
 
+
 class TestNumberEntry(TestStringEntry):
     TestClass = NumberEntry
-    
+
+
 class TestLyricEntry(TestStringEntry):
     TestClass = LyricEntry
-    
+
+
 class TestAtAliasEntry(TestStringEntry):
     TestClass = AtAliasEntry
-    
+
+
 class TestAtFileNameEntry(TestStringEntry):
     TestClass = AtFileNameEntry
-    
+
+
 class TestLabelEntry(TestStringEntry):
     TestClass = LabelEntry
-    
+
+
 class TestRegionEntry(TestStringEntry):
     TestClass = RegionEntry
-    
+
+
 class TestRegionEndEntry(TestStringEntry):
     TestClass = RegionEndEntry
-    
+
+
 class TestLengthEntry(TestIntEntry):
     TestClass = LengthEntry
-    
+
+
 class TestNoteNumEntry(TestIntEntry):
     TestClass = NoteNumEntry
+
     def test_set_tone_name(self):
         e = self.TestClass()
         e.init("1")
@@ -318,49 +338,61 @@ class TestNoteNumEntry(TestIntEntry):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(e.get_tone_name(), "C4")
-        
+
 
 class TestVelocityEntry(TestIntEntry):
     TestClass = VelocityEntry
-    
+
+
 class TestIntensityEntry(TestIntEntry):
     TestClass = IntensityEntry
-    
+
+
 class TestModulationEntry(TestIntEntry):
     TestClass = ModulationEntry
-    
+
+
 class TestTempoEntry(TestFloatEntry):
     TestClass = TempoEntry
     point = 2
-    
+
+
 class TestPreEntry(TestFloatEntry):
     TestClass = PreEntry
-    
+
+
 class TestAtPreEntry(TestFloatEntry):
     TestClass = AtPreEntry
 
+
 class TestOveEntry(TestFloatEntry):
     TestClass = PreEntry
-    
+
+
 class TestAtOveEntry(TestFloatEntry):
     TestClass = AtPreEntry
 
+
 class TestStpEntry(TestFloatEntry):
     TestClass = PreEntry
-    
+
+
 class TestAtStpEntry(TestFloatEntry):
     TestClass = AtPreEntry
-    
+
+
 class TestPBStartEntry(TestFloatEntry):
     TestClass = PBStartEntry
-    
+
+
 class TestDirectEntry(TestBoolEntry):
     TestClass = DirectEntry
 
+
 class TestPitchesEntry(TestListEntry):
     TestClass = PitchesEntry
-    baselist = [1,2,3]
-    changelist = [4,5,6]
+    baselist = [1, 2, 3]
+    changelist = [4, 5, 6]
     base_str = "1,2,3"
     change_str = "4,5,6"
     add_value = 4
@@ -368,10 +400,11 @@ class TestPitchesEntry(TestListEntry):
     insert_result = "1,2,4,3"
     set_result = "1,2,4"
     pop_result = "1,3"
-    append_result_list = [1,2,3,4]
-    insert_result_list = [1,2,4,3]
-    set_result_list = [1,2,4]
-    pop_result_list = [1,3]
+    append_result_list = [1, 2, 3, 4]
+    insert_result_list = [1, 2, 4, 3]
+    set_result_list = [1, 2, 4]
+    pop_result_list = [1, 3]
+
     def test_bad_init(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -379,7 +412,7 @@ class TestPitchesEntry(TestListEntry):
         self.assertEqual(cm.exception.args[0], "{} is not int".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_bad_init_from_str(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -395,7 +428,7 @@ class TestPitchesEntry(TestListEntry):
             e.append("a")
         self.assertEqual(cm.exception.args[0], "{} is not int".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_insert_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -403,7 +436,7 @@ class TestPitchesEntry(TestListEntry):
             e.insert(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not int".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_set_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -412,11 +445,11 @@ class TestPitchesEntry(TestListEntry):
         self.assertEqual(cm.exception.args[0], "{} is not int".format("a"))
         self.assertFalse(e.isUpdate)
 
-    
+
 class TestPBMEntry(TestListEntry):
     TestClass = PBMEntry
-    baselist = ["","s","r"]
-    changelist = ["j","r","s"]
+    baselist = ["", "s", "r"]
+    changelist = ["j", "r", "s"]
     base_str = ",s,r"
     change_str = "j,r,s"
     add_value = "j"
@@ -424,10 +457,11 @@ class TestPBMEntry(TestListEntry):
     insert_result = ",s,j,r"
     set_result = ",s,j"
     pop_result = ",r"
-    append_result_list = ["","s","r","j"]
-    insert_result_list = ["","s","j","r"]
-    set_result_list = ["","s","j"]
-    pop_result_list = ["","r"]
+    append_result_list = ["", "s", "r", "j"]
+    insert_result_list = ["", "s", "j", "r"]
+    set_result_list = ["", "s", "j"]
+    pop_result_list = ["", "r"]
+
     def test_bad_init(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -435,7 +469,7 @@ class TestPBMEntry(TestListEntry):
         self.assertEqual(cm.exception.args[0], "{} is not '',s,r,j".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_bad_init_from_str(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -451,7 +485,7 @@ class TestPBMEntry(TestListEntry):
             e.append("a")
         self.assertEqual(cm.exception.args[0], "{} is not '',s,r,j".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_insert_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -459,7 +493,7 @@ class TestPBMEntry(TestListEntry):
             e.insert(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not '',s,r,j".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_set_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -467,11 +501,12 @@ class TestPBMEntry(TestListEntry):
             e.set(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not '',s,r,j".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
+
 class TestPBYEntry(TestListEntry):
     TestClass = PBYEntry
-    baselist = [1.1,2.1,3.1]
-    changelist = [4.1,5.1,6.1]
+    baselist = [1.1, 2.1, 3.1]
+    changelist = [4.1, 5.1, 6.1]
     base_str = "1.1,2.1,3.1"
     change_str = "4.1,5.1,6.1"
     add_value = 4.1
@@ -479,10 +514,11 @@ class TestPBYEntry(TestListEntry):
     insert_result = "1.1,2.1,4.1,3.1"
     set_result = "1.1,2.1,4.1"
     pop_result = "1.1,3.1"
-    append_result_list = [1.1,2.1,3.1,4.1]
-    insert_result_list = [1.1,2.1,4.1,3.1]
-    set_result_list = [1.1,2.1,4.1]
-    pop_result_list = [1.1,3.1]
+    append_result_list = [1.1, 2.1, 3.1, 4.1]
+    insert_result_list = [1.1, 2.1, 4.1, 3.1]
+    set_result_list = [1.1, 2.1, 4.1]
+    pop_result_list = [1.1, 3.1]
+
     def test_bad_init(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -490,7 +526,7 @@ class TestPBYEntry(TestListEntry):
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_bad_init_from_str(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -506,7 +542,7 @@ class TestPBYEntry(TestListEntry):
             e.append("a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_insert_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -514,7 +550,7 @@ class TestPBYEntry(TestListEntry):
             e.insert(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_set_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -522,11 +558,12 @@ class TestPBYEntry(TestListEntry):
             e.set(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
+
 class TestPBWEntry(TestListEntry):
     TestClass = PBWEntry
-    baselist = [1.1,2.1,3.1]
-    changelist = [4.1,5.1,6.1]
+    baselist = [1.1, 2.1, 3.1]
+    changelist = [4.1, 5.1, 6.1]
     base_str = "1.1,2.1,3.1"
     change_str = "4.1,5.1,6.1"
     add_value = 4.1
@@ -534,10 +571,11 @@ class TestPBWEntry(TestListEntry):
     insert_result = "1.1,2.1,4.1,3.1"
     set_result = "1.1,2.1,4.1"
     pop_result = "1.1,3.1"
-    append_result_list = [1.1,2.1,3.1,4.1]
-    insert_result_list = [1.1,2.1,4.1,3.1]
-    set_result_list = [1.1,2.1,4.1]
-    pop_result_list = [1.1,3.1]
+    append_result_list = [1.1, 2.1, 3.1, 4.1]
+    insert_result_list = [1.1, 2.1, 4.1, 3.1]
+    set_result_list = [1.1, 2.1, 4.1]
+    pop_result_list = [1.1, 3.1]
+
     def test_bad_init(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -545,7 +583,7 @@ class TestPBWEntry(TestListEntry):
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_bad_init_from_str(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -561,7 +599,7 @@ class TestPBWEntry(TestListEntry):
             e.append("a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_insert_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -569,7 +607,7 @@ class TestPBWEntry(TestListEntry):
             e.insert(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.isUpdate)
-        
+
     def test_set_bad(self):
         e = self.TestClass()
         e.init(self.baselist)
@@ -577,9 +615,11 @@ class TestPBWEntry(TestListEntry):
             e.set(3, "a")
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.isUpdate)
+
 
 class TestPBSEntry(TestEntryBase):
     TestClass = PBSEntry
+
     def test_init(self):
         e = self.TestClass()
         e.init("1;2")
@@ -589,7 +629,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), str(e.value))
-        
+
     def test_init_comma(self):
         e = self.TestClass()
         e.init("1,2")
@@ -599,7 +639,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), str(e.value))
-        
+
     def test_init_single(self):
         e = self.TestClass()
         e.init("1")
@@ -609,7 +649,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         self.assertEqual(str(e), "1.000")
-        
+
     def test_init_bad_time(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -617,7 +657,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_init_bad_height(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -625,8 +665,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
-        
+
     def test_init_bad_single(self):
         e = self.TestClass()
         with self.assertRaises(ValueError) as cm:
@@ -651,7 +690,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), str(e.value))
-        
+
     def test_change_comma(self):
         e = self.TestClass()
         e.init("1;2")
@@ -668,7 +707,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), str(e.value))
-        
+
     def test_change_to_single(self):
         e = self.TestClass()
         e.init("1;2")
@@ -685,7 +724,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
         self.assertEqual(str(e), "2.000")
-        
+
     def test_change_bad_time(self):
         e = self.TestClass()
         e.init("1;2")
@@ -700,7 +739,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_bad_height(self):
         e = self.TestClass()
         e.init("1;2")
@@ -746,7 +785,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertEqual(2.000, e.height)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        
+
     def test_change_height(self):
         e = self.TestClass()
         e.init("1;2")
@@ -763,7 +802,6 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
 
-        
     def test_change_time_bad(self):
         e = self.TestClass()
         e.init("1;2")
@@ -778,7 +816,7 @@ class TestPBSEntry(TestEntryBase):
         self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_height_bad(self):
         e = self.TestClass()
         e.init("1;2")
@@ -794,29 +832,31 @@ class TestPBSEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
 
+
 class TestEnvelopeEntry(TestEntryBase):
     TestClass = EnvelopeEntry
+
     def test_init_7(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
         self.assertEqual("1.00,2.00,3.00,4,5,6,7", e.value)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_init_9(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7,%,8")
         self.assertEqual("1.00,2.00,3.00,4,5,6,7,%,8.00", e.value)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_init_11(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7,%,8,10,11")
         self.assertEqual("1.00,2.00,3.00,4,5,6,7,%,8.00,10.00,11", e.value)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_value_same_point(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
@@ -827,7 +867,7 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertEqual("2.00,3.00,4.00,5,6,7,8", e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        
+
     def test_change_value_add_point(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
@@ -838,7 +878,7 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertEqual("2.00,3.00,4.00,5,6,7,8,%,9.00,11.00,12", e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        
+
     def test_change_value_minus_point(self):
         e = self.TestClass()
         e.init("2,3,4,5,6,7,8,%,9,11,12")
@@ -849,31 +889,31 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertEqual("1.00,2.00,3.00,4,5,6,7", e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        
+
     def test_init_bad_value(self):
         e = self.TestClass()
         tmps = "1,2,3,4,5,6,7,%,8,10,11".split(",")
         for i in range(len(tmps)):
             if i == 7:
                 continue
-            tmp = ",".join(tmps[:i] + ["a"] + tmps[i+1:])
+            tmp = ",".join(tmps[:i] + ["a"] + tmps[i + 1:])
             with self.assertRaises(ValueError) as cm:
                 e.init(tmp)
             self.assertEqual(cm.exception.args[0], "{} is not envelope pattern".format(tmp))
         self.assertFalse(e.hasValue)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_p(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
         self.assertEqual("1.00,2.00,3.00,4,5,6,7", e.value)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        e.set_p(0,10)
+        e.set_p(0, 10)
         self.assertEqual("10.00,2.00,3.00,4,5,6,7", e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        
+
     def test_change_p_bad_value(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
@@ -881,9 +921,9 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         with self.assertRaises(ValueError):
-            e.set_p(0,"a")
+            e.set_p(0, "a")
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_p_bad_pos(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
@@ -891,20 +931,20 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         with self.assertRaises(IndexError):
-            e.set_p(10,10)
+            e.set_p(10, 10)
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_v(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
         self.assertEqual("1.00,2.00,3.00,4,5,6,7", e.value)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
-        e.set_v(0,10)
+        e.set_v(0, 10)
         self.assertEqual("1.00,2.00,3.00,10,5,6,7", e.value)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
-        
+
     def test_change_v_bad_value(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
@@ -912,9 +952,9 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         with self.assertRaises(ValueError):
-            e.set_v(0,"a")
+            e.set_v(0, "a")
         self.assertFalse(e.isUpdate)
-        
+
     def test_change_v_bad_pos(self):
         e = self.TestClass()
         e.init("1,2,3,4,5,6,7")
@@ -922,8 +962,9 @@ class TestEnvelopeEntry(TestEntryBase):
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
         with self.assertRaises(IndexError):
-            e.set_v(10,10)
+            e.set_v(10, 10)
         self.assertFalse(e.isUpdate)
+
 
 class TestVibratoEntry(TestEntryBase):
     TestClass = VibratoEntry
@@ -978,12 +1019,12 @@ class TestVibratoEntry(TestEntryBase):
         e = self.TestClass()
         tmps = "1,2,3,4,5,6,7".split(",")
         for i in range(len(tmps)):
-            tmp = ",".join(tmps[:i] + ["a"] + tmps[i+1:])
+            tmp = ",".join(tmps[:i] + ["a"] + tmps[i + 1:])
             with self.assertRaises(ValueError) as cm:
                 e.init(tmp)
             self.assertEqual(cm.exception.args[0], "{} is not float".format("a"))
         self.assertFalse(e.hasValue)
 
-        
+
 class TestFlagsEntry(TestStringEntry):
     TestClass = FlagsEntry

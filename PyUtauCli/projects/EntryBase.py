@@ -2,6 +2,7 @@
 各ノートパラメータ設定用のベースクラスを定義します。
 '''
 
+
 class EntryBase:
     '''
     エントリー用のベースクラスです。
@@ -9,7 +10,7 @@ class EntryBase:
     '''
     _isUpdate: bool = False
     _hasValue: bool = False
-    
+
     def _set_update(self):
         self._isUpdate = True
 
@@ -20,7 +21,8 @@ class EntryBase:
     @property
     def hasValue(self) -> bool:
         return self._hasValue
-    
+
+
 class StringEntry(EntryBase):
     '''
     Str型のvalueをもつエントリー用のベースクラスです。
@@ -44,8 +46,8 @@ class StringEntry(EntryBase):
 
     def __str__(self) -> str:
         return self.value
-    
-    
+
+
 class IntEntry(EntryBase):
     '''
     int型のvalueをもつエントリー用のベースクラスです。
@@ -66,7 +68,6 @@ class IntEntry(EntryBase):
         except:
             raise ValueError("{} is not int".format(value))
 
-
     def init(self, value: int):
         try:
             self._value = int(value)
@@ -76,7 +77,8 @@ class IntEntry(EntryBase):
 
     def __str__(self) -> str:
         return str(self.value)
-    
+
+
 class FloatEntry(EntryBase):
     '''
     float型のvalueをもつエントリー用のベースクラスです。
@@ -98,7 +100,6 @@ class FloatEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
 
-
     def init(self, value: float):
         try:
             self._value = float(value)
@@ -107,8 +108,9 @@ class FloatEntry(EntryBase):
             raise ValueError("{} is not float".format(value))
 
     def __str__(self) -> str:
-        return ("{:."+ str(self.point) +"f}").format(self._value)
-    
+        return ("{:." + str(self.point) + "f}").format(self._value)
+
+
 class BoolEntry(EntryBase):
     '''
     bool型のvalueをもつエントリー用のベースクラスです。
@@ -133,6 +135,7 @@ class BoolEntry(EntryBase):
     def __str__(self) -> str:
         return str(self.value)
 
+
 class ListEntry(EntryBase):
     '''
     list型のvalueをもつエントリー用のベースクラスです。
@@ -145,7 +148,7 @@ class ListEntry(EntryBase):
     @property
     def value(self) -> list:
         return self._value
-    
+
     @value.setter
     def value(self, value: list):
         for v in value:
@@ -153,7 +156,7 @@ class ListEntry(EntryBase):
         self._value = value
         self._set_update()
         self._hasValue = True
-        
+
     def _check_value(self, value):
         '''
         Raises
@@ -177,7 +180,7 @@ class ListEntry(EntryBase):
         self._hasValue = True
 
     def __str__(self) -> str:
-        return self.separater.join(map(str,self.value))
+        return self.separater.join(map(str, self.value))
 
     def append(self, value):
         value = self._check_value(value)
