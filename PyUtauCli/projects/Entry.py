@@ -65,6 +65,9 @@ class AtAliasEntry(StringEntry):
 
 class VelocityEntry(IntEntry):
     _value = 100
+    @property
+    def rate(self) -> float:
+        return 2 ** ((100-self._value)/100)
 
 
 class IntensityEntry(IntEntry):

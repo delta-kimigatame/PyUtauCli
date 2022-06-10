@@ -342,6 +342,15 @@ class TestNoteNumEntry(TestIntEntry):
 
 class TestVelocityEntry(TestIntEntry):
     TestClass = VelocityEntry
+    def test_rate(self):
+        e = self.TestClass()
+        e.init(100)
+        self.assertEqual(e.rate, 1)
+        e.value = 0
+        self.assertEqual(e.rate, 2)
+        e.value = 200
+        self.assertEqual(e.rate, 0.5)
+
 
 
 class TestIntensityEntry(TestIntEntry):
