@@ -1,5 +1,9 @@
 ﻿
 from .Entry import *
+from ..voicebank.prefixmap import PrefixMap
+from ..voicebank.oto import Oto
+
+
 class Note:
     '''
     ustやプラグインでのNoteを扱います。
@@ -148,5 +152,174 @@ class Note:
     next: note, default None
         1つ後ろのノートへのポインタ
     '''
+    num: NumberEntry
+    length: LengthEntry
+    lyric: LyricEntry
+    notenum: NoteNumEntry
+    tempo: TempoEntry
+    hasTempo: bool = False
+    pre: PreEntry
+    hasPre: bool = False
+    atPre: AtPreEntry
+    ove: OveEntry
+    hasOve: bool = False
+    atOve: AtOveEntry
+    stp: StpEntry
+    atStp: AtStpEntry
+    atFileName: AtFileNameEntry
+    atAlias: AtAliasEntry
+    velocity: VelocityEntry
+    intensity: IntensityEntry
+    modulation: ModulationEntry
+    pitches: PitchesEntry
+    pbStart: PBStartEntry
+    pbs: PBSEntry
+    pby: PBYEntry
+    pbm: PBMEntry
+    pbw: PBWEntry
+    envelope: EnvelopeEntry
+    vibrato: VibratoEntry
+    label: LabelEntry
+    direct: DirectEntry
+    region: RegionEntry
+    region_end: RegionEndEntry
+    flags: FlagsEntry
+    hasFlags: bool = False
     prev = None
     next = None
+
+    def __init__(self):
+        self.num = NumberEntry()
+        self.length = LengthEntry()
+        self.lyric = LyricEntry()
+        self.notenum = NoteNumEntry()
+        self.tempo = TempoEntry()
+        self.hasTempo = False
+        self.pre = PreEntry()
+        self.hasPre = False
+        self.atPre = AtPreEntry()
+        self.ove = OveEntry()
+        self.hasOve = False
+        self.atOve = AtOveEntry()
+        self.stp = StpEntry()
+        self.atStp = AtStpEntry()
+        self.atFileName = AtFileNameEntry()
+        self.atAlias = AtAliasEntry()
+        self.velocity = VelocityEntry()
+        self.intensity = IntensityEntry()
+        self.modulation = ModulationEntry()
+        self.pitches = PitchesEntry()
+        self.pbStart = PBStartEntry()
+        self.pbs = PBSEntry()
+        self.pby = PBYEntry()
+        self.pbm = PBMEntry()
+        self.pbw = PBWEntry()
+        self.envelope = EnvelopeEntry()
+        self.vibrato = VibratoEntry()
+        self.label = LabelEntry()
+        self.direct = DirectEntry()
+        self.region = RegionEntry()
+        self.region_end = RegionEndEntry()
+        self.flags = FlagsEntry()
+        self.hasFlags = False
+        self.prev = None
+        self.next = None
+
+    def apply_oto(self, oto: Oto, prefix: PrefixMap):
+        '''
+        | 原音設定値を読み込んで、pre,oveを更新します。
+        | もし、パラメータが初期化されていない場合、atPre,atOve,atStp,atAlias,atFileNameも更新します。
+
+        Parameters
+        ----------
+        oto: Oto
+            原音設定ファイル
+
+        prefix: prefixMap
+            エイリアスの推定に使用します。
+
+        Raises
+        ------
+        ValueError
+            lyricもしくはnotenumが初期化されていない場合
+        '''
+        alias: str
+        if not self.lyric.hasValue:
+            raise ValueError "lyric is not initial"
+        if not self.notenum.hasValue:
+            raise ValueError "notenum is not initial"
+
+        alias = self._init_alias(oto, prefix)
+        self._apply_oto_to_pre(alias, oto)
+        self._apply_oto_to_ove(alias, oto)
+        ### TODO 
+        #self.autofit_atparam()
+
+    def _init_alias(self, oto: Oto, prefix: PrefixMap) -> str:
+        '''
+        | 歌詞、音高、prefix.mapを参照してエイリアスを特定します。
+        | 一致する原音設定レコードが見つからない場合、""を返します。
+        | atAliasが値を持っていなかった場合、atAlias,atFileNameを更新します。
+
+        Parameters
+        ----------
+        oto: Oto
+            原音設定ファイル
+
+        prefix: prefixMap
+            エイリアスの推定に使用します。
+
+        Returns
+        -------
+        alias: str, default ""
+        '''
+        if self.atAlias.hasValue:
+            return self.atAlias.value
+        elif oto.haskey(prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix):
+            self.atAlias.value = prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix
+            self.atFileName.value = oto[self.atAlias.value].filename
+            return prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix
+        elif oto.haskey(self.lyric.value):
+            self.atAlias.value = self.lyric.value
+            self.atFileName.value = oto[self.lyric.value].filename
+            return self.lyric.value
+        else:
+            return ""
+
+    def _apply_oto_to_pre(self, alias: str, oto:Oto):
+        '''
+        | 原音設定値を読み込んで、preを更新します。
+        | もしalias=""の場合、0で更新します。
+
+        Parameters
+        ----------
+        alias: str
+            otoのkeyになるエイリアス
+        oto: Oto
+            原音設定ファイル
+        '''
+        if self.pre.hasValue:
+            return
+        if alias = "":
+            self.pre.value = 0
+        else:
+            self.pre.value = oto[alias].pre
+
+    def _apply_oto_to_ove(self, alias: str, oto:Oto):
+        '''
+        | 原音設定値を読み込んで、oveを更新します。
+        | もしalias=""の場合、0で更新します。
+
+        Parameters
+        ----------
+        alias: str
+            otoのkeyになるエイリアス
+        oto: Oto
+            原音設定ファイル
+        '''
+        if self.ove.hasValue:
+            return
+        if alias = "":
+            self.ove.value = 0
+        else:
+            self.ove.value = oto[alias].ove
