@@ -30,9 +30,23 @@ class TempoEntry(FloatEntry):
     _value = 120
     point = 2
 
+    @property
+    def hasValue(self) -> bool:
+        return self._hasValue
+
+    @hasValue.setter
+    def hasValue(self, value: bool):
+        self._hasValue = value
+
 
 class PreEntry(FloatEntry):
-    pass
+    @property
+    def hasValue(self) -> bool:
+        return self._hasValue
+
+    @hasValue.setter
+    def hasValue(self, value: bool):
+        self._hasValue = value
 
 
 class AtPreEntry(FloatEntry):
@@ -40,7 +54,13 @@ class AtPreEntry(FloatEntry):
 
 
 class OveEntry(FloatEntry):
-    pass
+    @property
+    def hasValue(self) -> bool:
+        return self._hasValue
+
+    @hasValue.setter
+    def hasValue(self, value: bool):
+        self._hasValue = value
 
 
 class AtOveEntry(FloatEntry):
@@ -65,9 +85,10 @@ class AtAliasEntry(StringEntry):
 
 class VelocityEntry(IntEntry):
     _value = 100
+
     @property
     def rate(self) -> float:
-        return 2 ** ((100-self._value)/100)
+        return 2 ** ((100 - self._value) / 100)
 
 
 class IntensityEntry(IntEntry):
@@ -410,4 +431,10 @@ class RegionEndEntry(StringEntry):
 
 
 class FlagsEntry(StringEntry):
-    pass
+    @property
+    def hasValue(self) -> bool:
+        return self._hasValue
+
+    @hasValue.setter
+    def hasValue(self, value: bool):
+        self._hasValue = value

@@ -1,9 +1,8 @@
-﻿import sys
-sys.path.append('../')
-
-from .Entry import *
+﻿from voicebank.oto import Oto
 from voicebank.prefixmap import PrefixMap
-from voicebank.oto import Oto
+from .Entry import *
+import sys
+sys.path.append('../')
 
 
 class Note:
@@ -27,14 +26,10 @@ class Note:
     tempo: TempoEntry
         ノートのbpm。
 
-    hasTempo: bool, default False
-        tempoの値が、このノートに設定されたものか、前のノートやプロジェクトのデフォルトから継承されたものかを管理する。
 
     pre: PreEntry
         ノートの先行発声
 
-    hasPre: bool, default False
-        preの値が、このノートに設定されたものか、原音設定値を読み込んだものかを管理する。
 
     atPre: AtPreEntry
         | UTAUのパラメータ自動調整適用後の先行発声値
@@ -49,8 +44,6 @@ class Note:
     ove: OveEntry
         ノートのオーバーラップ値。
 
-    hasOve: bool, default False
-        oveの値が、このノートに設定されたものか、原音設定値を読み込んだものかを管理する。
 
     atOve: AtOveEntry
         | UTAUのパラメータ自動調整適用後のオーバーラップ値
@@ -156,9 +149,6 @@ class Note:
     flags: FlagsEntry
         このノートに適用されるのフラグ
 
-    hasFlags: bool
-        flags値がこのノートに設定されたものか、プロジェクトのデフォルトによるものかを管理する。
-
     prev: Note, default None
         1つ前のノートへのポインタ
 
@@ -170,12 +160,9 @@ class Note:
     lyric: LyricEntry
     notenum: NoteNumEntry
     tempo: TempoEntry
-    hasTempo: bool = False
     pre: PreEntry
-    hasPre: bool = False
     atPre: AtPreEntry
     ove: OveEntry
-    hasOve: bool = False
     atOve: AtOveEntry
     stp: StpEntry
     atStp: AtStpEntry
@@ -197,7 +184,6 @@ class Note:
     region: RegionEntry
     region_end: RegionEndEntry
     flags: FlagsEntry
-    hasFlags: bool = False
     prev = None
     next = None
 
@@ -207,12 +193,9 @@ class Note:
         self.lyric = LyricEntry()
         self.notenum = NoteNumEntry()
         self.tempo = TempoEntry()
-        self.hasTempo = False
         self.pre = PreEntry()
-        self.hasPre = False
         self.atPre = AtPreEntry()
         self.ove = OveEntry()
-        self.hasOve = False
         self.atOve = AtOveEntry()
         self.stp = StpEntry()
         self.atStp = AtStpEntry()
@@ -234,7 +217,6 @@ class Note:
         self.region = RegionEntry()
         self.region_end = RegionEndEntry()
         self.flags = FlagsEntry()
-        self.hasFlags = False
         self.prev = None
         self.next = None
 
@@ -258,9 +240,9 @@ class Note:
         '''
         alias: str
         if not self.lyric.hasValue:
-            raise ValueError ("lyric is not initial")
+            raise ValueError("lyric is not initial")
         if not self.notenum.hasValue:
-            raise ValueError ("notenum is not initial")
+            raise ValueError("notenum is not initial")
 
         alias = self._init_alias(oto, prefix)
         self._apply_oto_to_pre(alias, oto)
@@ -317,6 +299,7 @@ class Note:
             self.pre.value = 0
         else:
             self.pre.value = oto[alias].pre
+        self.pre.hasValue = False
 
     def _apply_oto_to_ove(self, alias: str, oto: Oto):
         '''
@@ -336,6 +319,7 @@ class Note:
             self.ove.value = 0
         else:
             self.ove.value = oto[alias].ove
+        self.ove.hasValue = False
 
     def autofit_atparam(self):
         '''
@@ -390,9 +374,9 @@ class Note:
             tempoもしくはlengthが初期化されていないとき。
         '''
         if not self.length.hasValue:
-            raise ValueError ("length is not initial")
+            raise ValueError("length is not initial")
 
         if not self.tempo.hasValue:
-            raise ValueError ("tempo is not initial")
+            raise ValueError("tempo is not initial")
 
         return int(60 / self.tempo.value * self.length.value / 480 * 1000)
