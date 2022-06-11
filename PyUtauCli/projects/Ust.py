@@ -465,3 +465,4 @@ class Ust:
                 if note.region_end.hasValue:
                     fw.write("$region_end={}\r\n".format(note.region_end.value))
             fw.write("[#TRACKEND]\r\n")
+        self.logger.info("saving ust to:{} complete".format(self.filepath))
