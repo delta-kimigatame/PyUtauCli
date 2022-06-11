@@ -104,8 +104,11 @@ class Ust:
         if not os.path.isfile(self.filepath):
             self.logger.error("{} is not found".format(self.filepath))
             raise FileNotFoundError("{} is not found".format(self.filepath))
+        self.logger.info("{} is found. loading file.".format(self.filepath))
         seek: int = self._load_header()
+        self.logger.info("loading header complete.")
         self._load_note(seek)
+        self.logger.info("loading note complete.notes:{}".format(len(self.notes)))
         for i in range(len(self.notes)):
             if i != 0:
                 self.notes[i].prev = self.notes[i - 1]
@@ -402,6 +405,7 @@ class Ust:
         if filepath != "":
             self.filepath = filepath
         os.makedirs(os.path.split(self.filepath)[0], exist_ok=True)
+        self.logger.info("saving ust to:{}".format(self.filepath))
         with open(self.filepath, "w", encoding=encoding) as fw:
             fw.write("[#VERSION]\r\n")
             fw.write("UST Version{:.1f}\r\n".format(self.version))
