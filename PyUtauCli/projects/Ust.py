@@ -108,8 +108,8 @@ class Ust:
         self._load_note(seek)
         for i in range(len(self.notes)):
             if i != 0:
-                self.notes[i].prev = self.notes[i-1]
-                self.notes[i-1].next = self.notes[i]
+                self.notes[i].prev = self.notes[i - 1]
+                self.notes[i - 1].next = self.notes[i]
 
     def _load_header(self) -> int:
         '''
@@ -214,7 +214,9 @@ class Ust:
                 note = self.notes[-1]
                 note.num.init(line.replace("[", "").replace("]", ""))
                 note.tempo.init(tempo)
+                note.tempo.hasValue = False
                 note.flags.init(self.flags)
+                note.flags.hasValue = False
             elif line.startswith("Length"):
                 try:
                     note.length.init(line.replace("Length=", ""))
@@ -239,14 +241,12 @@ class Ust:
             elif line.startswith("Tempo"):
                 try:
                     note.tempo.init(line.replace("Tempo=", ""))
-                    note.hasTempo = True
                 except Exception as e:
                     self.logger.warn("{} tempo can't init. because {}".format(note.num.value,
                                                                               traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("PreUtterance"):
                 try:
                     note.pre.init(line.replace("PreUtterance=", ""))
-                    note.hasPre = True
                 except Exception as e:
                     self.logger.warn("{} pre can't init. because {}".format(note.num.value,
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
@@ -259,7 +259,6 @@ class Ust:
             elif line.startswith("VoiceOverlap"):
                 try:
                     note.ove.init(line.replace("VoiceOverlap=", ""))
-                    note.hasOve = True
                 except Exception as e:
                     self.logger.warn("{} ove can't init. because {}".format(note.num.value,
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
@@ -350,7 +349,6 @@ class Ust:
             elif line.startswith("Flags"):
                 try:
                     note.flags.init(line.replace("Flags=", ""))
-                    note.hasFlags = True
                 except Exception as e:
                     self.logger.warn("{} Flags can't init. because {}".format(note.num.value,
                                                                               traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
@@ -390,3 +388,76 @@ class Ust:
                 except Exception as e:
                     self.logger.warn("{} $region_end can't init. because {}".format(note.num.value,
                                                                                     traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
+
+    def save(self, filepath: str = "", encoding: str = "cp932"):
+        '''
+        | self.filepathもしくはfilepathにファイルを保存します。
+        | windows版UTAUとの互換性を優先してcp932を優先します。
+
+        Parameters
+        ----------
+        filepath: str, default ""
+        encoding: str, default "cp932"
+        '''
+        if filepath != "":
+            self.filepath = filepath
+        os.makedirs(os.path.split(self.filepath)[0], exist_ok=True)
+        with open(self.filepath, "w", encoding=encoding) as fw:
+            fw.write("[#VERSION]\r\n")
+            fw.write("UST Version{:.1f}\r\n".format(self.version))
+            fw.write("[#SETTING]\r\n")
+            fw.write("Tempo={:.2f}\r\n".format(self.tempo))
+            fw.write("Tracks=1\r\n")
+            fw.write("ProjectName={}\r\n".format(self.project_name))
+            fw.write("VoiceDir={}\r\n".format(self.voice_dir))
+            fw.write("OutFile={}\r\n".format(self.output_file))
+            fw.write("CacheDir={}\r\n".format(self.cache_dir))
+            fw.write("Tool1={}\r\n".format(self.wavtool))
+            fw.write("Tool2={}\r\n".format(self.resamp))
+            fw.write("Mode2={}\r\n".format(self.mode2))
+            for note in self.notes:
+                fw.write("[#{}]\r\n".format(note.num.value))
+                fw.write("Length={}\r\n".format(note.length.value))
+                fw.write("Lyric={}\r\n".format(note.lyric.value))
+                fw.write("NoteNum={}\r\n".format(note.notenum.value))
+                if note.tempo.hasValue:
+                    fw.write("Tempo={}\r\n".format(note.tempo.value))
+                if note.pre.hasValue:
+                    fw.write("PreUtterance={}\r\n".format(note.pre.value))
+                if note.ove.hasValue:
+                    fw.write("VoiceOverlap={}\r\n".format(note.ove.value))
+                if note.stp.hasValue:
+                    fw.write("StartPoint={}\r\n".format(note.stp.value))
+                if note.velocity.hasValue:
+                    fw.write("Velocity={}\r\n".format(note.velocity.value))
+                if note.intensity.hasValue:
+                    fw.write("Intensity={}\r\n".format(note.intensity.value))
+                if note.modulation.hasValue:
+                    fw.write("Modulation={}\r\n".format(note.modulation.value))
+                if note.pitches.hasValue:
+                    fw.write("Pitches={}\r\n".format(note.pitches.value))
+                if note.pbStart.hasValue:
+                    fw.write("PBStart={}\r\n".format(note.pbStart.value))
+                if note.pbs.hasValue:
+                    fw.write("PBS={}\r\n".format(note.pbs.value))
+                if note.pby.hasValue:
+                    fw.write("PBY={}\r\n".format(note.pby.value))
+                if note.pbm.hasValue:
+                    fw.write("PBM={}\r\n".format(note.pbm.value))
+                if note.pbw.hasValue:
+                    fw.write("PBW={}\r\n".format(note.pbw.value))
+                if note.flags.hasValue:
+                    fw.write("Flags={}\r\n".format(note.flags.value))
+                if note.vibrato.hasValue:
+                    fw.write("VBR={}\r\n".format(note.vibrato.value))
+                if note.envelope.hasValue:
+                    fw.write("Envelope={}\r\n".format(note.envelope.value))
+                if note.label.hasValue:
+                    fw.write("Label={}\r\n".format(note.label.value))
+                if note.direct.hasValue:
+                    fw.write("$direct={}\r\n".format(note.direct.value))
+                if note.region.hasValue:
+                    fw.write("$region={}\r\n".format(note.region.value))
+                if note.region_end.hasValue:
+                    fw.write("$region_end={}\r\n".format(note.region_end.value))
+            fw.write("[#TRACKEND]\r\n")
