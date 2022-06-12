@@ -1,7 +1,8 @@
-﻿from voicebank.oto import Oto
+﻿from .Entry import *
 from voicebank.prefixmap import PrefixMap
-from .Entry import *
+from voicebank.oto import Oto
 import sys
+import os. path
 sys.path.append('../')
 
 
@@ -247,8 +248,7 @@ class Note:
         alias = self._init_alias(oto, prefix)
         self._apply_oto_to_pre(alias, oto)
         self._apply_oto_to_ove(alias, oto)
-        # TODO
-        # self.autofit_atparam()
+        self.autofit_atparam()
 
     def _init_alias(self, oto: Oto, prefix: PrefixMap) -> str:
         '''
@@ -272,11 +272,11 @@ class Note:
             return self.atAlias.value
         elif oto.haskey(prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix):
             self.atAlias.value = prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix
-            self.atFileName.value = oto[self.atAlias.value].filename
+            self.atFileName.value = os.path.join(oto[self.atAlias.value].otopath, oto[self.atAlias.value].filename)
             return prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix
         elif oto.haskey(self.lyric.value):
             self.atAlias.value = self.lyric.value
-            self.atFileName.value = oto[self.lyric.value].filename
+            self.atFileName.value = os.path.join(oto[self.lyric.value].otopath, oto[self.lyric.value].filename)
             return self.lyric.value
         else:
             return ""
@@ -344,16 +344,13 @@ class Note:
         realPre: float = self.pre.value * self.velocity.rate
         realOve: float = self.ove.value * self.velocity.rate
         realStp: float = self.stp.value * self.velocity.rate
-        atPre: float
-        atOve: float
-        atStp: float
-        if self.prev.lyric.value == "R":
+        if self.prev.lyric.value != "R":
             prevMsLength /= 2
 
         if prevMsLength < (realPre - realOve):
             self.atPre.value = realPre / (realPre - realOve) * prevMsLength
             self.atOve.value = realOve / (realPre - realOve) * prevMsLength
-            self.atStp.value = realPre - atPre.value + realStp
+            self.atStp.value = realPre - self.atPre.value + realStp
         else:
             self.atPre.value = realPre
             self.atOve.value = realOve

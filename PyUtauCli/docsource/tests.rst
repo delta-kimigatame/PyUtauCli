@@ -20,6 +20,14 @@ tests.test\_entry module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_note module
+-----------------------
+
+.. automodule:: tests.test_note
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_oto module
 ----------------------
 
