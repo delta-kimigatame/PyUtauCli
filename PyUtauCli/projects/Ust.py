@@ -6,6 +6,7 @@ import settings.settings
 import os
 import os.path
 import sys
+import locale
 import re
 import traceback
 from logging import Logger
@@ -71,7 +72,7 @@ class Ust:
     tempo: float
     wavtool: str
     resamp: str
-    flags: str
+    flags: str = ""
     mode2: bool = False
     utf8: bool = False
     notes: list = []
@@ -83,6 +84,7 @@ class Ust:
     def __init__(self, filepath: str, *, logger: Logger = None):
         self.logger = logger or default_logger
         self.filepath = filepath
+        self.notes = []
 
     def load(self, filepath: str = ""):
         '''
@@ -105,19 +107,25 @@ class Ust:
             self.logger.error("{} is not found".format(self.filepath))
             raise FileNotFoundError("{} is not found".format(self.filepath))
         self.logger.info("{} is found. loading file.".format(self.filepath))
-        seek: int = self._load_header()
+        with open(self.filepath, "rb") as fr:
+            data = fr.read()
+        seek: int = self._load_header(data)
         self.logger.info("loading header complete.")
-        self._load_note(seek)
+        self._load_note(data[seek:])
         self.logger.info("loading note complete.notes:{}".format(len(self.notes)))
         for i in range(len(self.notes)):
             if i != 0:
                 self.notes[i].prev = self.notes[i - 1]
                 self.notes[i - 1].next = self.notes[i]
 
-    def _load_header(self) -> int:
+    def _load_header(self, data: bytes) -> int:
         '''
-        | self.filepathのファイルをシステムの文字コードもしくはcp932で1行ずつ読み込み、各パラメータを更新します。
-        | self.filepathが存在することは事前に確認できているものとします。
+        | dataをシステムの文字コードもしくはcp932でデコードを試み、各パラメータを更新します。
+        
+        Parameters
+        ----------
+        data: byte
+            self.filepathをバイナリで読み込んだもの
 
         Returns
         -------
@@ -127,38 +135,37 @@ class Ust:
         Raises
         ------
         UnicodeDecodeError
-            ファイルがシステム既定でもcp932でも開けなかった場合
+            ファイルがシステム既定でもcp932でもデコードできなかった場合
         '''
-        notHeaderReg: re.Pattern = re.compile("\[#([0-9]+|PREV|NEXT)\]")
+        setting_cursor: int = data.find(b"[#SETTING]")
         cursor: int = 0
+        header_lines: list
+        if (setting_cursor == -1):
+            setting_cursor = 1
+        cursor = data[setting_cursor+1:].find(b"[#")
+        cursor += setting_cursor
         try:
-            with open(self.filepath, "r") as fr:
-                cursor = self._load_head_helper(fr, notHeaderReg)
+            header_lines = data[:cursor].decode(locale.getlocale()[1]).replace("\r","").split("\n")
         except:
             try:
-                with open(self.filepath, "r", encoding="cp932") as fr:
-                    cursor = self._load_head_helper(fr, notHeaderReg)
+                header_lines = data[:cursor].decode("cp932").replace("\r","").split("\n")
             except UnicodeDecodeError as e:
-                self.logger.error("can't read {}'s header. because required character encoding is system default or cp932".format(otopath))
-                e.reason = "can't read {}'s header. because required character encoding is system default or cp932".format(otopath)
+                self.logger.error("can't read {}'s header. because required character encoding is system default or cp932".format(self.filepath))
+                e.reason = "can't read {}'s header. because required character encoding is system default or cp932".format(self.filepath)
                 raise e
+        self._load_head_helper(header_lines)
         return cursor
 
-    def _load_head_helper(self, fr, notHeaderReg: re.Pattern) -> int:
-        '''
-        Returns
-        -------
-        cursor: int
-            ヘッダ末尾の位置
-        '''
-
-        cursor: int = 0
-        line: str = fr.readline().replace("\n", "")
-        while not notHeaderReg.fullmatch(line):
+    def _load_head_helper(self, lines):
+        vflag: bool = False
+        for line in lines:
             if line == "[#VERSION]":
-                self.version = float(fr.readline().replace("\n", "").replace("UST Version", ""))
+                vflag = True
+            elif vflag:
+                vflag = False
+                self._version = float(line.replace("UST Version", ""))
             elif line.startswith("Tempo="):
-                self.tempo = line.replace("Tempo=", "")
+                self.tempo = float(line.replace("Tempo=", ""))
             elif line.startswith("Project="):
                 self.project_name = line.replace("Project=", "")
             elif line.startswith("VoiceDir="):
@@ -175,19 +182,15 @@ class Ust:
                 self.flags = line.replace("Flags=", "")
             elif line.startswith("Mode2="):
                 self.mode2 = bool(line.replace("Mode2=", ""))
-            cursor = fr.tell()
-            line = fr.readline().replace("\n", "")
-        return cursor
 
-    def _load_note(self, seek: int):
+    def _load_note(self, data: bytes):
         '''
-        | self.filepathのファイルをcp932もしくはutf-8読み込み、各ノートのパラメータを更新します。
-        | self.filepathが存在することは事前に確認できているものとします。
+        | dataをcp932もしくはutf-8読み込み、各ノートのパラメータを更新します。
 
         Parameters
         ----------
-        seek: int
-            ヘッダの末尾
+        data: byte
+            self.filepathをバイナリで読み込み、ヘッダ部分を除いたもの
 
         Raises
         ------
@@ -195,22 +198,20 @@ class Ust:
             ファイルがcp932でもutf-8でも開けなかった場合
         '''
         lines: list = []
-        tempo: float = self.tempo
-        note: Note = None
         try:
-            with open(self.filepath, "r", encoding="cp932") as fr:
-                fr.seek(seek)
-                lines = fr.read().replace("\r", "").split("\n")
+            lines = data.decode("cp932").replace("\r","").split("\n")
         except:
             try:
-                with open(self.filepath, "r", encoding="utf-8") as fr:
-                    fr.seek(seek)
-                    lines = fr.read().replace("\r", "").split("\n")
+                lines = data.decode("utf-8").replace("\r","").split("\n")
             except UnicodeDecodeError as e:
-                self.logger.error("can't read {}'s body. because required character encoding is cp932 or utf-8".format(otopath))
-                e.reason = "can't read {}'s body. because required character encoding is cp932 or utf-8".format(otopath)
+                self.logger.error("can't read {}'s body. because required character encoding is cp932 or utf-8".format(self.filepath))
+                e.reason = "can't read {}'s body. because required character encoding is cp932 or utf-8".format(self.filepath)
                 raise e
+        self._load_note_helper(lines)
 
+    def _load_note_helper(self, lines: list):
+        tempo: float = self.tempo
+        note: Note = None
         for line in lines:
             if line.startswith("[#"):
                 self.notes.append(Note())
@@ -407,62 +408,62 @@ class Ust:
         os.makedirs(os.path.split(self.filepath)[0], exist_ok=True)
         self.logger.info("saving ust to:{}".format(self.filepath))
         with open(self.filepath, "w", encoding=encoding) as fw:
-            fw.write("[#VERSION]\r\n")
-            fw.write("UST Version{:.1f}\r\n".format(self.version))
-            fw.write("[#SETTING]\r\n")
-            fw.write("Tempo={:.2f}\r\n".format(self.tempo))
-            fw.write("Tracks=1\r\n")
-            fw.write("ProjectName={}\r\n".format(self.project_name))
-            fw.write("VoiceDir={}\r\n".format(self.voice_dir))
-            fw.write("OutFile={}\r\n".format(self.output_file))
-            fw.write("CacheDir={}\r\n".format(self.cache_dir))
-            fw.write("Tool1={}\r\n".format(self.wavtool))
-            fw.write("Tool2={}\r\n".format(self.resamp))
-            fw.write("Mode2={}\r\n".format(self.mode2))
+            fw.write("[#VERSION]\n")
+            fw.write("UST Version{:.1f}\n".format(self.version))
+            fw.write("[#SETTING]\n")
+            fw.write("Tempo={:.2f}\n".format(self.tempo))
+            fw.write("Tracks=1\n")
+            fw.write("ProjectName={}\n".format(self.project_name))
+            fw.write("VoiceDir={}\n".format(self.voice_dir))
+            fw.write("OutFile={}\n".format(self.output_file))
+            fw.write("CacheDir={}\n".format(self.cache_dir))
+            fw.write("Tool1={}\n".format(self.wavtool))
+            fw.write("Tool2={}\n".format(self.resamp))
+            fw.write("Mode2={}\n".format(self.mode2))
             for note in self.notes:
-                fw.write("[#{}]\r\n".format(note.num.value))
-                fw.write("Length={}\r\n".format(note.length.value))
-                fw.write("Lyric={}\r\n".format(note.lyric.value))
-                fw.write("NoteNum={}\r\n".format(note.notenum.value))
+                fw.write("[#{}]\n".format(note.num.value))
+                fw.write("Length={}\n".format(note.length.value))
+                fw.write("Lyric={}\n".format(note.lyric.value))
+                fw.write("NoteNum={}\n".format(note.notenum.value))
                 if note.tempo.hasValue:
-                    fw.write("Tempo={}\r\n".format(note.tempo.value))
+                    fw.write("Tempo={}\n".format(note.tempo.value))
                 if note.pre.hasValue:
-                    fw.write("PreUtterance={}\r\n".format(note.pre.value))
+                    fw.write("PreUtterance={}\n".format(note.pre.value))
                 if note.ove.hasValue:
-                    fw.write("VoiceOverlap={}\r\n".format(note.ove.value))
+                    fw.write("VoiceOverlap={}\n".format(note.ove.value))
                 if note.stp.hasValue:
-                    fw.write("StartPoint={}\r\n".format(note.stp.value))
+                    fw.write("StartPoint={}\n".format(note.stp.value))
                 if note.velocity.hasValue:
-                    fw.write("Velocity={}\r\n".format(note.velocity.value))
+                    fw.write("Velocity={}\n".format(note.velocity.value))
                 if note.intensity.hasValue:
-                    fw.write("Intensity={}\r\n".format(note.intensity.value))
+                    fw.write("Intensity={}\n".format(note.intensity.value))
                 if note.modulation.hasValue:
-                    fw.write("Modulation={}\r\n".format(note.modulation.value))
+                    fw.write("Modulation={}\n".format(note.modulation.value))
                 if note.pitches.hasValue:
-                    fw.write("Pitches={}\r\n".format(note.pitches.value))
+                    fw.write("Pitches={}\n".format(note.pitches.value))
                 if note.pbStart.hasValue:
-                    fw.write("PBStart={}\r\n".format(note.pbStart.value))
+                    fw.write("PBStart={}\n".format(note.pbStart.value))
                 if note.pbs.hasValue:
-                    fw.write("PBS={}\r\n".format(note.pbs.value))
+                    fw.write("PBS={}\n".format(note.pbs.value))
                 if note.pby.hasValue:
-                    fw.write("PBY={}\r\n".format(note.pby.value))
+                    fw.write("PBY={}\n".format(note.pby.value))
                 if note.pbm.hasValue:
-                    fw.write("PBM={}\r\n".format(note.pbm.value))
+                    fw.write("PBM={}\n".format(note.pbm.value))
                 if note.pbw.hasValue:
-                    fw.write("PBW={}\r\n".format(note.pbw.value))
+                    fw.write("PBW={}\n".format(note.pbw.value))
                 if note.flags.hasValue:
-                    fw.write("Flags={}\r\n".format(note.flags.value))
+                    fw.write("Flags={}\n".format(note.flags.value))
                 if note.vibrato.hasValue:
-                    fw.write("VBR={}\r\n".format(note.vibrato.value))
+                    fw.write("VBR={}\n".format(note.vibrato.value))
                 if note.envelope.hasValue:
-                    fw.write("Envelope={}\r\n".format(note.envelope.value))
+                    fw.write("Envelope={}\n".format(note.envelope.value))
                 if note.label.hasValue:
-                    fw.write("Label={}\r\n".format(note.label.value))
+                    fw.write("Label={}\n".format(note.label.value))
                 if note.direct.hasValue:
-                    fw.write("$direct={}\r\n".format(note.direct.value))
+                    fw.write("$direct={}\n".format(note.direct.value))
                 if note.region.hasValue:
-                    fw.write("$region={}\r\n".format(note.region.value))
+                    fw.write("$region={}\n".format(note.region.value))
                 if note.region_end.hasValue:
-                    fw.write("$region_end={}\r\n".format(note.region_end.value))
-            fw.write("[#TRACKEND]\r\n")
+                    fw.write("$region_end={}\n".format(note.region_end.value))
+            fw.write("[#TRACKEND]\n")
         self.logger.info("saving ust to:{} complete".format(self.filepath))
