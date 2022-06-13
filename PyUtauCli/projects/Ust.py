@@ -65,13 +65,13 @@ class Ust:
 
     filepath: str
     _version: float = 1.2
-    project_name: str
-    voice_dir: str
-    cache_dir: str
-    output_file: str
-    tempo: float
-    wavtool: str
-    resamp: str
+    project_name: str = ""
+    voice_dir: str = ""
+    cache_dir: str = ""
+    output_file: str = ""
+    tempo: float = 120.0
+    wavtool: str = ""
+    resamp: str = ""
     flags: str = ""
     mode2: bool = False
     utf8: bool = False
@@ -410,7 +410,8 @@ class Ust:
         '''
         if filepath != "":
             self.filepath = filepath
-        os.makedirs(os.path.split(self.filepath)[0], exist_ok=True)
+        if os.path.split(self.filepath)[0] !="":
+            os.makedirs(os.path.split(self.filepath)[0], exist_ok=True)
         self.logger.info("saving ust to:{}".format(self.filepath))
         with open(self.filepath, "w", encoding=encoding) as fw:
             fw.write("[#VERSION]\n")
@@ -418,57 +419,60 @@ class Ust:
             fw.write("[#SETTING]\n")
             fw.write("Tempo={:.2f}\n".format(self.tempo))
             fw.write("Tracks=1\n")
-            fw.write("ProjectName={}\n".format(self.project_name))
+            fw.write("Project={}\n".format(self.project_name))
             fw.write("VoiceDir={}\n".format(self.voice_dir))
             fw.write("OutFile={}\n".format(self.output_file))
             fw.write("CacheDir={}\n".format(self.cache_dir))
             fw.write("Tool1={}\n".format(self.wavtool))
             fw.write("Tool2={}\n".format(self.resamp))
+            fw.write("Flags={}\n".format(self.flags))
             fw.write("Mode2={}\n".format(self.mode2))
             for note in self.notes:
-                fw.write("[#{}]\n".format(note.num.value))
-                fw.write("Length={}\n".format(note.length.value))
-                fw.write("Lyric={}\n".format(note.lyric.value))
-                fw.write("NoteNum={}\n".format(note.notenum.value))
+                fw.write("[{}]\n".format(str(note.num)))
+                fw.write("Length={}\n".format(str(note.length)))
+                fw.write("Lyric={}\n".format(str(note.lyric)))
+                fw.write("NoteNum={}\n".format(str(note.notenum.value)))
                 if note.tempo.hasValue:
-                    fw.write("Tempo={}\n".format(note.tempo.value))
+                    fw.write("Tempo={}\n".format(str(note.tempo)))
                 if note.pre.hasValue:
-                    fw.write("PreUtterance={}\n".format(note.pre.value))
+                    fw.write("PreUtterance={}\n".format(str(note.pre)))
+                else:
+                    fw.write("PreUtterance=\n")
                 if note.ove.hasValue:
-                    fw.write("VoiceOverlap={}\n".format(note.ove.value))
+                    fw.write("VoiceOverlap={}\n".format(str(note.ove)))
                 if note.stp.hasValue:
-                    fw.write("StartPoint={}\n".format(note.stp.value))
+                    fw.write("StartPoint={}\n".format(str(note.stp)))
                 if note.velocity.hasValue:
-                    fw.write("Velocity={}\n".format(note.velocity.value))
+                    fw.write("Velocity={}\n".format(str(note.velocity)))
                 if note.intensity.hasValue:
-                    fw.write("Intensity={}\n".format(note.intensity.value))
+                    fw.write("Intensity={}\n".format(str(note.intensity)))
                 if note.modulation.hasValue:
-                    fw.write("Modulation={}\n".format(note.modulation.value))
+                    fw.write("Modulation={}\n".format(str(note.modulation)))
                 if note.pitches.hasValue:
-                    fw.write("Pitches={}\n".format(note.pitches.value))
+                    fw.write("Pitches={}\n".format(str(note.pitches)))
                 if note.pbStart.hasValue:
-                    fw.write("PBStart={}\n".format(note.pbStart.value))
+                    fw.write("PBStart={}\n".format(str(note.pbStart)))
                 if note.pbs.hasValue:
-                    fw.write("PBS={}\n".format(note.pbs.value))
+                    fw.write("PBS={}\n".format(str(note.pbs)))
                 if note.pby.hasValue:
-                    fw.write("PBY={}\n".format(note.pby.value))
+                    fw.write("PBY={}\n".format(str(note.pby)))
                 if note.pbm.hasValue:
-                    fw.write("PBM={}\n".format(note.pbm.value))
+                    fw.write("PBM={}\n".format(str(note.pbm)))
                 if note.pbw.hasValue:
-                    fw.write("PBW={}\n".format(note.pbw.value))
+                    fw.write("PBW={}\n".format(str(note.pbw)))
                 if note.flags.hasValue:
-                    fw.write("Flags={}\n".format(note.flags.value))
+                    fw.write("Flags={}\n".format(str(note.flags)))
                 if note.vibrato.hasValue:
-                    fw.write("VBR={}\n".format(note.vibrato.value))
+                    fw.write("VBR={}\n".format(str(note.vibrato)))
                 if note.envelope.hasValue:
-                    fw.write("Envelope={}\n".format(note.envelope.value))
+                    fw.write("Envelope={}\n".format(str(note.envelope)))
                 if note.label.hasValue:
-                    fw.write("Label={}\n".format(note.label.value))
+                    fw.write("Label={}\n".format(str(note.label)))
                 if note.direct.hasValue:
-                    fw.write("$direct={}\n".format(note.direct.value))
+                    fw.write("$direct={}\n".format(str(note.direct)))
                 if note.region.hasValue:
-                    fw.write("$region={}\n".format(note.region.value))
+                    fw.write("$region={}\n".format(str(note.region)))
                 if note.region_end.hasValue:
-                    fw.write("$region_end={}\n".format(note.region_end.value))
+                    fw.write("$region_end={}\n".format(str(note.region_end)))
             fw.write("[#TRACKEND]\n")
         self.logger.info("saving ust to:{} complete".format(self.filepath))

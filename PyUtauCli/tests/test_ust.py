@@ -80,43 +80,42 @@ class TestUstInputEncoding(unittest.TestCase):
         self.assertEqual(ust.wavtool, "wavtool.exe")
         self.assertEqual(ust.resamp, "resamp.exe")
         self.assertEqual(ust.flags, "B50")
-        self.assertTrue(ust.mode2)
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_cp932_injapan_utf8(self):
         locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_cp932_inother_locale(self):
         locale.setlocale(locale.LC_CTYPE,"zh_TW")
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_cp932_utf8_injapan_win(self):
         locale.setlocale(locale.LC_CTYPE,"japanese")
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_cp932_utf8_injapan_utf8(self):
         locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_cp932_utf8_inother_locale(self):
         locale.setlocale(locale.LC_CTYPE,"zh_TW")
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
 
     def test_load_cp932_otherlocale_injapan_win(self):
         locale.setlocale(locale.LC_CTYPE,"japanese")
@@ -168,7 +167,7 @@ class TestUstInputEncoding(unittest.TestCase):
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_otherlocale_utf8_injapan_win(self):
         locale.setlocale(locale.LC_CTYPE,"japanese")
@@ -193,7 +192,7 @@ class TestUstInputEncoding(unittest.TestCase):
         ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
         
     def test_load_utf8_cp932_injapan_win(self):
         locale.setlocale(locale.LC_CTYPE,"japanese")
@@ -209,7 +208,7 @@ class TestUstInputEncoding(unittest.TestCase):
         ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
 
     def test_load_utf8_cp932_inother_locale(self):
         locale.setlocale(locale.LC_CTYPE,"zh_TW")
@@ -235,7 +234,7 @@ class TestUstInputEncoding(unittest.TestCase):
         ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
-        self.assertEqual(logcm.output[3], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
+        self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
 
     def test_load_utf8_utf8_inother_locale(self):
         locale.setlocale(locale.LC_CTYPE,"zh_TW")
@@ -734,3 +733,119 @@ class TestLoadNote(unittest.TestCase):
         self.assertFalse(self.ust.notes[2].tempo.hasValue)
         self.assertEqual(self.ust.notes[2].flags.value, "B50")
         self.assertFalse(self.ust.notes[2].flags.hasValue)
+
+class TestWrite(unittest.TestCase):
+    @mock.patch("os.path.isfile")
+    def test_write(self, mock_isfile):
+        mock_isfile.return_value = True
+        self.test_logger = settings.logger.get_logger("TEST", True)
+        self.ust = projects.Ust.Ust("testpath", logger=self.test_logger)
+        test_header = ["[#VERSION]",
+                       "UST Version1.2",
+                       "[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#0000]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        test_note2 = ["[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "Tempo=120",
+                     "PreUtterance=1",
+                     "@preuttr=2",
+                     "VoiceOverlap=3",
+                     "@overlap=4",
+                     "StartPoint=5",
+                     "@stpoint=6",
+                     "@filename=filepath",
+                     "@alias=あ_C4",
+                     "Velocity=150",
+                     "Intensity=80",
+                     "Modulation=30",
+                     "Pitches=0,1,2,3",
+                     "PBStart=-10.0",
+                     "PBS=-5;3",
+                     "PBY=1,2,3",
+                     "PBW=10,20,30,40",
+                     "PBM=,s,r,j,",
+                     "Flags=g-5",
+                     "VBR=1,2,3,4,5,6,7,8",
+                     "Envelope=9,10,11,12,13,14,15,%,16,17,18",
+                     "Label=aa",
+                     "$direct=True",
+                     "$region=1番",
+                     "$region_end=イントロ",
+                     ]
+        test_note3 = ["[#0002]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note+test_note2+test_note3 + ["[#TRACKEND]"]).encode("cp932")
+        mock_io = mock.mock_open(read_data=data)
+        with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
+            with mock.patch("builtins.open", mock_io) as mocked_open:
+                self.ust.load()
+                self.ust.save()
+        self.assertEqual(mock_io().write.call_args_list[0][0][0], "[#VERSION]\n")
+        self.assertEqual(mock_io().write.call_args_list[1][0][0], "UST Version1.2\n")
+        self.assertEqual(mock_io().write.call_args_list[2][0][0], "[#SETTING]\n")
+        self.assertEqual(mock_io().write.call_args_list[3][0][0], "Tempo=150.00\n")
+        self.assertEqual(mock_io().write.call_args_list[4][0][0], "Tracks=1\n")
+        self.assertEqual(mock_io().write.call_args_list[5][0][0], "Project=test\n")
+        self.assertEqual(mock_io().write.call_args_list[6][0][0], "VoiceDir=%VOICE%aaa\n")
+        self.assertEqual(mock_io().write.call_args_list[7][0][0], "OutFile=output.wav\n")
+        self.assertEqual(mock_io().write.call_args_list[8][0][0], "CacheDir=main__.cache\n")
+        self.assertEqual(mock_io().write.call_args_list[9][0][0], "Tool1=wavtool.exe\n")
+        self.assertEqual(mock_io().write.call_args_list[10][0][0], "Tool2=resamp.exe\n")
+        self.assertEqual(mock_io().write.call_args_list[11][0][0], "Flags=B50\n")
+        self.assertEqual(mock_io().write.call_args_list[12][0][0], "Mode2=True\n")
+        self.assertEqual(mock_io().write.call_args_list[13][0][0], "[#0000]\n")
+        self.assertEqual(mock_io().write.call_args_list[14][0][0], "Length=1920\n")
+        self.assertEqual(mock_io().write.call_args_list[15][0][0], "Lyric=あ\n")
+        self.assertEqual(mock_io().write.call_args_list[16][0][0], "NoteNum=60\n")
+        self.assertEqual(mock_io().write.call_args_list[17][0][0], "PreUtterance=\n")
+        self.assertEqual(mock_io().write.call_args_list[18][0][0], "[#0001]\n")
+        self.assertEqual(mock_io().write.call_args_list[19][0][0], "Length=1920\n")
+        self.assertEqual(mock_io().write.call_args_list[20][0][0], "Lyric=あ\n")
+        self.assertEqual(mock_io().write.call_args_list[21][0][0], "NoteNum=60\n")
+        self.assertEqual(mock_io().write.call_args_list[22][0][0], "Tempo=120.00\n")
+        self.assertEqual(mock_io().write.call_args_list[23][0][0], "PreUtterance=1.000\n")
+        self.assertEqual(mock_io().write.call_args_list[24][0][0], "VoiceOverlap=3.000\n")
+        self.assertEqual(mock_io().write.call_args_list[25][0][0], "StartPoint=5.000\n")
+        self.assertEqual(mock_io().write.call_args_list[26][0][0], "Velocity=150\n")
+        self.assertEqual(mock_io().write.call_args_list[27][0][0], "Intensity=80\n")
+        self.assertEqual(mock_io().write.call_args_list[28][0][0], "Modulation=30\n")
+        self.assertEqual(mock_io().write.call_args_list[29][0][0], "Pitches=0,1,2,3\n")
+        self.assertEqual(mock_io().write.call_args_list[30][0][0], "PBStart=-10.000\n")
+        self.assertEqual(mock_io().write.call_args_list[31][0][0], "PBS=-5;3\n")
+        self.assertEqual(mock_io().write.call_args_list[32][0][0], "PBY=1.0,2.0,3.0\n")
+        self.assertEqual(mock_io().write.call_args_list[33][0][0], "PBM=,s,r,j,\n")
+        self.assertEqual(mock_io().write.call_args_list[34][0][0], "PBW=10.0,20.0,30.0,40.0\n")
+        self.assertEqual(mock_io().write.call_args_list[35][0][0], "Flags=g-5\n")
+        self.assertEqual(mock_io().write.call_args_list[36][0][0], "VBR=1.00,2.00,3.00,4.00,5.00,6.00,7.00,8.00\n")
+        self.assertEqual(mock_io().write.call_args_list[37][0][0], "Envelope=9.00,10.00,11.00,12,13,14,15,%,16.00,17.00,18\n")
+        self.assertEqual(mock_io().write.call_args_list[38][0][0], "Label=aa\n")
+        self.assertEqual(mock_io().write.call_args_list[39][0][0], "$direct=True\n")
+        self.assertEqual(mock_io().write.call_args_list[40][0][0], "$region=1番\n")
+        self.assertEqual(mock_io().write.call_args_list[41][0][0], "$region_end=イントロ\n")
+        self.assertEqual(mock_io().write.call_args_list[42][0][0], "[#0002]\n")
+        self.assertEqual(mock_io().write.call_args_list[43][0][0], "Length=1920\n")
+        self.assertEqual(mock_io().write.call_args_list[44][0][0], "Lyric=あ\n")
+        self.assertEqual(mock_io().write.call_args_list[45][0][0], "NoteNum=60\n")
+        self.assertEqual(mock_io().write.call_args_list[46][0][0], "PreUtterance=\n")
+        self.assertEqual(mock_io().write.call_args_list[47][0][0], "[#TRACKEND]\n")
+        self.assertEqual(len(logcm.output), 5)
+        self.assertEqual(logcm.output[4], "INFO:TEST:saving ust to:{} complete".format(self.ust.filepath))
