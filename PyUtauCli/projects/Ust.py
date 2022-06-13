@@ -214,7 +214,9 @@ class Ust:
         tempo: float = self.tempo
         note: Note = None
         for line in lines:
-            if line.startswith("[#"):
+            if line == "[#TRACKEND]":
+                continue
+            elif line.startswith("[#"):
                 self.notes.append(Note())
                 note = self.notes[-1]
                 note.num.init(line.replace("[", "").replace("]", ""))
@@ -246,12 +248,14 @@ class Ust:
             elif line.startswith("Tempo"):
                 try:
                     note.tempo.init(line.replace("Tempo=", ""))
+                    tempo = note.tempo.value
                 except Exception as e:
                     self.logger.warn("{} tempo can't init. because {}".format(note.num.value,
                                                                               traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("PreUtterance"):
                 try:
-                    note.pre.init(line.replace("PreUtterance=", ""))
+                    if line.replace("PreUtterance=", "") != "":
+                        note.pre.init(line.replace("PreUtterance=", ""))
                 except Exception as e:
                     self.logger.warn("{} pre can't init. because {}".format(note.num.value,
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
@@ -317,7 +321,7 @@ class Ust:
                                                                                    traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("Pitches"):
                 try:
-                    note.pitches.init(line.replace("Pitches=", ""))
+                    note.pitches.init_from_str(line.replace("Pitches=", ""))
                 except Exception as e:
                     self.logger.warn("{} Pitches can't init. because {}".format(note.num.value,
                                                                                 traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
@@ -335,19 +339,19 @@ class Ust:
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("PBY"):
                 try:
-                    note.pby.init(line.replace("PBY=", ""))
+                    note.pby.init_from_str(line.replace("PBY=", ""))
                 except Exception as e:
                     self.logger.warn("{} PBY can't init. because {}".format(note.num.value,
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("PBM"):
                 try:
-                    note.pbm.init(line.replace("PBM=", ""))
+                    note.pbm.init_from_str(line.replace("PBM=", ""))
                 except Exception as e:
                     self.logger.warn("{} PBM can't init. because {}".format(note.num.value,
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("PBW"):
                 try:
-                    note.pbw.init(line.replace("PBW=", ""))
+                    note.pbw.init_from_str(line.replace("PBW=", ""))
                 except Exception as e:
                     self.logger.warn("{} PBW can't init. because {}".format(note.num.value,
                                                                             traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
@@ -381,13 +385,13 @@ class Ust:
                 except Exception as e:
                     self.logger.warn("{} $direct can't init. because {}".format(note.num.value,
                                                                                 traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
-            elif line.startswith("$region"):
+            elif line.startswith("$region="):
                 try:
                     note.region.init(line.replace("$region=", ""))
                 except Exception as e:
                     self.logger.warn("{} $region can't init. because {}".format(note.num.value,
                                                                                 traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
-            elif line.startswith("$region_end"):
+            elif line.startswith("$region_end="):
                 try:
                     note.region_end.init(line.replace("$region_end=", ""))
                 except Exception as e:
