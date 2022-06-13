@@ -52,6 +52,14 @@ tests.test\_settings module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_ust module
+----------------------
+
+.. automodule:: tests.test_ust
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_voicebank module
 ----------------------------
 

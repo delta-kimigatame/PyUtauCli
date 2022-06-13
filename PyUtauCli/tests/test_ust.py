@@ -16,8 +16,9 @@ import locale
 import projects.Ust
 import settings.logger
 
-def _make_test_ust(filename, header_encoding, body_encoding, lyric ="あ",voice="音源名"):
-    with open(filename, "w", encoding = header_encoding) as fw:
+
+def _make_test_ust(filename, header_encoding, body_encoding, lyric="あ", voice="音源名"):
+    with open(filename, "w", encoding=header_encoding) as fw:
         fw.write("[#VERSION]\n")
         fw.write("UST Version1.2\n")
         fw.write("[#SETTING]\n")
@@ -32,44 +33,45 @@ def _make_test_ust(filename, header_encoding, body_encoding, lyric ="あ",voice=
         fw.write("Flags=B50\n")
         fw.write("Mode2=True\n")
 
-    with open(filename, "a", encoding = body_encoding) as fw:
+    with open(filename, "a", encoding=body_encoding) as fw:
         fw.write("[#0000]\n")
         fw.write("Length=1920\n")
         fw.write("Lyric={}\n".format(lyric))
         fw.write("NoteNum=60\n")
         fw.write("PreUtterance=\n")
 
+
 class TestUstInputEncoding(unittest.TestCase):
     def setUp(self):
-        if os.path.isdir(os.path.join("testdata","ust")):
-            shutil.rmtree(os.path.join("testdata","ust"))
-        os.makedirs(os.path.join("testdata","ust"), exist_ok=True)
-        _make_test_ust(os.path.join("testdata","ust","cp932-cp932.ust"), "cp932", "cp932")
-        _make_test_ust(os.path.join("testdata","ust","cp932-utf8.ust"), "cp932", "utf-8")
-        _make_test_ust(os.path.join("testdata","ust","cp932-cp950.ust"), "cp932", "cp950",lyric=b"\xf0\xfe".decode("cp950"))
-        _make_test_ust(os.path.join("testdata","ust","cp950-cp932.ust"), "cp950", "cp932",voice=b"\xf0\xfe".decode("cp950"))
-        _make_test_ust(os.path.join("testdata","ust","cp950-utf8.ust"), "cp950", "utf-8",voice=b"\xf0\xfe".decode("cp950"))
-        _make_test_ust(os.path.join("testdata","ust","utf8-cp932.ust"), "utf-8", "cp932",voice="音源")
-        _make_test_ust(os.path.join("testdata","ust","utf8-utf8.ust"), "utf-8", "utf-8",voice="音源",lyric="音源")
+        if os.path.isdir(os.path.join("testdata", "ust")):
+            shutil.rmtree(os.path.join("testdata", "ust"))
+        os.makedirs(os.path.join("testdata", "ust"), exist_ok=True)
+        _make_test_ust(os.path.join("testdata", "ust", "cp932-cp932.ust"), "cp932", "cp932")
+        _make_test_ust(os.path.join("testdata", "ust", "cp932-utf8.ust"), "cp932", "utf-8")
+        _make_test_ust(os.path.join("testdata", "ust", "cp932-cp950.ust"), "cp932", "cp950", lyric=b"\xf0\xfe".decode("cp950"))
+        _make_test_ust(os.path.join("testdata", "ust", "cp950-cp932.ust"), "cp950", "cp932", voice=b"\xf0\xfe".decode("cp950"))
+        _make_test_ust(os.path.join("testdata", "ust", "cp950-utf8.ust"), "cp950", "utf-8", voice=b"\xf0\xfe".decode("cp950"))
+        _make_test_ust(os.path.join("testdata", "ust", "utf8-cp932.ust"), "utf-8", "cp932", voice="音源")
+        _make_test_ust(os.path.join("testdata", "ust", "utf8-utf8.ust"), "utf-8", "utf-8", voice="音源", lyric="音源")
         self.test_logger = settings.logger.get_logger("TEST", True)
 
     def test_init(self):
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"))
-        self.assertEqual(ust.filepath, os.path.join("testdata","ust","cp932-cp932.ust"))
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp932.ust"))
+        self.assertEqual(ust.filepath, os.path.join("testdata", "ust", "cp932-cp932.ust"))
         self.assertEqual(ust.version, 1.2)
         self.assertFalse(ust.mode2)
 
     def test_load_not_found_file(self):
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"), logger=self.test_logger)
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(FileNotFoundError) as cm:
-                ust.load(os.path.join("testdata","ust","notfound.ust"))
+                ust.load(os.path.join("testdata", "ust", "notfound.ust"))
         self.assertEqual(cm.exception.args[0], "{} is not found".format(ust.filepath))
         self.assertEqual(logcm.output[0], "ERROR:TEST:{} is not found".format(ust.filepath))
 
     def test_load_cp932_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(ust.tempo, 150)
@@ -81,170 +83,177 @@ class TestUstInputEncoding(unittest.TestCase):
         self.assertEqual(ust.resamp, "resamp.exe")
         self.assertEqual(ust.flags, "B50")
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_cp932_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_cp932_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_cp932_utf8_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_cp932_utf8_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_cp932_utf8_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
 
     def test_load_cp932_otherlocale_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp950.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp950.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s body. because required character encoding is cp932 or utf-8".format(ust.filepath))
         self.assertEqual(logcm.output[2], "ERROR:TEST:can't read {}'s body. because required character encoding is cp932 or utf-8".format(ust.filepath))
-        
+
     def test_load_cp932_otherlocale_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp950.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp950.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s body. because required character encoding is cp932 or utf-8".format(ust.filepath))
         self.assertEqual(logcm.output[2], "ERROR:TEST:can't read {}'s body. because required character encoding is cp932 or utf-8".format(ust.filepath))
-        
+
     def test_load_cp932_otherlocale_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp932-cp950.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp932-cp950.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s body. because required character encoding is cp932 or utf-8".format(ust.filepath))
         self.assertEqual(logcm.output[2], "ERROR:TEST:can't read {}'s body. because required character encoding is cp932 or utf-8".format(ust.filepath))
-        
+
     def test_load_otherlocale_cp932_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp950-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
 
     def test_load_otherlocale_cp932_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp950-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+
     def test_load_otherlocale_cp932_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp950-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_otherlocale_utf8_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp950-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
 
     def test_load_otherlocale_utf8_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp950-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+
     def test_load_otherlocale_utf8_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","cp950-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "cp950-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
-        
+
     def test_load_utf8_cp932_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "utf8-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+
     def test_load_utf8_cp932_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "utf8-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
 
     def test_load_utf8_cp932_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-cp932.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "utf8-cp932.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        
-        
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+
     def test_load_utf8_utf8_injapan_win(self):
-        locale.setlocale(locale.LC_CTYPE,"japanese")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "japanese")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "utf8-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-            
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+
     def test_load_utf8_utf8_injapan_utf8(self):
-        locale.setlocale(locale.LC_CTYPE,"ja_JP.utf8")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "ja_JP.utf8")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "utf8-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             ust.load()
         self.assertEqual(logcm.output[2], "INFO:TEST:loading note complete.notes:1".format(ust.filepath))
 
     def test_load_utf8_utf8_inother_locale(self):
-        locale.setlocale(locale.LC_CTYPE,"zh_TW")
-        ust = projects.Ust.Ust(os.path.join("testdata","ust","utf8-utf8.ust"), logger=self.test_logger)
+        locale.setlocale(locale.LC_CTYPE, "zh_TW")
+        ust = projects.Ust.Ust(os.path.join("testdata", "ust", "utf8-utf8.ust"), logger=self.test_logger)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with self.assertRaises(UnicodeDecodeError) as cm:
                 ust.load()
         self.assertEqual(cm.exception.reason, "can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        self.assertEqual(logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
-        
+        self.assertEqual(
+            logcm.output[1], "ERROR:TEST:can't read {}'s header. because required character encoding is system default or cp932".format(ust.filepath))
+
     def tearDown(self):
         if os.path.isdir(os.path.join("testdata")):
             shutil.rmtree(os.path.join("testdata"))
@@ -291,7 +300,6 @@ class TestLoadHeader(unittest.TestCase):
         self.assertEqual(self.ust.resamp, "resamp.exe")
         self.assertEqual(self.ust.flags, "B50")
         self.assertTrue(self.ust.mode2)
-        
 
     def test_no_version(self):
         test_header = ["[#SETTING]",
@@ -328,7 +336,7 @@ class TestLoadHeader(unittest.TestCase):
         self.assertEqual(self.ust.resamp, "resamp.exe")
         self.assertEqual(self.ust.flags, "B50")
         self.assertTrue(self.ust.mode2)
-        
+
     def test_no_setting(self):
         test_header = ["[#VERSION]",
                        "UST Version1.2"]
@@ -345,8 +353,7 @@ class TestLoadHeader(unittest.TestCase):
         data = "\n".join(test_header + test_note).encode("cp932")
         header = "\n".join(test_header).encode("cp932")
         cursor = self.ust._load_header(data)
-        
-        
+
     def test_no_header(self):
         test_header = []
         test_note = ["[#0000]",
@@ -362,7 +369,7 @@ class TestLoadHeader(unittest.TestCase):
         data = "\n".join(test_header + test_note).encode("cp932")
         header = "\n".join(test_header).encode("cp932")
         cursor = self.ust._load_header(data)
-        
+
     def test_simple_start_prev(self):
         test_header = ["[#VERSION]",
                        "UST Version1.2",
@@ -400,7 +407,7 @@ class TestLoadHeader(unittest.TestCase):
         self.assertEqual(self.ust.resamp, "resamp.exe")
         self.assertEqual(self.ust.flags, "B50")
         self.assertTrue(self.ust.mode2)
-        
+
     def test_simple_start_delete(self):
         test_header = ["[#VERSION]",
                        "UST Version1.2",
@@ -472,7 +479,8 @@ class TestLoadHeader(unittest.TestCase):
         self.assertEqual(self.ust.resamp, "resamp.exe")
         self.assertEqual(self.ust.flags, "B50")
         self.assertTrue(self.ust.mode2)
-        
+
+
 class TestLoadNote(unittest.TestCase):
     def setUp(self):
         self.test_logger = settings.logger.get_logger("TEST", True)
@@ -571,7 +579,6 @@ class TestLoadNote(unittest.TestCase):
         self.assertEqual(self.ust.notes[0].region.value, "1番")
         self.assertEqual(self.ust.notes[0].region_end.value, "イントロ")
 
-        
     def test_fully_error_note(self):
         '''
         エラーが出ることと、処理が止まらないことを確認する。
@@ -611,28 +618,28 @@ class TestLoadNote(unittest.TestCase):
             self.ust._load_note(data)
         self.assertEqual(len(self.ust.notes), 1)
         self.assertEqual(self.ust.notes[0].num.value, "#0000")
-        self.assertEqual(logcm.output[0],"WARNING:TEST:#0000 length can't init. because ValueError: a is not int")
-        self.assertEqual(logcm.output[1],"WARNING:TEST:#0000 notenum can't init. because ValueError: b is not int")
-        self.assertEqual(logcm.output[2],"WARNING:TEST:#0000 tempo can't init. because ValueError: c is not float")
+        self.assertEqual(logcm.output[0], "WARNING:TEST:#0000 length can't init. because ValueError: a is not int")
+        self.assertEqual(logcm.output[1], "WARNING:TEST:#0000 notenum can't init. because ValueError: b is not int")
+        self.assertEqual(logcm.output[2], "WARNING:TEST:#0000 tempo can't init. because ValueError: c is not float")
         self.assertEqual(self.ust.notes[0].tempo.value, 150)
         self.assertFalse(self.ust.notes[0].tempo.hasValue)
-        self.assertEqual(logcm.output[3],"WARNING:TEST:#0000 pre can't init. because ValueError: d is not float")
-        self.assertEqual(logcm.output[4],"WARNING:TEST:#0000 @preuttr can't init. because ValueError: e is not float")
-        self.assertEqual(logcm.output[5],"WARNING:TEST:#0000 ove can't init. because ValueError: f is not float")
-        self.assertEqual(logcm.output[6],"WARNING:TEST:#0000 @overlap can't init. because ValueError: g is not float")
-        self.assertEqual(logcm.output[7],"WARNING:TEST:#0000 stp can't init. because ValueError: h is not float")
-        self.assertEqual(logcm.output[8],"WARNING:TEST:#0000 @stpoint can't init. because ValueError: i is not float")
-        self.assertEqual(logcm.output[9],"WARNING:TEST:#0000 Velocity can't init. because ValueError: j is not int")
-        self.assertEqual(logcm.output[10],"WARNING:TEST:#0000 Intensity can't init. because ValueError: k is not int")
-        self.assertEqual(logcm.output[11],"WARNING:TEST:#0000 Modulation can't init. because ValueError: l is not int")
-        self.assertEqual(logcm.output[12],"WARNING:TEST:#0000 Pitches can't init. because ValueError: m is not int")
-        self.assertEqual(logcm.output[13],"WARNING:TEST:#0000 PBStart can't init. because ValueError: n is not float")
-        self.assertEqual(logcm.output[14],"WARNING:TEST:#0000 PBS can't init. because ValueError: o is not float")
-        self.assertEqual(logcm.output[15],"WARNING:TEST:#0000 PBY can't init. because ValueError: p is not float")
-        self.assertEqual(logcm.output[16],"WARNING:TEST:#0000 PBW can't init. because ValueError: q is not float")
-        self.assertEqual(logcm.output[17],"WARNING:TEST:#0000 PBM can't init. because ValueError: t is not '',s,r,j")
-        self.assertEqual(logcm.output[18],"WARNING:TEST:#0000 VBR can't init. because ValueError: r is not float")
-        self.assertEqual(logcm.output[19],"WARNING:TEST:#0000 Envelope can't init. because ValueError: s is not envelope pattern")
+        self.assertEqual(logcm.output[3], "WARNING:TEST:#0000 pre can't init. because ValueError: d is not float")
+        self.assertEqual(logcm.output[4], "WARNING:TEST:#0000 @preuttr can't init. because ValueError: e is not float")
+        self.assertEqual(logcm.output[5], "WARNING:TEST:#0000 ove can't init. because ValueError: f is not float")
+        self.assertEqual(logcm.output[6], "WARNING:TEST:#0000 @overlap can't init. because ValueError: g is not float")
+        self.assertEqual(logcm.output[7], "WARNING:TEST:#0000 stp can't init. because ValueError: h is not float")
+        self.assertEqual(logcm.output[8], "WARNING:TEST:#0000 @stpoint can't init. because ValueError: i is not float")
+        self.assertEqual(logcm.output[9], "WARNING:TEST:#0000 Velocity can't init. because ValueError: j is not int")
+        self.assertEqual(logcm.output[10], "WARNING:TEST:#0000 Intensity can't init. because ValueError: k is not int")
+        self.assertEqual(logcm.output[11], "WARNING:TEST:#0000 Modulation can't init. because ValueError: l is not int")
+        self.assertEqual(logcm.output[12], "WARNING:TEST:#0000 Pitches can't init. because ValueError: m is not int")
+        self.assertEqual(logcm.output[13], "WARNING:TEST:#0000 PBStart can't init. because ValueError: n is not float")
+        self.assertEqual(logcm.output[14], "WARNING:TEST:#0000 PBS can't init. because ValueError: o is not float")
+        self.assertEqual(logcm.output[15], "WARNING:TEST:#0000 PBY can't init. because ValueError: p is not float")
+        self.assertEqual(logcm.output[16], "WARNING:TEST:#0000 PBW can't init. because ValueError: q is not float")
+        self.assertEqual(logcm.output[17], "WARNING:TEST:#0000 PBM can't init. because ValueError: t is not '',s,r,j")
+        self.assertEqual(logcm.output[18], "WARNING:TEST:#0000 VBR can't init. because ValueError: r is not float")
+        self.assertEqual(logcm.output[19], "WARNING:TEST:#0000 Envelope can't init. because ValueError: s is not envelope pattern")
         self.assertEqual(len(logcm.output), 20)
 
     def test_3notes(self):
@@ -642,41 +649,41 @@ class TestLoadNote(unittest.TestCase):
                      "NoteNum=60",
                      "PreUtterance="]
         test_note2 = ["[#0001]",
-                     "Length=1920",
-                     "Lyric={}".format("あ"),
-                     "NoteNum=60",
-                     "Tempo=120",
-                     "PreUtterance=1",
-                     "@preuttr=2",
-                     "VoiceOverlap=3",
-                     "@overlap=4",
-                     "StartPoint=5",
-                     "@stpoint=6",
-                     "@filename=filepath",
-                     "@alias=あ_C4",
-                     "Velocity=150",
-                     "Intensity=80",
-                     "Modulation=30",
-                     "Pitches=0,1,2,3",
-                     "PBStart=-10.0",
-                     "PBS=-5;3",
-                     "PBY=1,2,3",
-                     "PBW=10,20,30,40",
-                     "PBM=,s,r,j,",
-                     "Flags=g-5",
-                     "VBR=1,2,3,4,5,6,7,8",
-                     "Envelope=9,10,11,12,13,14,15,%,16,17,18",
-                     "Label=aa",
-                     "$direct=True",
-                     "$region=1番",
-                     "$region_end=イントロ",
-                     ]
+                      "Length=1920",
+                      "Lyric={}".format("あ"),
+                      "NoteNum=60",
+                      "Tempo=120",
+                      "PreUtterance=1",
+                      "@preuttr=2",
+                      "VoiceOverlap=3",
+                      "@overlap=4",
+                      "StartPoint=5",
+                      "@stpoint=6",
+                      "@filename=filepath",
+                      "@alias=あ_C4",
+                      "Velocity=150",
+                      "Intensity=80",
+                      "Modulation=30",
+                      "Pitches=0,1,2,3",
+                      "PBStart=-10.0",
+                      "PBS=-5;3",
+                      "PBY=1,2,3",
+                      "PBW=10,20,30,40",
+                      "PBM=,s,r,j,",
+                      "Flags=g-5",
+                      "VBR=1,2,3,4,5,6,7,8",
+                      "Envelope=9,10,11,12,13,14,15,%,16,17,18",
+                      "Label=aa",
+                      "$direct=True",
+                      "$region=1番",
+                      "$region_end=イントロ",
+                      ]
         test_note3 = ["[#0002]",
-                     "Length=1920",
-                     "Lyric={}".format("あ"),
-                     "NoteNum=60",
-                     "PreUtterance="]
-        data = "\n".join(test_note+test_note2+test_note3 + ["[#TRACKEND]"]).encode("cp932")
+                      "Length=1920",
+                      "Lyric={}".format("あ"),
+                      "NoteNum=60",
+                      "PreUtterance="]
+        data = "\n".join(test_note + test_note2 + test_note3 + ["[#TRACKEND]"]).encode("cp932")
         self.ust._load_note(data)
         self.assertEqual(len(self.ust.notes), 3)
         self.assertEqual(self.ust.notes[0].num.value, "#0000")
@@ -734,6 +741,7 @@ class TestLoadNote(unittest.TestCase):
         self.assertEqual(self.ust.notes[2].flags.value, "B50")
         self.assertFalse(self.ust.notes[2].flags.hasValue)
 
+
 class TestWrite(unittest.TestCase):
     @mock.patch("os.path.isfile")
     def test_write(self, mock_isfile):
@@ -759,41 +767,41 @@ class TestWrite(unittest.TestCase):
                      "NoteNum=60",
                      "PreUtterance="]
         test_note2 = ["[#0001]",
-                     "Length=1920",
-                     "Lyric={}".format("あ"),
-                     "NoteNum=60",
-                     "Tempo=120",
-                     "PreUtterance=1",
-                     "@preuttr=2",
-                     "VoiceOverlap=3",
-                     "@overlap=4",
-                     "StartPoint=5",
-                     "@stpoint=6",
-                     "@filename=filepath",
-                     "@alias=あ_C4",
-                     "Velocity=150",
-                     "Intensity=80",
-                     "Modulation=30",
-                     "Pitches=0,1,2,3",
-                     "PBStart=-10.0",
-                     "PBS=-5;3",
-                     "PBY=1,2,3",
-                     "PBW=10,20,30,40",
-                     "PBM=,s,r,j,",
-                     "Flags=g-5",
-                     "VBR=1,2,3,4,5,6,7,8",
-                     "Envelope=9,10,11,12,13,14,15,%,16,17,18",
-                     "Label=aa",
-                     "$direct=True",
-                     "$region=1番",
-                     "$region_end=イントロ",
-                     ]
+                      "Length=1920",
+                      "Lyric={}".format("あ"),
+                      "NoteNum=60",
+                      "Tempo=120",
+                      "PreUtterance=1",
+                      "@preuttr=2",
+                      "VoiceOverlap=3",
+                      "@overlap=4",
+                      "StartPoint=5",
+                      "@stpoint=6",
+                      "@filename=filepath",
+                      "@alias=あ_C4",
+                      "Velocity=150",
+                      "Intensity=80",
+                      "Modulation=30",
+                      "Pitches=0,1,2,3",
+                      "PBStart=-10.0",
+                      "PBS=-5;3",
+                      "PBY=1,2,3",
+                      "PBW=10,20,30,40",
+                      "PBM=,s,r,j,",
+                      "Flags=g-5",
+                      "VBR=1,2,3,4,5,6,7,8",
+                      "Envelope=9,10,11,12,13,14,15,%,16,17,18",
+                      "Label=aa",
+                      "$direct=True",
+                      "$region=1番",
+                      "$region_end=イントロ",
+                      ]
         test_note3 = ["[#0002]",
-                     "Length=1920",
-                     "Lyric={}".format("あ"),
-                     "NoteNum=60",
-                     "PreUtterance="]
-        data = "\n".join(test_header + test_note+test_note2+test_note3 + ["[#TRACKEND]"]).encode("cp932")
+                      "Length=1920",
+                      "Lyric={}".format("あ"),
+                      "NoteNum=60",
+                      "PreUtterance="]
+        data = "\n".join(test_header + test_note + test_note2 + test_note3 + ["[#TRACKEND]"]).encode("cp932")
         mock_io = mock.mock_open(read_data=data)
         with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
             with mock.patch("builtins.open", mock_io) as mocked_open:

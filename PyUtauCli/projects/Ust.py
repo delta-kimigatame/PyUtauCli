@@ -121,7 +121,7 @@ class Ust:
     def _load_header(self, data: bytes) -> int:
         '''
         | dataをシステムの文字コードもしくはcp932でデコードを試み、各パラメータを更新します。
-        
+
         Parameters
         ----------
         data: byte
@@ -143,13 +143,13 @@ class Ust:
         header_lines: list
         if (setting_cursor == -1 and version_cursor == -1):
             setting_cursor = 0
-        cursor = data[setting_cursor+1:].find(b"[#")
+        cursor = data[setting_cursor + 1:].find(b"[#")
         cursor += setting_cursor
         try:
-            header_lines = data[:cursor].decode(locale.getlocale()[1]).replace("\r","").split("\n")
+            header_lines = data[:cursor].decode(locale.getlocale()[1]).replace("\r", "").split("\n")
         except:
             try:
-                header_lines = data[:cursor].decode("cp932").replace("\r","").split("\n")
+                header_lines = data[:cursor].decode("cp932").replace("\r", "").split("\n")
             except UnicodeDecodeError as e:
                 self.logger.error("can't read {}'s header. because required character encoding is system default or cp932".format(self.filepath))
                 e.reason = "can't read {}'s header. because required character encoding is system default or cp932".format(self.filepath)
@@ -200,10 +200,10 @@ class Ust:
         '''
         lines: list = []
         try:
-            lines = data.decode("cp932").replace("\r","").split("\n")
+            lines = data.decode("cp932").replace("\r", "").split("\n")
         except:
             try:
-                lines = data.decode("utf-8").replace("\r","").split("\n")
+                lines = data.decode("utf-8").replace("\r", "").split("\n")
             except UnicodeDecodeError as e:
                 self.logger.error("can't read {}'s body. because required character encoding is cp932 or utf-8".format(self.filepath))
                 e.reason = "can't read {}'s body. because required character encoding is cp932 or utf-8".format(self.filepath)
@@ -410,7 +410,7 @@ class Ust:
         '''
         if filepath != "":
             self.filepath = filepath
-        if os.path.split(self.filepath)[0] !="":
+        if os.path.split(self.filepath)[0] != "":
             os.makedirs(os.path.split(self.filepath)[0], exist_ok=True)
         self.logger.info("saving ust to:{}".format(self.filepath))
         with open(self.filepath, "w", encoding=encoding) as fw:
