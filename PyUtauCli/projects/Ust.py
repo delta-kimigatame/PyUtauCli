@@ -137,11 +137,12 @@ class Ust:
         UnicodeDecodeError
             ファイルがシステム既定でもcp932でもデコードできなかった場合
         '''
+        version_cursor: int = data.find(b"[#VERSION]")
         setting_cursor: int = data.find(b"[#SETTING]")
         cursor: int = 0
         header_lines: list
-        if (setting_cursor == -1):
-            setting_cursor = 1
+        if (setting_cursor == -1 and version_cursor == -1):
+            setting_cursor = 0
         cursor = data[setting_cursor+1:].find(b"[#")
         cursor += setting_cursor
         try:

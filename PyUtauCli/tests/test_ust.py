@@ -39,7 +39,7 @@ def _make_test_ust(filename, header_encoding, body_encoding, lyric ="あ",voice=
         fw.write("NoteNum=60\n")
         fw.write("PreUtterance=\n")
 
-class TestUstInput(unittest.TestCase):
+class TestUstInputEncoding(unittest.TestCase):
     def setUp(self):
         if os.path.isdir(os.path.join("testdata","ust")):
             shutil.rmtree(os.path.join("testdata","ust"))
@@ -249,3 +249,228 @@ class TestUstInput(unittest.TestCase):
     def tearDown(self):
         if os.path.isdir(os.path.join("testdata")):
             shutil.rmtree(os.path.join("testdata"))
+
+
+class TestLoadHeader(unittest.TestCase):
+    def setUp(self):
+        self.ust = projects.Ust.Ust("testpath")
+
+    def test_simple(self):
+        test_header = ["[#VERSION]",
+                       "UST Version1.2",
+                       "[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#0000]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance=",
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        self.assertEqual(cursor, len(header))
+        self.assertEqual(self.ust.tempo, 150)
+        self.assertEqual(self.ust.project_name, "test")
+        self.assertEqual(self.ust.voice_dir, "%VOICE%aaa")
+        self.assertEqual(self.ust.output_file, "output.wav")
+        self.assertEqual(self.ust.cache_dir, "main__.cache")
+        self.assertEqual(self.ust.wavtool, "wavtool.exe")
+        self.assertEqual(self.ust.resamp, "resamp.exe")
+        self.assertEqual(self.ust.flags, "B50")
+        self.assertTrue(self.ust.mode2)
+        
+
+    def test_no_version(self):
+        test_header = ["[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#0000]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance=",
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        self.assertEqual(cursor, len(header))
+        self.assertEqual(self.ust.tempo, 150)
+        self.assertEqual(self.ust.project_name, "test")
+        self.assertEqual(self.ust.voice_dir, "%VOICE%aaa")
+        self.assertEqual(self.ust.output_file, "output.wav")
+        self.assertEqual(self.ust.cache_dir, "main__.cache")
+        self.assertEqual(self.ust.wavtool, "wavtool.exe")
+        self.assertEqual(self.ust.resamp, "resamp.exe")
+        self.assertEqual(self.ust.flags, "B50")
+        self.assertTrue(self.ust.mode2)
+        
+    def test_no_setting(self):
+        test_header = ["[#VERSION]",
+                       "UST Version1.2"]
+        test_note = ["[#0000]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance=",
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        
+        
+    def test_no_header(self):
+        test_header = []
+        test_note = ["[#0000]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance=",
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        
+    def test_simple_start_prev(self):
+        test_header = ["[#VERSION]",
+                       "UST Version1.2",
+                       "[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#PREV]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance=",
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        self.assertEqual(cursor, len(header))
+        self.assertEqual(self.ust.tempo, 150)
+        self.assertEqual(self.ust.project_name, "test")
+        self.assertEqual(self.ust.voice_dir, "%VOICE%aaa")
+        self.assertEqual(self.ust.output_file, "output.wav")
+        self.assertEqual(self.ust.cache_dir, "main__.cache")
+        self.assertEqual(self.ust.wavtool, "wavtool.exe")
+        self.assertEqual(self.ust.resamp, "resamp.exe")
+        self.assertEqual(self.ust.flags, "B50")
+        self.assertTrue(self.ust.mode2)
+        
+    def test_simple_start_delete(self):
+        test_header = ["[#VERSION]",
+                       "UST Version1.2",
+                       "[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#DELETE]"
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        self.assertEqual(cursor, len(header))
+        self.assertEqual(self.ust.tempo, 150)
+        self.assertEqual(self.ust.project_name, "test")
+        self.assertEqual(self.ust.voice_dir, "%VOICE%aaa")
+        self.assertEqual(self.ust.output_file, "output.wav")
+        self.assertEqual(self.ust.cache_dir, "main__.cache")
+        self.assertEqual(self.ust.wavtool, "wavtool.exe")
+        self.assertEqual(self.ust.resamp, "resamp.exe")
+        self.assertEqual(self.ust.flags, "B50")
+        self.assertTrue(self.ust.mode2)
+
+    def test_simple_start_insert(self):
+        test_header = ["[#VERSION]",
+                       "UST Version1.2",
+                       "[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#INSERT]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance=",
+                     "[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note).encode("cp932")
+        header = "\n".join(test_header).encode("cp932")
+        cursor = self.ust._load_header(data)
+        self.assertEqual(cursor, len(header))
+        self.assertEqual(self.ust.tempo, 150)
+        self.assertEqual(self.ust.project_name, "test")
+        self.assertEqual(self.ust.voice_dir, "%VOICE%aaa")
+        self.assertEqual(self.ust.output_file, "output.wav")
+        self.assertEqual(self.ust.cache_dir, "main__.cache")
+        self.assertEqual(self.ust.wavtool, "wavtool.exe")
+        self.assertEqual(self.ust.resamp, "resamp.exe")
+        self.assertEqual(self.ust.flags, "B50")
+        self.assertTrue(self.ust.mode2)
+        
