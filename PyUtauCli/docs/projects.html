@@ -1218,6 +1218,38 @@
 </section>
 <section id="module-projects.UtauPlugin">
 <span id="projects-utauplugin-module"></span><h2>projects.UtauPlugin module<a class="headerlink" href="#module-projects.UtauPlugin" title="このヘッドラインへのパーマリンク"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.UtauPlugin.UtauPlugin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.UtauPlugin.</span></span><span class="sig-name descname"><span class="pre">UtauPlugin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">logging.Logger</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.UtauPlugin.UtauPlugin" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#projects.Ust.Ust" title="projects.Ust.Ust"><code class="xref py py-class docutils literal notranslate"><span class="pre">projects.Ust.Ust</span></code></a></p>
+<div class="line-block">
+<div class="line">UTAUのプラグイン用一時ファイルを扱います。</div>
+<div class="line">ほぼ、Ustと共通の仕様ですが、主に書き出しに関する仕様が異なります。</div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.UtauPlugin.UtauPlugin.filepath">
+<span class="sig-name descname"><span class="pre">filepath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#projects.UtauPlugin.UtauPlugin.filepath" title="この定義へのパーマリンク"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="projects.UtauPlugin.UtauPlugin.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cp932'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.UtauPlugin.UtauPlugin.save" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">self.filepathもしくはfilepathにファイルを保存します。</div>
+<div class="line">windows版UTAUとの互換性を優先してcp932を優先します。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em><em>, </em><em>default &quot;&quot;</em>) -- </p></li>
+<li><p><strong>encoding</strong> (<em>str</em><em>, </em><em>default &quot;cp932&quot;</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-projects">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-projects" title="このヘッドラインへのパーマリンク"></a></h2>
