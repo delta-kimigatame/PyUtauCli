@@ -741,6 +741,52 @@ class TestLoadNote(unittest.TestCase):
         self.assertEqual(self.ust.notes[2].flags.value, "B50")
         self.assertFalse(self.ust.notes[2].flags.hasValue)
 
+class TestLoadAll(unittest.TestCase):
+    @mock.patch("os.path.isfile")
+    def test_write(self, mock_isfile):
+        mock_isfile.return_value = True
+        self.test_logger = settings.logger.get_logger("TEST", True)
+        self.ust = projects.Ust.Ust("testpath", logger=self.test_logger)
+        test_header = ["[#VERSION]",
+                       "UST Version1.2",
+                       "[#SETTING]",
+                       "Tempo=150.00",
+                       "Tracks=1",
+                       "Project=test",
+                       "VoiceDir=%VOICE%{}".format("aaa"),
+                       "OutFile=output.wav",
+                       "CacheDir=main__.cache",
+                       "Tool1=wavtool.exe",
+                       "Tool2=resamp.exe",
+                       "Flags=B50",
+                       "Mode2=True"]
+        test_note = ["[#0000]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        test_note2 = ["[#0001]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        test_note3 = ["[#0002]",
+                     "Length=1920",
+                     "Lyric={}".format("あ"),
+                     "NoteNum=60",
+                     "PreUtterance="]
+        data = "\n".join(test_header + test_note + test_note2 + test_note3 + ["[#TRACKEND]"]).encode("cp932")
+        mock_io = mock.mock_open(read_data=data)
+        with self.assertLogs(logger=self.test_logger, level=logging.DEBUG) as logcm:
+            with mock.patch("builtins.open", mock_io) as mocked_open:
+                self.ust.load()
+                self.ust.save()
+        self.assertIsNone(self.ust.notes[0].prev)
+        self.assertEqual(self.ust.notes[1].prev, self.ust.notes[0])
+        self.assertEqual(self.ust.notes[2].prev, self.ust.notes[1])
+        self.assertIsNone(self.ust.notes[2].next)
+        self.assertEqual(self.ust.notes[1].next, self.ust.notes[2])
+        self.assertEqual(self.ust.notes[0].next, self.ust.notes[1])
 
 class TestWrite(unittest.TestCase):
     @mock.patch("os.path.isfile")
