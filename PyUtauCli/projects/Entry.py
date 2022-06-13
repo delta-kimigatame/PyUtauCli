@@ -297,6 +297,7 @@ class VibratoEntry(EntryBase):
     _fadeOutTime: float
     _phase: float
     _height: float
+    _amp: float
     _value: str
     separater: str = ","
 
@@ -329,14 +330,19 @@ class VibratoEntry(EntryBase):
         return self._height
 
     @property
+    def amp(self) -> float:
+        return self._amp
+
+    @property
     def value(self) -> str:
-        return "{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}".format(self._length,
+        return "{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}".format(self._length,
                                                                          self._cycle,
                                                                          self._depth,
                                                                          self._fadeInTime,
                                                                          self._fadeOutTime,
                                                                          self._phase,
-                                                                         self._height)
+                                                                         self._height,
+                                                                         self._amp)
 
     @length.setter
     def length(self, value: float):
@@ -393,6 +399,14 @@ class VibratoEntry(EntryBase):
         except:
             raise ValueError("{} is not float".format(value))
         self._set_update()
+        
+    @amp.setter
+    def amp(self, value: float):
+        try:
+            self._amp = float(value)
+        except:
+            raise ValueError("{} is not float".format(value))
+        self._set_update()
 
     @value.setter
     def value(self, value: str):
@@ -404,6 +418,7 @@ class VibratoEntry(EntryBase):
         self.fadeOutTime = values[4]
         self.phase = values[5]
         self.height = values[6]
+        self.amp = values[7]
         self._hasValue = True
 
     def init(self, value: str):

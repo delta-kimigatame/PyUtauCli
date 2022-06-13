@@ -980,8 +980,8 @@ class TestVibratoEntry(TestEntryBase):
 
     def test_init(self):
         e = self.TestClass()
-        e.init("1,2,3,4,5,6,7")
-        self.assertEqual("1.00,2.00,3.00,4.00,5.00,6.00,7.00", e.value)
+        e.init("1,2,3,4,5,6,7,8")
+        self.assertEqual("1.00,2.00,3.00,4.00,5.00,6.00,7.00,8.00", e.value)
         self.assertEqual(e.length, 1.00)
         self.assertEqual(e.cycle, 2.00)
         self.assertEqual(e.depth, 3.00)
@@ -989,13 +989,14 @@ class TestVibratoEntry(TestEntryBase):
         self.assertEqual(e.fadeOutTime, 5.00)
         self.assertEqual(e.phase, 6.00)
         self.assertEqual(e.height, 7.00)
+        self.assertEqual(e.amp, 8.00)
         self.assertTrue(e.hasValue)
         self.assertFalse(e.isUpdate)
 
     def test_set(self):
         e = self.TestClass()
-        e.value = "1,2,3,4,5,6,7"
-        self.assertEqual("1.00,2.00,3.00,4.00,5.00,6.00,7.00", e.value)
+        e.value = "1,2,3,4,5,6,7,8"
+        self.assertEqual("1.00,2.00,3.00,4.00,5.00,6.00,7.00,8.00", e.value)
         self.assertEqual(e.length, 1.00)
         self.assertEqual(e.cycle, 2.00)
         self.assertEqual(e.depth, 3.00)
@@ -1003,14 +1004,15 @@ class TestVibratoEntry(TestEntryBase):
         self.assertEqual(e.fadeOutTime, 5.00)
         self.assertEqual(e.phase, 6.00)
         self.assertEqual(e.height, 7.00)
+        self.assertEqual(e.amp, 8.00)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
 
     def test_change(self):
         e = self.TestClass()
-        e.init("1,2,3,4,5,6,7")
-        e.value = "2,3,4,5,6,7,8"
-        self.assertEqual("2.00,3.00,4.00,5.00,6.00,7.00,8.00", e.value)
+        e.init("1,2,3,4,5,6,7,8")
+        e.value = "2,3,4,5,6,7,8,9"
+        self.assertEqual("2.00,3.00,4.00,5.00,6.00,7.00,8.00,9.00", e.value)
         self.assertEqual(e.length, 2.00)
         self.assertEqual(e.cycle, 3.00)
         self.assertEqual(e.depth, 4.00)
@@ -1018,6 +1020,7 @@ class TestVibratoEntry(TestEntryBase):
         self.assertEqual(e.fadeOutTime, 6.00)
         self.assertEqual(e.phase, 7.00)
         self.assertEqual(e.height, 8.00)
+        self.assertEqual(e.amp, 9.00)
         self.assertTrue(e.hasValue)
         self.assertTrue(e.isUpdate)
 
@@ -1026,7 +1029,7 @@ class TestVibratoEntry(TestEntryBase):
         valueのset時に、各プロパティのsetを呼び出しているため、個別のテスト省略
         '''
         e = self.TestClass()
-        tmps = "1,2,3,4,5,6,7".split(",")
+        tmps = "1,2,3,4,5,6,7,8".split(",")
         for i in range(len(tmps)):
             tmp = ",".join(tmps[:i] + ["a"] + tmps[i + 1:])
             with self.assertRaises(ValueError) as cm:
