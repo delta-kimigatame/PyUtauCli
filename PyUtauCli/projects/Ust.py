@@ -1,16 +1,15 @@
-﻿from voicebank.oto import Oto
-from voicebank.prefixmap import PrefixMap
-from .Note import Note
-import settings.logger
-import settings.settings
-import os
+﻿import os
 import os.path
-import sys
 import locale
 import re
 import traceback
 from logging import Logger
-sys.path.append('../')
+
+from voicebank.oto import Oto
+from voicebank.prefixmap import PrefixMap
+from .Note import Note
+import settings.logger
+import settings.settings
 
 
 default_logger = settings.logger.get_logger(__name__, False)

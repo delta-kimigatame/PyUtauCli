@@ -1,9 +1,8 @@
-﻿from .Entry import *
+﻿import os. path
+
+from .Entry import *
 from voicebank.prefixmap import PrefixMap
 from voicebank.oto import Oto
-import sys
-import os. path
-sys.path.append('../')
 
 
 class Note:

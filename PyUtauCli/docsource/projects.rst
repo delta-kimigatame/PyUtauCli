@@ -36,6 +36,14 @@ projects.Ust module
    :undoc-members:
    :show-inheritance:
 
+projects.UtauPlugin module
+--------------------------
+
+.. automodule:: projects.UtauPlugin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
