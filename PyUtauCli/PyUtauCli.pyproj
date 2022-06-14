@@ -55,6 +55,9 @@
     <Compile Include="settings\settings.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tmp.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="settings\win_utau.py">
       <SubType>Code</SubType>
     </Compile>

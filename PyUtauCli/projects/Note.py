@@ -372,7 +372,7 @@ class Note:
         if not self.length.hasValue:
             raise ValueError("length is not initial")
 
-        if not self.tempo.hasValue:
-            raise ValueError("tempo is not initial")
+        #if not self.tempo.hasValue:
+        #    raise ValueError("tempo is not initial")
 
         return int(60 / self.tempo.value * self.length.value / 480 * 1000)
