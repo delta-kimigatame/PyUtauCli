@@ -82,6 +82,9 @@
     <Compile Include="tests\test_ust.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_utauplugin.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_voicebank.py">
       <SubType>Code</SubType>
     </Compile>
