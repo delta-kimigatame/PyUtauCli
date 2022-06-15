@@ -9,4 +9,5 @@ PyUtauCli
    projects
    settings
    tests
+   tmp
    voicebank

@@ -60,6 +60,14 @@ tests.test\_ust module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_utauplugin module
+-----------------------------
+
+.. automodule:: tests.test_utauplugin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_voicebank module
 ----------------------------
 

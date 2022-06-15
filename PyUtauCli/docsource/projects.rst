@@ -28,6 +28,14 @@ projects.Note module
    :undoc-members:
    :show-inheritance:
 
+projects.RenderNote module
+--------------------------
+
+.. automodule:: projects.RenderNote
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 projects.Ust module
 -------------------
 

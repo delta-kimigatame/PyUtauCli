@@ -1,0 +1,20 @@
+2022-06-15 20:30:47,838 projects.Ust:108 load [INFO]: D:\80.ust\ピカピカ\main.ust is found. loading file.
+2022-06-15 20:30:47,843 projects.Ust:112 load [INFO]: loading header complete.
+2022-06-15 20:30:47,856 projects.Ust:114 load [INFO]: loading note complete.notes:608
+2022-06-15 20:30:47,856 voicebank.voicebank:120 is_utau_voicebank [INFO]: D:\voice\仄歌エリー4音階連続音-パッションフルーツ- is found. checking directory
+2022-06-15 20:30:47,857 voicebank.voicebank:123 is_utau_voicebank [INFO]: character.txt is found.
+2022-06-15 20:30:47,858 voicebank.voicebank:120 is_utau_voicebank [INFO]: D:\voice\仄歌エリー4音階連続音-パッションフルーツ- is found. checking directory
+2022-06-15 20:30:47,858 voicebank.voicebank:123 is_utau_voicebank [INFO]: character.txt is found.
+2022-06-15 20:30:47,862 voicebank.voicebank:77 __init__ [INFO]: character.txt is loaded. VBName:仄歌エリー
+2022-06-15 20:30:47,879 voicebank.voicebank:84 __init__ [INFO]: oto.ini is loaded.files 6, records 5281
+2022-06-15 20:30:47,881 voicebank.voicebank:90 __init__ [INFO]: prefix.map is loaded
+2022-06-15 20:31:37,795 projects.Ust:108 load [INFO]: D:\80.ust\ピカピカ\main.ust is found. loading file.
+2022-06-15 20:31:37,796 projects.Ust:112 load [INFO]: loading header complete.
+2022-06-15 20:31:37,807 projects.Ust:114 load [INFO]: loading note complete.notes:608
+2022-06-15 20:31:37,808 voicebank.voicebank:120 is_utau_voicebank [INFO]: D:\voice\仄歌エリー4音階連続音-パッションフルーツ- is found. checking directory
+2022-06-15 20:31:37,808 voicebank.voicebank:123 is_utau_voicebank [INFO]: character.txt is found.
+2022-06-15 20:31:37,809 voicebank.voicebank:120 is_utau_voicebank [INFO]: D:\voice\仄歌エリー4音階連続音-パッションフルーツ- is found. checking directory
+2022-06-15 20:31:37,809 voicebank.voicebank:123 is_utau_voicebank [INFO]: character.txt is found.
+2022-06-15 20:31:37,810 voicebank.voicebank:77 __init__ [INFO]: character.txt is loaded. VBName:仄歌エリー
+2022-06-15 20:31:37,827 voicebank.voicebank:84 __init__ [INFO]: oto.ini is loaded.files 6, records 5281
+2022-06-15 20:31:37,827 voicebank.voicebank:90 __init__ [INFO]: prefix.map is loaded

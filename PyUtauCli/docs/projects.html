@@ -46,6 +46,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-projects.Entry">projects.Entry module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-projects.EntryBase">projects.EntryBase module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-projects.Note">projects.Note module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-projects.RenderNote">projects.RenderNote module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-projects.Ust">projects.Ust module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-projects.UtauPlugin">projects.UtauPlugin module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-projects">Module contents</a></li>
@@ -959,6 +960,227 @@
 <span class="sig-name descname"><span class="pre">vibrato</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#projects.Entry.VibratoEntry" title="projects.Entry.VibratoEntry"><span class="pre">projects.Entry.VibratoEntry</span></a></em><a class="headerlink" href="#projects.Note.Note.vibrato" title="この定義へのパーマリンク"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="module-projects.RenderNote">
+<span id="projects-rendernote-module"></span><h2>projects.RenderNote module<a class="headerlink" href="#module-projects.RenderNote" title="このヘッドラインへのパーマリンク"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">projects.RenderNote.</span></span><span class="sig-name descname"><span class="pre">RenderNote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#projects.Note.Note" title="projects.Note.Note"><span class="pre">projects.Note.Note</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="voicebank.html#voicebank.voicebank.VoiceBank" title="voicebank.voicebank.VoiceBank"><span class="pre">voicebank.voicebank.VoiceBank</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cachedir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#projects.RenderNote.RenderNote" title="この定義へのパーマリンク"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>UTAUのNoteをresamplerやwavtoolに渡せるパラメータにしたもの。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.input_path">
+<span class="sig-name descname"><span class="pre">input_path</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.input_path" title="この定義へのパーマリンク"></a></dt>
+<dd><p>入力する原音のフルパス。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.cache_path">
+<span class="sig-name descname"><span class="pre">cache_path</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.cache_path" title="この定義へのパーマリンク"></a></dt>
+<dd><p>resampが出力する中間ファイルのパス</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.output_path">
+<span class="sig-name descname"><span class="pre">output_path</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.output_path" title="この定義へのパーマリンク"></a></dt>
+<dd><p>wavtoolが出力する最終ファイルのパス</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.target_tone">
+<span class="sig-name descname"><span class="pre">target_tone</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.target_tone" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">音高名(A4=440Hz)。</div>
+<div class="line">半角上げは#もしくは♯</div>
+<div class="line">半角下げはbもしくは♭で与えられます。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.velocity">
+<span class="sig-name descname"><span class="pre">velocity</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.velocity" title="この定義へのパーマリンク"></a></dt>
+<dd><p>子音速度</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.flags">
+<span class="sig-name descname"><span class="pre">flags</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.flags" title="この定義へのパーマリンク"></a></dt>
+<dd><p>フラグ(省略可)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, default &quot;&quot;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.offset" title="この定義へのパーマリンク"></a></dt>
+<dd><p>入力ファイルの読み込み開始位置(ms)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float, default 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.target_ms">
+<span class="sig-name descname"><span class="pre">target_ms</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.target_ms" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">出力ファイルの長さ(ms)</div>
+<div class="line">UTAUでは通常50ms単位に丸めた値が渡される。</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float, default 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.fixed_ms">
+<span class="sig-name descname"><span class="pre">fixed_ms</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.fixed_ms" title="この定義へのパーマリンク"></a></dt>
+<dd><p>offsetからみて通常伸縮しない長さ(ms)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float, default 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.end_ms">
+<span class="sig-name descname"><span class="pre">end_ms</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.end_ms" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">入力ファイルの読み込み終了位置(ms)(省略可 default:0)</div>
+<div class="line">正の数の場合、ファイル末尾からの時間</div>
+<div class="line">負の数の場合、offsetからの時間</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float, default 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.indensity">
+<span class="sig-name descname"><span class="pre">indensity</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.indensity" title="この定義へのパーマリンク"></a></dt>
+<dd><p>音量。0～200(省略可)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, default 100</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.modulation">
+<span class="sig-name descname"><span class="pre">modulation</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.modulation" title="この定義へのパーマリンク"></a></dt>
+<dd><p>モジュレーション。0～200(省略可)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, default 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.tempo">
+<span class="sig-name descname"><span class="pre">tempo</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.tempo" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">ピッチのテンポ</div>
+<div class="line">数字の頭に!がついた文字列</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, default &quot;!120&quot;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.pitchbend">
+<span class="sig-name descname"><span class="pre">pitchbend</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.pitchbend" title="この定義へのパーマリンク"></a></dt>
+<dd><div class="line-block">
+<div class="line">ピッチベンド。(省略可)</div>
+<div class="line">-2048～2047までの12bitの2進数をbase64で2文字の文字列に変換し、</div>
+<div class="line">同じ数字が続く場合ランレングス圧縮したもの</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, default &quot;&quot;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.stp">
+<span class="sig-name descname"><span class="pre">stp</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.stp" title="この定義へのパーマリンク"></a></dt>
+<dd><p>入力wavの先頭のオフセットをmsで指定する。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="projects.RenderNote.RenderNote.output_ms">
+<span class="sig-name descname"><span class="pre">output_ms</span></span><a class="headerlink" href="#projects.RenderNote.RenderNote.output_ms" title="この定義へのパーマリンク"></a></dt>
+<dd><p>wavtoolが出力する長さ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt>envelope<span class="classifier">list</span></dt><dd><dl>
+<dt>エンベロープのパターンは以下のいずれかです。</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="n">p2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="n">v1</span> <span class="n">v2</span> <span class="n">v3</span> <span class="n">v4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="n">v1</span> <span class="n">v2</span> <span class="n">v3</span> <span class="n">v4</span> <span class="n">ove</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="n">v1</span> <span class="n">v2</span> <span class="n">v3</span> <span class="n">v4</span> <span class="n">ove</span> <span class="n">p4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="n">v1</span> <span class="n">v2</span> <span class="n">v3</span> <span class="n">v4</span> <span class="n">ove</span> <span class="n">p4</span> <span class="n">p5</span> <span class="n">v5</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">p1,p2,p3,p4,p5,ove : float</div>
+<div class="line">v1,v2,v3,v4,v5 : int</div>
+</div>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

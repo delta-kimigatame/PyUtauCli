@@ -1,4 +1,4 @@
-﻿import os. path
+﻿import os.path
 
 from .Entry import *
 from voicebank.prefixmap import PrefixMap
