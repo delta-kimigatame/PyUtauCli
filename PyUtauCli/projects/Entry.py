@@ -112,8 +112,8 @@ class PBStartEntry(FloatEntry):
 
 
 class PBSEntry(EntryBase):
-    _time: float
-    _height: float
+    _time: float = 0
+    _height: float = 0
     _value: str
 
     @property
