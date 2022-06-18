@@ -190,7 +190,7 @@ class RenderNote:
         base_pitches += self._interp_pitches(note, t, offset)
         if note.next is not None and note.next.lyric.value != "R":
             base_pitches += self._interp_pitches(note.next, t, offset + note.msLength)
-        return base_pitches
+        return self.encodeRunLength(self.encodeBase64(base_pitches))
 
     def _get_base_pitches(self, note: Note, t:np.ndarray) -> np.ndarray:
         '''
@@ -379,3 +379,83 @@ class RenderNote:
         mode: list = (note.pbm.value + [""]*(len(x)-1))[:len(x)-1]
 
         return x, y, mode
+    
+
+    @staticmethod
+    def encodeBase64Core(value: int) -> str:
+        '''
+        0～63の数値を受け取り、1文字のstrを返す。
+
+        Parameters
+        ----------
+        value: int
+
+        Returns
+        -------
+        result: str
+        '''
+        if value < 26: #A-Z
+            return chr(value + ord("A"))
+        elif value < 52:
+            return chr(value + ord("A") - 26)
+        elif value < 62:
+            return chr(value + ord("0") - 52)
+        elif value == 63:
+            return "+"
+        else:
+            return "/"
+
+    @staticmethod
+    def encodeBase64(values: np.ndarray) -> list:
+        '''
+        -2048 ～ 2047の数字を受け取り、文字列を返します。
+
+        Parameters
+        ----------
+        values: np.ndarray
+            -2048 ～ 2047のint列
+
+        Returns
+        -------
+        result: list
+            base64にエンコードした2桁の文字列のリスト
+        '''
+        result: list = []
+        for value in values:
+            tmp = value
+            if value < 0:
+                tmp += 4096
+            result.append(RenderNote.encodeBase64Core(int(tmp/64)) + RenderNote.encodeBase64Core(tmp&63))
+        return result
+
+    @staticmethod
+    def encodeRunLength(values: list) -> str:
+        '''
+        | base64エンコードした文字列のリストを受け取り、ランレングス圧縮します。
+        | 2文字一組とし、#num#はひとつ前の組の繰り返し回数を表します。
+    
+        >>> [AA, AB, AC] → AAABAC
+        >>> [AA, AA, AA, AA] → AA#3#
+
+
+        Parameters
+        ----------
+        values: list
+
+        Returns
+        -------
+        result: str
+        '''
+        result: str = ""
+        tmp: str = ""
+        num: int = 0
+        for value in values:
+            if tmp != value:
+                tmp = value
+                if num != 0:
+                    result += "#{}#".format(num)
+                num = 0
+                result += value
+            else:
+                num += 1
+        return result
