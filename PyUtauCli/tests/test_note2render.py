@@ -414,3 +414,356 @@ class TestConvertPitch(unittest.TestCase):
     def test_RunLength(self):
         self.assertEqual(projects.RenderNote.RenderNote.encodeRunLength(["AA","AB","AC"]),"AAABAC")
         self.assertEqual(projects.RenderNote.RenderNote.encodeRunLength(["AA","AA","AB","AC","AC","AC","AB"]),"AA#1#ABAC#2#AB")
+
+    def test_vibrato_fade_no_fade(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        start: int = np.where(t>=600)[0][0]
+        end: int = np.where(t<900)[0][-1]
+        phase: np.ndarray = t[start:end + 1] - 600
+        fade = r_note._get_vibrato_fade(self.ust.notes[1],phase)
+        np.testing.assert_array_equal(fade,np.array([1]*(end+1-start)))
+
+    def test_vibrato_fade_fadein(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,100,0,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        start: int = np.where(t>=600)[0][0]
+        end: int = np.where(t<900)[0][-1]
+        phase: np.ndarray = t[start:end + 1] - 600
+        fade = r_note._get_vibrato_fade(self.ust.notes[1],phase)
+        answer = np.arange(0,1,1/(end+1-start))
+        for i in range(len(fade)):
+            self.assertEqual("{:.2f}".format(fade[i]),"{:.2f}".format(answer[i]))
+
+    def test_vibrato_fade_fadeout(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,100,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        start: int = np.where(t>=600)[0][0]
+        end: int = np.where(t<900)[0][-1]
+        phase: np.ndarray = t[start:end + 1] - 600
+        fade = r_note._get_vibrato_fade(self.ust.notes[1],phase)
+        answer = np.arange(1,0,-1/(end+1-start))
+        for i in range(len(fade)):
+            self.assertEqual("{:.2f}".format(fade[i]),"{:.2f}".format(answer[i]))
+            
+    def test_vibrato_fade_fadein_and_out(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,50,50,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        start: int = np.where(t>=600)[0][0]
+        end: int = np.where(t<900)[0][-1]
+        phase: np.ndarray = t[start:end + 1] - 600
+        fade = r_note._get_vibrato_fade(self.ust.notes[1],phase)
+        answer = np.ndarray = np.ones_like(fade,dtype=np.float64)
+        answer[0:30] = np.arange(0,1,1/30)
+        answer[30:60] = np.arange(1,0,-1/30)
+        for i in range(len(fade)):
+            self.assertEqual("{:.2f}".format(fade[i]),"{:.2f}".format(answer[i]))
+        
+    def test_vibrato_no_fade(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],100)
+        self.assertEqual(result[130],0)
+        self.assertEqual(result[135],-100)
+        self.assertEqual(result[140],0)
+        self.assertEqual(result[145],100)
+        self.assertEqual(result[150],0)
+        self.assertEqual(result[155],-100)
+        self.assertEqual(result[160],0)
+        self.assertEqual(result[165],100)
+        self.assertEqual(result[170],0)
+        self.assertEqual(result[175],-100)
+        
+        
+    def test_vibrato_no_fade_phase100(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,100,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],100)
+        self.assertEqual(result[130],0)
+        self.assertEqual(result[135],-100)
+        self.assertEqual(result[140],0)
+        self.assertEqual(result[145],100)
+        self.assertEqual(result[150],0)
+        self.assertEqual(result[155],-100)
+        self.assertEqual(result[160],0)
+        self.assertEqual(result[165],100)
+        self.assertEqual(result[170],0)
+        self.assertEqual(result[175],-100)
+        
+    def test_vibrato_no_fade_phase50(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,50,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],-100)
+        self.assertEqual(result[130],0)
+        self.assertEqual(result[135],100)
+        self.assertEqual(result[140],0)
+        self.assertEqual(result[145],-100)
+        self.assertEqual(result[150],0)
+        self.assertEqual(result[155],100)
+        self.assertEqual(result[160],0)
+        self.assertEqual(result[165],-100)
+        self.assertEqual(result[170],0)
+        self.assertEqual(result[175],100)
+        
+        
+    def test_vibrato_no_fade_phase25(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,25,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],0)
+        self.assertEqual(result[130],-100)
+        self.assertEqual(result[135],0)
+        self.assertEqual(result[140],100)
+        self.assertEqual(result[145],0)
+        self.assertEqual(result[150],-100)
+        self.assertEqual(result[155],0)
+        self.assertEqual(result[160],100)
+        self.assertEqual(result[165],0)
+        self.assertEqual(result[170],-100)
+        self.assertEqual(result[175],0)
+        
+    def test_vibrato_no_fade_phase75(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,75,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],0)
+        self.assertEqual(result[130],100)
+        self.assertEqual(result[135],0)
+        self.assertEqual(result[140],-100)
+        self.assertEqual(result[145],0)
+        self.assertEqual(result[150],100)
+        self.assertEqual(result[155],0)
+        self.assertEqual(result[160],-100)
+        self.assertEqual(result[165],0)
+        self.assertEqual(result[170],100)
+        self.assertEqual(result[175],0)
+        
+        
+    def test_vibrato_no_fade_depth(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,200,0,0,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],200)
+        self.assertEqual(result[130],0)
+        self.assertEqual(result[135],-200)
+        self.assertEqual(result[140],0)
+        self.assertEqual(result[145],200)
+        self.assertEqual(result[150],0)
+        self.assertEqual(result[155],-200)
+        self.assertEqual(result[160],0)
+        self.assertEqual(result[165],200)
+        self.assertEqual(result[170],0)
+        self.assertEqual(result[175],-200)
+
+        
+    def test_vibrato_no_fade_cycle(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,50,100,0,0,75,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],100)
+        self.assertEqual(result[130],-100)
+        self.assertEqual(result[135],100)
+        self.assertEqual(result[140],-100)
+        self.assertEqual(result[145],100)
+        self.assertEqual(result[150],-100)
+        self.assertEqual(result[155],100)
+        self.assertEqual(result[160],-100)
+        self.assertEqual(result[165],100)
+        self.assertEqual(result[170],-100)
+        self.assertEqual(result[175],100)
+        
+    def test_vibrato_no_fade_length(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "25,100,100,0,0,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(750/5)], np.array([0]*int(750/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[150],0)
+        self.assertEqual(result[155],100)
+        self.assertEqual(result[160],0)
+        self.assertEqual(result[165],-100)
+        self.assertEqual(result[170],0)
+        self.assertEqual(result[175],100)
+        
+        
+    def test_vibrato_no_fade_height(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,0,100,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],200)
+        self.assertEqual(result[130],100)
+        self.assertEqual(result[135],0)
+        self.assertEqual(result[140],100)
+        self.assertEqual(result[145],200)
+        self.assertEqual(result[150],100)
+        self.assertEqual(result[155],0)
+        self.assertEqual(result[160],100)
+        self.assertEqual(result[165],200)
+        self.assertEqual(result[170],100)
+        self.assertEqual(result[175],0)
+        
+    def test_vibrato_no_fade_height_negative(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,0,0,0,-100,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],0)
+        self.assertEqual(result[130],-100)
+        self.assertEqual(result[135],-200)
+        self.assertEqual(result[140],-100)
+        self.assertEqual(result[145],0)
+        self.assertEqual(result[150],-100)
+        self.assertEqual(result[155],-200)
+        self.assertEqual(result[160],-100)
+        self.assertEqual(result[165],0)
+        self.assertEqual(result[170],-100)
+        self.assertEqual(result[175],-200)
+        
+        
+    def test_vibrato_fade50(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,50,50,0,0,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],17)
+        self.assertEqual(result[130],0)
+        self.assertEqual(result[135],-50)
+        self.assertEqual(result[140],0)
+        self.assertEqual(result[145],83)
+        self.assertEqual(result[150],0)
+        self.assertEqual(result[155],-83)
+        self.assertEqual(result[160],0)
+        self.assertEqual(result[165],50)
+        self.assertEqual(result[170],0)
+        self.assertEqual(result[175],-17)
+        
+    def test_vibrato_fade50_height(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.ust.notes[1].vibrato.value = "50,100,100,50,50,0,100,0"
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        t = np.arange(0,950,5)
+        result = r_note._get_vibrato_pitches(self.ust.notes[1], t, 300)
+        np.testing.assert_array_equal(result[0:int(600/5)], np.array([0]*int(600/5))) #最初のビブラートがかからない部分
+        np.testing.assert_array_equal(result[int(900/5):int(950/5)], np.array([0]*int(50/5))) #楽譜上再生されない後ろの部分
+        #ビブラート部分
+        self.assertEqual(result[125],33)
+        self.assertEqual(result[130],33)
+        self.assertEqual(result[135],0)
+        self.assertEqual(result[140],67)
+        self.assertEqual(result[145],167)
+        self.assertEqual(result[150],100)
+        self.assertEqual(result[155],0)
+        self.assertEqual(result[160],67)
+        self.assertEqual(result[165],100)
+        self.assertEqual(result[170],33)
+        self.assertEqual(result[175],0)

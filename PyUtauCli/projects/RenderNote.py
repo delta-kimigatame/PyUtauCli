@@ -190,7 +190,9 @@ class RenderNote:
         base_pitches: np.ndarray = self._get_base_pitches(note, t)
         if note.prev is not None and note.prev.lyric.value != "R":
             base_pitches += self._interp_pitches(note.prev, t, offset - note.prev.msLength)
+            base_pitches += self._get_vibrato_pitches(note.prev, t, offset - note.prev.msLength)
         base_pitches += self._interp_pitches(note, t, offset)
+        base_pitches += self._get_vibrato_pitches(note, t, offset)
         if note.next is not None and note.next.lyric.value != "R":
             base_pitches += self._interp_pitches(note.next, t, offset + note.msLength)
         return self.encodeRunLength(self.encodeBase64(base_pitches))
@@ -383,6 +385,55 @@ class RenderNote:
 
         return x, y, mode
     
+    def _get_vibrato_pitches(self, note:Note, t:np.ndarray, offset:float) -> np.ndarray:
+        '''
+        noteのpbs,pby,pbw,pbmとnote.prev.notenumを使ってピッチ列を返します。
+        
+        Parameters
+        ----------
+        note: Note
+            | 変換するノート。
+            | noteとnote.nextは事前にapply_otoを実施しておくこと
+
+        t: np.ndarray
+            ピッチ点の時間列
+
+        offset: float
+            時間のずれ
+
+        Returns
+        -------
+        pitches: np.ndarray
+            ピッチ列
+        '''
+        pitches: np.ndarray = np.zeros_like(t, dtype = np.int16)
+        if not note.vibrato.hasValue:
+            return pitches
+        start_ms: float = offset + note.msLength * (100 - note.vibrato.length) / 100
+        end_ms: float = offset + note.msLength
+        start: int = np.where(t>=start_ms)[0][0]
+        end: int = np.where(t<end_ms)[0][-1]
+                
+        phase: np.ndarray = t[start:end + 1] - start_ms
+        phase_offset: float = 2 * np.pi * note.vibrato.phase /100
+
+        fade = self._get_vibrato_fade(note, phase)
+
+        height: np.ndarray = fade * int(note.vibrato.depth)
+        pitches[start:end+1] = np.round((np.sin(2 * np.pi / note.vibrato.cycle * phase + phase_offset) + note.vibrato.height/100) * height)
+        return pitches
+
+    def _get_vibrato_fade(self, note:Note, t:np.ndarray) -> np.ndarray:
+        vibrato_ms: float = note.msLength * note.vibrato.length / 100
+        fadeintime: float = vibrato_ms * note.vibrato.fadeInTime / 100
+        fadeout_start_ms: float = vibrato_ms - vibrato_ms * note.vibrato.fadeOutTime / 100
+        fade:np.ndarray = np.ones_like(t,dtype=np.float64)
+        for i in range(len(t)):
+            if t[i] <= fadeintime and fadeintime != 0:
+                fade[i] =  t[i] / fadeintime
+            elif t[i] >= fadeout_start_ms:
+                fade[i] =  1 - ((t[i] - fadeout_start_ms) / (vibrato_ms - fadeout_start_ms))
+        return fade
 
     @staticmethod
     def encodeBase64Core(value: int) -> str:
