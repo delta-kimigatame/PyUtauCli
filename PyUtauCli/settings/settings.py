@@ -41,3 +41,5 @@ if UTAU_IS_INSTALLED:
     VOICE_ROOT.append(os.path.join(UTAU_ROOT, "voice"))
 else:
     UTAU_ROOT: str = ""
+    
+DEFAULT_ENV: str = UTAU_SETTINGS.get("DefaultEnv", "0 10 35 0 100 100 0")
