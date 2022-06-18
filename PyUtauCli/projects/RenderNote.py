@@ -88,6 +88,86 @@ class RenderNote:
         | v1,v2,v3,v4,v5 : int
 
     '''
+    _input_path: str
+    _output_path: str
+    _target_tone: str
+    _velocity: int
+    _flags: str
+    _offset: float
+    _target_ms: int
+    _fixed_ms: float
+    _end_ms: float
+    _intensity: int
+    _modulation: int
+    _tempo: str
+    _pitchbend: str
+    _stp: float
+    _envelope: str
+    _cache_path: str
+
+    @property
+    def input_path(self) -> str:
+        return self._input_path
+    
+    @property
+    def output_path(self) -> str:
+        return self._output_path
+
+    @property
+    def target_tone(self) -> str:
+        return self._target_tone
+    
+    @property
+    def velocity(self) -> int:
+        return self._velocity
+
+    @property
+    def flags(self) -> str:
+        return self._flags
+    
+    @property
+    def offset(self) -> float:
+        return self._offset
+    
+    @property
+    def target_ms(self) -> int:
+        return self._target_ms
+    
+    @property
+    def fixed_ms(self) -> float:
+        return self._fixed_ms
+    
+    @property
+    def end_ms(self) -> float:
+        return self._end_ms
+    
+    @property
+    def intensity(self) -> int:
+        return self._intensity
+    
+    @property
+    def modulation(self) -> int:
+        return self._modulation
+
+    @property
+    def tempo(self) -> str:
+        return self._tempo
+    
+    @property
+    def pitchbend(self) -> str:
+        return self._pitchbend
+    
+    @property
+    def stp(self) -> float:
+        return self._stp
+
+    @property
+    def envelope(self) -> str:
+        return self._envelope
+    
+    @property
+    def cache_path(self) -> str:
+        return self._cache_path
 
     def __init__(self, note: Note, vb: VoiceBank, cachedir: str, output: str, mode2: bool = True):
         '''
