@@ -8,6 +8,7 @@ import PyRwu.pitch
 
 from .Note import Note
 from voicebank import VoiceBank
+import settings
 
 class RenderNote:
     '''
@@ -128,12 +129,12 @@ class RenderNote:
         self._tempo = "!{:.2f}".format(note.tempo.value)
         self._pitchbend = self._get_pitches(note, mode2)
         self._stp = note.atStp.value
-        #TODO envelopeが空欄の場合の処理が必要
-        self._envelope = note.envelope.value.replace("%", str(note.ove)).replace(","," ")
-        #self._cache_path = os.path.join(cachedir, "{}_{}_{}_{}".format(int(note.num.value[1:],
-        #                                                                   note.atAlias.value.replace(" ","+"),
-        #                                                                   note.notenum.get_tone_name(),
-        #                                                                   self._get_cache_hash(note))))
+        if note.envelope.hasValue:
+            self._envelope = note.envelope.value.replace("%", str(note.ove)).replace(","," ")
+        else:
+            self._envelope = settings.DEFAULT_ENV.replace("%", str(note.ove))
+        self._cache_path = os.path.join(cachedir, self._get_cache_hash(note))
+
     def _get_cache_hash(self, note: Note) -> str:
         '''
         resampが使用する各パラメータを使用して、ハッシュ値を生成します。
@@ -150,13 +151,15 @@ class RenderNote:
             6桁のハッシュ文字
 
         '''
-        #todo
-        pass
-        #hashlib.md5("{}_{}_{}_{}".format(note.pre.value,
-        #                                 note.stp.value,
-        #                                 note.velocity.value,
-        #                                 note.flags.value,
-        #                                 ).encode()).hexdigest()[:6]
+        return hashlib.md5("{}_{}_{}_{}_{}_{}_{}_{}".format(note.pre.value,
+                                                            note.stp.value,
+                                                            note.velocity.value,
+                                                            note.flags.value,
+                                                            note.intensity.value,
+                                                            note.modulation.value,
+                                                            note.tempo.value,
+                                                            self._pitchbend,
+                                                            ).encode()).hexdigest()[:6]
 
     def _get_pitches(self, note: Note, mode2: bool) -> str:
         '''
@@ -214,7 +217,7 @@ class RenderNote:
             | pbs.time → next.pbs.timeの点 = 0
             | next.pbs.timeより後ろの点 = (next.notenum - notenum) * 100
         '''
-        base_pitches: np.ndarray = np.zeros_like(t)
+        base_pitches: np.ndarray = np.zeros_like(t, dtype = np.int16)
         offset: float = note.atPre.value + note.atStp.value
         start: int
         end: int
@@ -253,7 +256,7 @@ class RenderNote:
         pitches: np.ndarray
             ピッチ列
         '''
-        pitches: np.ndarray = np.zeros_like(t)
+        pitches: np.ndarray = np.zeros_like(t, dtype = np.int16)
 
         if not note.pbs.hasValue:
             return pitches
