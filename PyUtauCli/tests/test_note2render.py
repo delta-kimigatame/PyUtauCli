@@ -264,3 +264,146 @@ class TestConvertPitch(unittest.TestCase):
         self.assertEqual(np.where(t >= self.ust.notes[2].pbs.time + 300 + self.ust.notes[1].msLength)[0][0],48+96-24)
         logical_result[48+96-24:] = 200
         np.testing.assert_array_equal(result, logical_result)
+
+    def test_interp_base_minimum_single_note(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        self.ust.notes[1].pbs.value = "-150;-10"
+        self.ust.notes[1].pbw.value = [100, 150, 50]
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        x, y, mode = r_note._get_interp_base(self.ust.notes[1], 300)
+        np.testing.assert_array_equal(x, np.array([150, 250, 400, 450]))
+        np.testing.assert_array_equal(y, np.array([-100, 0, 0, 0]))
+        self.assertEqual(mode, ["", "", ""])
+        
+    def test_interp_base_minimum_with_prev(self):
+        self.ust.notes[1].prev = self.ust.notes[0]
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        self.ust.notes[1].pbs.value = "-150;-10"
+        self.ust.notes[1].pbw.value = [100, 150, 50]
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        x, y, mode = r_note._get_interp_base(self.ust.notes[1], 300)
+        np.testing.assert_array_equal(x, np.array([150, 250, 400, 450]))
+        np.testing.assert_array_equal(y, np.array([-200, 0, 0, 0])) #1つめの要素がprev.notenum依存
+        self.assertEqual(mode, ["", "", ""])
+
+    def test_interp_base_single_note(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        self.ust.notes[1].pbs.value = "-150;-10"
+        self.ust.notes[1].pbw.value = [100, 150, 50]
+        self.ust.notes[1].pby.value = [3.5, -12.1]
+        self.ust.notes[1].pbm.value = ["s","r","j"]
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        x, y, mode = r_note._get_interp_base(self.ust.notes[1], 300)
+        np.testing.assert_array_equal(x, np.array([150, 250, 400, 450]))
+        np.testing.assert_array_equal(y, np.array([-100, 35,-121, 0]))
+        self.assertEqual(mode, ["s", "r", "j"])
+
+    def test_interp_param(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        self.ust.notes[1].pbs.value = "-150;-10"
+        self.ust.notes[1].pbw.value = [100, 150, 50]
+        self.ust.notes[1].pby.value = [3.5, -12.1]
+        self.ust.notes[1].pbm.value = ["s","r","j"]
+        t = PyRwu.pitch.getPitchRange(100, 950, 44100)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        x, y, mode = r_note._get_interp_base(self.ust.notes[1], 300)
+        s,e,c,h,p = r_note._get_interp_param(x, y, t, 1)
+        self.assertEqual(s, np.where(t>x[0])[0][0]) #24
+        self.assertEqual(e, np.where(t<x[1])[0][-1]) #39
+        self.assertEqual(c, 100)
+        self.assertEqual(h, 35+100)
+        np.testing.assert_array_equal(p, t[s:e+1] - 150)
+        
+        s,e,c,h,p = r_note._get_interp_param(x, y, t, 2)
+        self.assertEqual(s, np.where(t>x[1])[0][0])
+        self.assertEqual(e, np.where(t<x[2])[0][-1])
+        self.assertEqual(c, 150)
+        self.assertEqual(h, -121-35)
+        np.testing.assert_array_equal(p, t[s:e+1] - 250)
+        
+        s,e,c,h,p = r_note._get_interp_param(x, y, t, 3)
+        self.assertEqual(s, np.where(t>x[2])[0][0])
+        self.assertEqual(e, np.where(t<x[3])[0][-1])
+        self.assertEqual(c, 50)
+        self.assertEqual(h, 121)
+        np.testing.assert_array_equal(p, t[s:e+1] - 400)
+
+    def test_interp_default(self):
+        t = np.arange(0,180,5)
+        result = projects.RenderNote.RenderNote._interp_default(180, 100, t, 50)
+        self.assertEqual(50.0, result[0])
+        self.assertEqual(round(50+50-25*3**0.5), round(result[6]))
+        self.assertEqual(round(50+50-25*2**0.5), round(result[9]))
+        self.assertEqual(round(50+50-25), round(result[12]))
+        self.assertEqual(100.0, round(result[18]))
+        self.assertEqual(round(100+25), round(result[24]))
+        self.assertEqual(round(100+25*2**0.5), round(result[27]))
+        self.assertEqual(round(100+25*3**0.5), round(result[30]))
+        
+    def test_interp_s(self):
+        t = np.arange(0,100,5)
+        result = projects.RenderNote.RenderNote._interp_s(100, 100, t, 50)
+        self.assertEqual(50.0, result[0])
+        self.assertEqual(55.0, result[1])
+        self.assertEqual(100.0, round(result[10]))
+        
+    def test_interp_r(self):
+        t = np.arange(0,90,5)
+        result = projects.RenderNote.RenderNote._interp_r(90, 100, t, 50)
+        self.assertEqual(50.0, result[0])
+        self.assertEqual(round(50+50), round(result[6]))
+        self.assertEqual(round(50+50*2**0.5), round(result[9]))
+        self.assertEqual(round(50+50*3**0.5), round(result[12]))
+
+    def test_interp_j(self):
+        t = np.arange(0,90,5)
+        result = projects.RenderNote.RenderNote._interp_j(90, 100, t, 50)
+        self.assertEqual(50.0, result[0])
+        self.assertEqual(round(50+100-50*3**0.5), round(result[6]))
+        self.assertEqual(round(50+100-50*2**0.5), round(result[9]))
+        self.assertEqual(round(50+50), round(result[12]))
+
+    def test_interp_default_n(self):
+        t = np.arange(0,180,5)
+        result = projects.RenderNote.RenderNote._interp_default(180, -100, t, 50)
+        self.assertEqual(50.0, result[0])
+        self.assertEqual(round(50-50+25*3**0.5), round(result[6]))
+        self.assertEqual(round(50-50+25*2**0.5), round(result[9]))
+        self.assertEqual(round(50-50+25), round(result[12]))
+        self.assertEqual(0, round(result[18]))
+        self.assertEqual(round(-25), round(result[24]))
+        self.assertEqual(round(-25*2**0.5), round(result[27]))
+        self.assertEqual(round(-25*3**0.5), round(result[30]))
+        
+    def test_interp_unit(self):
+        self.ust.notes[1].pre.value = 300
+        self.ust.notes[1].apply_oto(self.vb.oto, self.vb.prefix)
+        self.assertEqual(self.ust.notes[1].atPre.value, 300)
+        self.assertEqual(self.ust.notes[1].atStp.value, 0)
+        self.ust.notes[1].pbs.value = "-300;-10"
+        self.ust.notes[1].pbw.value = [400,0,400]
+        self.ust.notes[1].pby.value = [10,5,0]
+        self.ust.notes[1].pbm.value = ["","","s"]
+        t = np.arange(0,950,5)
+        r_note = projects.RenderNote.RenderNote(self.ust.notes[1], self.vb, "cache", "output", True)
+        result = r_note._interp_pitches(self.ust.notes[1], t, 300)
+        self.assertEqual(-100, result[0])
+        self.assertEqual(int(-50*2**0.5), round(result[20]))
+        self.assertEqual(0, result[40])
+        self.assertEqual(int(50*2**0.5), round(result[60]))
+        self.assertEqual(50, round(result[80]))
+        self.assertEqual(25, round(result[120]))
+        self.assertEqual(0, round(result[160]))
+

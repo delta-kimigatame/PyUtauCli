@@ -1,6 +1,5 @@
 ﻿import os.path
 import hashlib
-import math
 
 from typing import Tuple
 
@@ -191,6 +190,7 @@ class RenderNote:
         base_pitches += self._interp_pitches(note, t, offset)
         if note.next is not None and note.next.lyric.value != "R":
             base_pitches += self._interp_pitches(note.next, t, offset + note.msLength)
+        return base_pitches
 
     def _get_base_pitches(self, note: Note, t:np.ndarray) -> np.ndarray:
         '''
@@ -273,28 +273,32 @@ class RenderNote:
             if(mode[i-1] == ""):
                 #cos(-pi) → cos(0)の補完
                 pitches[start:end+1] = self._interp_default(cycle, height, phase, y[i-1])
-            elif (mode.value[i-1] == "s"):
+            elif (mode[i-1] == "s"):
                 #線形補完
                 pitches[start:end+1] = self._interp_s(cycle, height, phase, y[i-1])
-            elif (mode.value[i-1] == "r"):
+            elif (mode[i-1] == "r"):
                 #sin(0) → sin(pi/2)の補完
                 pitches[start:end+1] = self._interp_r(cycle, height, phase, y[i-1])
-            elif (mode.value[i-1] == "j"):
+            elif (mode[i-1] == "j"):
                 #cos(0) → cos(pi/2)の補完
                 pitches[start:end+1] = self._interp_j(cycle, height, phase, y[i-1])
         return pitches
 
-    def _interp_default(self, cycle, height, phase, offset):
-        return (math.cos(math.pi / cycle * phase - math.pi) + 1) * height / 2 + offset
-
-    def _interp_s(self, cycle, height, phase, offset):
+    @staticmethod
+    def _interp_default(cycle, height, phase, offset):
+        return ((np.cos(np.pi / cycle * phase - np.pi) + 1) * height / 2 + offset)
+    
+    @staticmethod
+    def _interp_s(cycle, height, phase, offset):
         return height / cycle * phase + offset
-
-    def _interp_r(self, cycle, height, phase, offset):
-        return math.sin(math.pi / cycle / 2 * phase) * height + offset
-
-    def _interp_j(self, cycle, height, phase, offset):
-        return (math.cos(math.pi / cycle / 2 * phase)+1) * height + offset
+    
+    @staticmethod
+    def _interp_r(cycle, height, phase, offset):
+        return np.sin(np.pi / cycle / 2 * phase) * height + offset
+    
+    @staticmethod
+    def _interp_j(cycle, height, phase, offset):
+        return (-np.cos(np.pi / cycle / 2 * phase)+1) * height + offset
 
     def _get_interp_param(self, x: np.ndarray, y: np.ndarray, t: np.ndarray, i: int) -> Tuple[int, int, float, float, np.ndarray]:
         '''
@@ -330,7 +334,7 @@ class RenderNote:
         phase: np.ndarray
             t[start:end+1]をx[i-1]からの経過時間に変換したもの
         '''
-        start: int = np.where(t>x[i])[0][0]
+        start: int = np.where(t>=x[i-1])[0][0]
         end: int = np.where(t<x[i])[0][-1]
         cycle: float = x[i] - x[i-1]
         height: int = y[i] - y[i-1]
@@ -364,14 +368,14 @@ class RenderNote:
         x:np.ndarray = np.zeros(len(note.pbw.value) + 1)
         for i in range(len(note.pbw.value)):
             x[i+1] = x[i] + note.pbw.value[i]
-        x = x - note.pbs.time + offset
+        x = x + note.pbs.time + offset
         y: np.ndarray = np.zeros_like(x)
         if note.prev is not None and note.prev.lyric.value != "R":
             y[0] = (note.prev.notenum.value - note.notenum.value) * 100
         else:
             y[0] = note.pbs.height * 10
         for i in range(len(note.pby.value)):
-            y[i+1] = y[i] * 10
-        mode: list = (note.pbm.value + [""]*len(x-1))[:len(x-1)]
+            y[i+1] = note.pby.value[i] * 10
+        mode: list = (note.pbm.value + [""]*(len(x)-1))[:len(x)-1]
 
         return x, y, mode
