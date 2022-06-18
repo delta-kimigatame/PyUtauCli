@@ -407,3 +407,10 @@ class TestConvertPitch(unittest.TestCase):
         self.assertEqual(25, round(result[120]))
         self.assertEqual(0, round(result[160]))
 
+    def test_base64(self):
+        result = projects.RenderNote.RenderNote.encodeBase64(np.array([0,63,2047,-2048,-1]))
+        self.assertEqual(result,["AA","A/","f/","gA","//"])
+
+    def test_RunLength(self):
+        self.assertEqual(projects.RenderNote.RenderNote.encodeRunLength(["AA","AB","AC"]),"AAABAC")
+        self.assertEqual(projects.RenderNote.RenderNote.encodeRunLength(["AA","AA","AB","AC","AC","AC","AB"]),"AA#1#ABAC#2#AB")

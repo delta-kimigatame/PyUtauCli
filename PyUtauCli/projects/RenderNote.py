@@ -400,10 +400,10 @@ class RenderNote:
         if value < 26: #A-Z
             return chr(value + ord("A"))
         elif value < 52:
-            return chr(value + ord("A") - 26)
+            return chr(value + ord("a") - 26)
         elif value < 62:
             return chr(value + ord("0") - 52)
-        elif value == 63:
+        elif value == 62:
             return "+"
         else:
             return "/"
