@@ -53,7 +53,7 @@ class RenderNote:
         | 正の数の場合、ファイル末尾からの時間
         | 負の数の場合、offsetからの時間
 
-    indensity: int, default 100
+    intensity: int, default 100
         音量。0～200(省略可)
 
     modulation: int, default 0
@@ -124,16 +124,17 @@ class RenderNote:
         self._target_ms = (round((self._output_ms) / 50) + 1 ) * 50
         self._fixed_ms = vb.oto[note.atAlias.value].consonant
         self._end_ms = vb.oto[note.atAlias.value].blank
-        self._indensity = note.indensity.value
+        self._intensity = note.intensity.value
         self._modulation = note.modulation.value
         self._tempo = "!{:.2f}".format(note.tempo.value)
-        self._pitchbend = self._get_pitches()
+        self._pitchbend = self._get_pitches(note, mode2)
         self._stp = note.atStp.value
-        self._envelope = note.envelope.value.replace("%", note.ove.value).replace(","," ")
-        self._cache_path = os.path.join(cachedir, "{}_{}_{}_{}".format(int(note.num.value[1:],
-                                                                           note.atAlias.value.replace(" ","+"),
-                                                                           note.notenum.get_tone_name(),
-                                                                           self._get_cache_hash(note))))
+        #TODO envelopeが空欄の場合の処理が必要
+        self._envelope = note.envelope.value.replace("%", str(note.ove)).replace(","," ")
+        #self._cache_path = os.path.join(cachedir, "{}_{}_{}_{}".format(int(note.num.value[1:],
+        #                                                                   note.atAlias.value.replace(" ","+"),
+        #                                                                   note.notenum.get_tone_name(),
+        #                                                                   self._get_cache_hash(note))))
     def _get_cache_hash(self, note: Note) -> str:
         '''
         resampが使用する各パラメータを使用して、ハッシュ値を生成します。
@@ -182,14 +183,14 @@ class RenderNote:
             | 同じ数字が続く場合ランレングス圧縮したもの
 
         '''
-        t: np.ndarray = PyRwu.pitch.getPitchRange(self.tempo, self.target_ms, 44100)
+        t: np.ndarray = PyRwu.pitch.getPitchRange(self._tempo, self._target_ms, 44100)
         offset: float = note.atPre.value + note.atStp.value
-        base_pitches: np.ndarray = self._get_base_pitches()
+        base_pitches: np.ndarray = self._get_base_pitches(note, t)
         if note.prev is not None and note.prev.lyric.value != "R":
-            base_pitches += self._interp_pitches(note.prev, offset - note.prev.msLength)
-        base_pitches += self._interp_pitches(note, offset)
+            base_pitches += self._interp_pitches(note.prev, t, offset - note.prev.msLength)
+        base_pitches += self._interp_pitches(note, t, offset)
         if note.next is not None and note.next.lyric.value != "R":
-            base_pitches += self._interp_pitches(note.next, offset + note.msLength)
+            base_pitches += self._interp_pitches(note.next, t, offset + note.msLength)
 
     def _get_base_pitches(self, note: Note, t:np.ndarray) -> np.ndarray:
         '''

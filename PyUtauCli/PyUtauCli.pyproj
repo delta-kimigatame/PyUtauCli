@@ -58,6 +58,9 @@
     <Compile Include="settings\settings.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_note2render.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tmp.py">
       <SubType>Code</SubType>
     </Compile>
