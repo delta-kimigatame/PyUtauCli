@@ -76,6 +76,9 @@ for note in plugin.notes:
 #プラグインファイルの書き込み
 plugin.save()
 ```
+
+#### 使い方(Google Colab)
+colab(https://colab.research.google.com/drive/1V9aWorTtgjVQDjdnv4Yd1ps63Q_kDRpj?usp=sharing)
 ***
 
 ### 技術仕様
