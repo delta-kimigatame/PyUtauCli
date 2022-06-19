@@ -4,7 +4,8 @@ windows版UTAUの情報を取得します。
 
 
 import platform
-import winreg
+if platform.platform().startswith("Windows"):
+    import winreg
 import os
 import os.path
 
