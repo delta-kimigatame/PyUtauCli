@@ -292,14 +292,26 @@ class RenderNote:
         '''
         t: np.ndarray = PyRwu.pitch.getPitchRange(self._tempo, self._target_ms, 44100)
         offset: float = note.atPre.value + note.atStp.value
-        base_pitches: np.ndarray = self._get_base_pitches(note, t)
-        if note.prev is not None and note.prev.lyric.value != "R":
-            base_pitches += self._interp_pitches(note.prev, t, offset - note.prev.msLength)
-            base_pitches += self._get_vibrato_pitches(note.prev, t, offset - note.prev.msLength)
-        base_pitches += self._interp_pitches(note, t, offset)
-        base_pitches += self._get_vibrato_pitches(note, t, offset)
-        if note.next is not None and note.next.lyric.value != "R":
-            base_pitches += self._interp_pitches(note.next, t, offset + note.msLength)
+        if mode2:
+            base_pitches: np.ndarray = self._get_base_pitches(note, t)
+            if note.prev is not None and note.prev.lyric.value != "R":
+                base_pitches += self._interp_pitches(note.prev, t, offset - note.prev.msLength)
+                base_pitches += self._get_vibrato_pitches(note.prev, t, offset - note.prev.msLength)
+            base_pitches += self._interp_pitches(note, t, offset)
+            base_pitches += self._get_vibrato_pitches(note, t, offset)
+            if note.next is not None and note.next.lyric.value != "R":
+                base_pitches += self._interp_pitches(note.next, t, offset + note.msLength)
+        else:
+            base_pitches: np.ndarray = np.zeros_like(t, dtype = np.int16)
+            start_ms: float = offset + note.pbStart.value #pbstartは負の数
+            start: int = np.where(t>= start_ms)[0][0]
+            end: int = start + len(note.pitches.value)
+            print(note.pbStart.value)
+            print(offset)
+            print(start)
+            print(end)
+            if start < end:
+                base_pitches[start:end] = np.array(note.pitches.value)
         return self.encodeRunLength(self.encodeBase64(base_pitches))
 
     def _get_base_pitches(self, note: Note, t:np.ndarray) -> np.ndarray:
