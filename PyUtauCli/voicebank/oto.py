@@ -248,7 +248,7 @@ class Oto:
             params=param.split(",")
             if len(params) != 6:
                 continue
-            self._datas_by_file[subdir].append(OtoRecord(subdir, filename, params[0], params[1], params[2], params[3], params[4], params[5]))
+            self._datas_by_file[subdir].append(OtoRecord(subdir, filename, params[0], params[1], params[4], params[5], params[2], params[3]))
             self._setValue(params[0], self._datas_by_file[subdir][-1])
             self._setValue(".".join(os.path.join(subdir, filename).split(".")[:-1]), self._datas_by_file[subdir][-1])
 
