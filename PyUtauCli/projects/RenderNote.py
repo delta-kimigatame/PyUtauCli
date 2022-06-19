@@ -229,7 +229,10 @@ class RenderNote:
             self._pitchbend = ""
         self._stp = note.atStp.value
         if note.envelope.hasValue:
-            self._envelope = note.envelope.value.replace("%", str(note.atOve)).replace(","," ")
+            if "%" in note.envelope.value:
+                self._envelope = note.envelope.value.replace("%", str(note.atOve)).replace(","," ")
+            else:
+                self._envelope = note.envelope.value.replace(","," ") + " " +str(note.atOve)
         else:
             self._envelope = settings.DEFAULT_ENV.replace("%", str(note.atOve))
         self._cache_path = os.path.join(cachedir, "{}_{}_{}_{}.wav".format(note.num.value[1:],
@@ -448,7 +451,7 @@ class RenderNote:
             t[start:end+1]をx[i-1]からの経過時間に変換したもの
         '''
         start: int = np.where(t>=x[i-1])[0][0]
-        if t[0]<=x[i]:
+        if t[0]<x[i]:
             end: int = np.where(t<x[i])[0][-1]
         else:
             end: int = 0
