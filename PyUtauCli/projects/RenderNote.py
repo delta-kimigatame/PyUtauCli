@@ -104,6 +104,8 @@ class RenderNote:
     _stp: float
     _envelope: str
     _cache_path: str
+    _output_ms: float
+    _require_resamp: bool = True
 
     @property
     def input_path(self) -> str:
@@ -168,6 +170,14 @@ class RenderNote:
     @property
     def cache_path(self) -> str:
         return self._cache_path
+    
+    @property
+    def output_ms(self) -> float:
+        return self._output_ms
+
+    @property
+    def require_resamp(self) -> bool:
+        return self._require_resamp
 
     def __init__(self, note: Note, vb: VoiceBank, cachedir: str, output: str, mode2: bool = True):
         '''
@@ -196,24 +206,36 @@ class RenderNote:
         self._target_tone = note.notenum.get_tone_name()
         self._velocity = note.velocity.value
         self._flags = note.flags.value
-        self._offset = vb.oto[note.atAlias.value].offset
         if note.next is None:
-            self._output_ms = note.msLength + note.atPre.value + note.atStp.value
+            self._output_ms = note.msLength + note.atPre.value
         else:
-            self._output_ms = note.msLength + note.atPre.value + note.atStp.value + note.next.atOve.value - note.next.atPre.value
-        self._target_ms = (round((self._output_ms) / 50) + 1 ) * 50
-        self._fixed_ms = vb.oto[note.atAlias.value].consonant
-        self._end_ms = vb.oto[note.atAlias.value].blank
+            self._output_ms = note.msLength + note.atPre.value + note.next.atOve.value - note.next.atPre.value
+        self._target_ms = (round((self._output_ms + note.atStp.value) / 50) + 1 ) * 50
+        if  vb.oto.haskey(note.atAlias.value):
+            self._offset = vb.oto[note.atAlias.value].offset
+            self._fixed_ms = vb.oto[note.atAlias.value].consonant
+            self._end_ms = vb.oto[note.atAlias.value].blank
+        else:
+            self._offset = 0
+            self._fixed_ms = 0
+            self._end_ms = 0
+            self._require_resamp = False
         self._intensity = note.intensity.value
         self._modulation = note.modulation.value
         self._tempo = "!{:.2f}".format(note.tempo.value)
-        self._pitchbend = self._get_pitches(note, mode2)
+        if note.lyric.value != "R":
+            self._pitchbend = self._get_pitches(note, mode2)
+        else:
+            self._pitchbend = ""
         self._stp = note.atStp.value
         if note.envelope.hasValue:
-            self._envelope = note.envelope.value.replace("%", str(note.ove)).replace(","," ")
+            self._envelope = note.envelope.value.replace("%", str(note.atOve)).replace(","," ")
         else:
-            self._envelope = settings.DEFAULT_ENV.replace("%", str(note.ove))
-        self._cache_path = os.path.join(cachedir, self._get_cache_hash(note))
+            self._envelope = settings.DEFAULT_ENV.replace("%", str(note.atOve))
+        self._cache_path = os.path.join(cachedir, "{}_{}_{}_{}.wav".format(note.num.value[1:],
+                                                note.atAlias.value.replace(" ","+"),
+                                                note.notenum.get_tone_name(),
+                                                self._get_cache_hash(note)))
 
     def _get_cache_hash(self, note: Note) -> str:
         '''
@@ -313,8 +335,9 @@ class RenderNote:
             base_pitches[start:end] = (note.prev.notenum.value - note.notenum.value) * 100
         if note.next is not None and note.next.lyric.value != "R":
             next_offset: float = offset + note.msLength
-            start = np.where(t >= note.next.pbs.time + next_offset)[0][0]
-            base_pitches[start:] = (note.next.notenum.value - note.notenum.value) * 100
+            if t[-1] >= note.next.pbs.time + next_offset:
+                start = np.where(t >= note.next.pbs.time + next_offset)[0][0]
+                base_pitches[start:] = (note.next.notenum.value - note.notenum.value) * 100
         return base_pitches
 
     def _interp_pitches(self, note: Note, t:np.ndarray, offset:float) -> np.ndarray:
@@ -367,6 +390,7 @@ class RenderNote:
             elif (mode[i-1] == "j"):
                 #cos(0) → cos(pi/2)の補完
                 pitches[start:end+1] = self._interp_j(cycle, height, phase, y[i-1])
+
         return pitches
 
     @staticmethod
@@ -420,7 +444,10 @@ class RenderNote:
             t[start:end+1]をx[i-1]からの経過時間に変換したもの
         '''
         start: int = np.where(t>=x[i-1])[0][0]
-        end: int = np.where(t<x[i])[0][-1]
+        if t[0]<=x[i]:
+            end: int = np.where(t<x[i])[0][-1]
+        else:
+            end: int = 0
         cycle: float = x[i] - x[i-1]
         height: int = y[i] - y[i-1]
         phase: np.ndarray = t[start:end+1] - x[i-1]
