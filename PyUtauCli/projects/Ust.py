@@ -318,11 +318,11 @@ class Ust:
                 except Exception as e:
                     self.logger.warn("{} Modulation can't init. because {}".format(note.num.value,
                                                                                    traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
-            elif line.startswith("Pitches"):
+            elif line.startswith("PitchBend="):
                 try:
-                    note.pitches.init_from_str(line.replace("Pitches=", ""))
+                    note.pitches.init_from_str(line.replace("PitchBend=", ""))
                 except Exception as e:
-                    self.logger.warn("{} Pitches can't init. because {}".format(note.num.value,
+                    self.logger.warn("{} PitchBend can't init. because {}".format(note.num.value,
                                                                                 traceback.format_exception_only(type(e), e)[0].rstrip('\n')))
             elif line.startswith("PBStart"):
                 try:
@@ -448,7 +448,7 @@ class Ust:
                 if note.modulation.hasValue:
                     fw.write("Modulation={}\n".format(str(note.modulation)))
                 if note.pitches.hasValue:
-                    fw.write("Pitches={}\n".format(str(note.pitches)))
+                    fw.write("PitchBend={}\n".format(str(note.pitches)))
                 if note.pbStart.hasValue:
                     fw.write("PBStart={}\n".format(str(note.pbStart)))
                 if note.pbs.hasValue:

@@ -523,7 +523,7 @@ class TestLoadNote(unittest.TestCase):
                      "Velocity=150",
                      "Intensity=80",
                      "Modulation=30",
-                     "Pitches=0,1,2,3",
+                     "PitchBend=0,1,2,3",
                      "PBStart=-10.0",
                      "PBS=-5;3",
                      "PBY=1,2,3",
@@ -599,7 +599,7 @@ class TestLoadNote(unittest.TestCase):
                      "Velocity=j",
                      "Intensity=k",
                      "Modulation=l",
-                     "Pitches=m",
+                     "PitchBend=m",
                      "PBStart=n",
                      "PBS=o",
                      "PBY=p",
@@ -632,7 +632,7 @@ class TestLoadNote(unittest.TestCase):
         self.assertEqual(logcm.output[9], "WARNING:TEST:#0000 Velocity can't init. because ValueError: j is not int")
         self.assertEqual(logcm.output[10], "WARNING:TEST:#0000 Intensity can't init. because ValueError: k is not int")
         self.assertEqual(logcm.output[11], "WARNING:TEST:#0000 Modulation can't init. because ValueError: l is not int")
-        self.assertEqual(logcm.output[12], "WARNING:TEST:#0000 Pitches can't init. because ValueError: m is not int")
+        self.assertEqual(logcm.output[12], "WARNING:TEST:#0000 PitchBend can't init. because ValueError: m is not int")
         self.assertEqual(logcm.output[13], "WARNING:TEST:#0000 PBStart can't init. because ValueError: n is not float")
         self.assertEqual(logcm.output[14], "WARNING:TEST:#0000 PBS can't init. because ValueError: o is not float")
         self.assertEqual(logcm.output[15], "WARNING:TEST:#0000 PBY can't init. because ValueError: p is not float")
@@ -664,7 +664,7 @@ class TestLoadNote(unittest.TestCase):
                       "Velocity=150",
                       "Intensity=80",
                       "Modulation=30",
-                      "Pitches=0,1,2,3",
+                      "PitchBend=0,1,2,3",
                       "PBStart=-10.0",
                       "PBS=-5;3",
                       "PBY=1,2,3",
@@ -828,7 +828,7 @@ class TestWrite(unittest.TestCase):
                       "Velocity=150",
                       "Intensity=80",
                       "Modulation=30",
-                      "Pitches=0,1,2,3",
+                      "PitchBend=0,1,2,3",
                       "PBStart=-10.0",
                       "PBS=-5;3",
                       "PBY=1,2,3",
@@ -882,7 +882,7 @@ class TestWrite(unittest.TestCase):
         self.assertEqual(mock_io().write.call_args_list[26][0][0], "Velocity=150\n")
         self.assertEqual(mock_io().write.call_args_list[27][0][0], "Intensity=80\n")
         self.assertEqual(mock_io().write.call_args_list[28][0][0], "Modulation=30\n")
-        self.assertEqual(mock_io().write.call_args_list[29][0][0], "Pitches=0,1,2,3\n")
+        self.assertEqual(mock_io().write.call_args_list[29][0][0], "PitchBend=0,1,2,3\n")
         self.assertEqual(mock_io().write.call_args_list[30][0][0], "PBStart=-10.000\n")
         self.assertEqual(mock_io().write.call_args_list[31][0][0], "PBS=-5;3\n")
         self.assertEqual(mock_io().write.call_args_list[32][0][0], "PBY=1.0,2.0,3.0\n")
