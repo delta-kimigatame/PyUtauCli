@@ -3,6 +3,7 @@ import os.path
 import shutil
 from logging import Logger
 
+import numpy as np
 import PyRwu
 import PyWavTool
 
@@ -13,6 +14,14 @@ import settings.logger as mylogger
 import settings
 
 default_logger = mylogger.get_logger(__name__, False)
+
+class FastResamp(PyRwu.Resamp):
+    def _getAp(self,
+               f0_floor: float,
+               f0_ceil: float,
+               frame_period: float,
+               threshold: float):
+        self._ap = np.zeros_like(self._sp)
 
 class Render:
     '''
@@ -109,6 +118,32 @@ class Render:
                                       note.offset, note.target_ms, note.fixed_ms, note.end_ms, note.intensity,
                                       note.modulation, note.tempo, note.pitchbend))
                 resamp = PyRwu.Resamp(note.input_path, note.cache_path, note.target_tone, note.velocity, note.flags,
+                                      note.offset, note.target_ms, note.fixed_ms, note.end_ms, note.intensity,
+                                      note.modulation, note.tempo, note.pitchbend, logger=self.logger)
+                resamp.resamp()
+            else:
+                self.logger.info("{} have be cached".format(note.cache_path))
+
+                
+
+    def fast_resamp(self, * , force:bool = False):
+        '''
+        FastResampを使用してキャッシュファイルを生成する。
+
+        Parameters
+        ----------
+        force: bool, default False
+            Trueの場合、キャッシュファイルがあっても生成する。
+        '''
+        os.makedirs(self._cache_dir, exist_ok=True)
+        for note in self.notes:
+            if not note.require_resamp:
+                continue
+            if force or not os.path.isfile(note.cache_path):
+                self.logger.info("{} {} {} {} {} {} {} {} {} {} {} {} {}".format(note.input_path, note.cache_path, note.target_tone, note.velocity, note.flags,
+                                      note.offset, note.target_ms, note.fixed_ms, note.end_ms, note.intensity,
+                                      note.modulation, note.tempo, note.pitchbend))
+                resamp = FastResamp(note.input_path, note.cache_path, note.target_tone, note.velocity, note.flags,
                                       note.offset, note.target_ms, note.fixed_ms, note.end_ms, note.intensity,
                                       note.modulation, note.tempo, note.pitchbend, logger=self.logger)
                 resamp.resamp()
