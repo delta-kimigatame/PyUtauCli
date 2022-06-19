@@ -1,25 +1,25 @@
-# PyUtauCli
+ï»¿# PyUtauCli
 
-### ‚±‚ê‚Í‰½?
-* ˆ¹‰®^ÒŠ—‚É‚æ‚Á‚ÄŒöŠJ‚³‚ê‚Ä‚¢‚éAWindowsŒü‚¯‚Éì¬‚³‚ê‚½‰Ìº‡¬ƒ\ƒtƒgƒEƒFƒAuUTAUvŠÖ˜Aƒf[ƒ^‚ğˆµ‚¤ƒvƒƒWƒFƒNƒg‚Å‚·B
+### ã“ã‚Œã¯ä½•?
+* é£´å±‹ï¼è–è’²æ°ã«ã‚ˆã£ã¦å…¬é–‹ã•ã‚Œã¦ã„ã‚‹ã€Windowså‘ã‘ã«ä½œæˆã•ã‚ŒãŸæ­Œå£°åˆæˆã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã€ŒUTAUã€é–¢é€£ãƒ‡ãƒ¼ã‚¿ã‚’æ‰±ã†ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚
 
-    UTAUŒö®ƒTƒCƒg(http://utau2008.web.fc2.com/)
+    UTAUå…¬å¼ã‚µã‚¤ãƒˆ(http://utau2008.web.fc2.com/)
 
-* ˆµ‚¦‚éƒf[ƒ^
+* æ‰±ãˆã‚‹ãƒ‡ãƒ¼ã‚¿
 
-  * .ustƒtƒ@ƒCƒ‹(UTAU sequence txt) 
-    * ust version1.2‚ÉŒÀ‚é
-    * ƒwƒbƒ_•”•ª‚Ì•¶šƒR[ƒh‚ÍƒVƒXƒeƒ€Šù’è‚à‚µ‚­‚Ícp932
-    * body•”•ª‚Ì•¶šƒR[ƒh‚Ícp932‚à‚µ‚­‚Íutf-8
-  * utauplugin—pƒf[ƒ^
-  * UTAU‰¹Œ¹ŠÖ˜Aƒf[ƒ^
+  * .ustãƒ•ã‚¡ã‚¤ãƒ«(UTAU sequence txt) 
+    * ust version1.2ã«é™ã‚‹
+    * ãƒ˜ãƒƒãƒ€éƒ¨åˆ†ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã¯ã‚·ã‚¹ãƒ†ãƒ æ—¢å®šã‚‚ã—ãã¯cp932
+    * bodyéƒ¨åˆ†ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã¯cp932ã‚‚ã—ãã¯utf-8
+  * utaupluginç”¨ãƒ‡ãƒ¼ã‚¿
+  * UTAUéŸ³æºé–¢é€£ãƒ‡ãƒ¼ã‚¿
     * oto.ini
     * prefix.map
-    * .frq(ü”g”•\ƒf[ƒ^)
-  * windows”ÅUTAU‚Ìİ’èƒtƒ@ƒCƒ‹
+    * .frq(å‘¨æ³¢æ•°è¡¨ãƒ‡ãƒ¼ã‚¿)
+  * windowsç‰ˆUTAUã®è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
 
-* ‰ü‘¢‚â‘g‚İ‚İ‚ğŠ½Œ}‚µ‚Ü‚·‚ªA‚»‚ê‚ç‚Ì‚½‚ß‚ÌƒhƒLƒ…ƒƒ“ƒg‚Í€”õ’†‚Å‚·B
-* ‰¹º‚Ì‡¬‚É‚ÍA‰º‹L‚ÌŒZ’íƒvƒƒWƒFƒNƒg‚ğŠˆ—p‚µ‚Ä‚¢‚Ü‚·B
+* æ”¹é€ ã‚„çµ„ã¿è¾¼ã¿ã‚’æ­“è¿ã—ã¾ã™ãŒã€ãã‚Œã‚‰ã®ãŸã‚ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã¯æº–å‚™ä¸­ã§ã™ã€‚
+* éŸ³å£°ã®åˆæˆã«ã¯ã€ä¸‹è¨˜ã®å…„å¼Ÿãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’æ´»ç”¨ã—ã¦ã„ã¾ã™ã€‚
 
     PyWavTool(https://github.com/delta-kimigatame/PyWavTool)
     PyRwu(https://github.com/delta-kimigatame/PyRwu)
@@ -27,37 +27,37 @@
 
 ***
 
-### –ÆÓ–€
-* –{ƒ\ƒtƒgƒEƒFƒA‚ğg—p‚µ‚Ä¶‚¶‚½‚¢‚©‚È‚é•s‹ï‡‚É‚Â‚¢‚Ä‚àAìÒ‚ÍÓ”C‚ğ•‰‚¢‚Ü‚¹‚ñB
-* ìÒ‚ÍA–{ƒ\ƒtƒgƒEƒFƒA‚Ì•s‹ï‡‚ğC³‚·‚éÓ”C‚ğ•‰‚¢‚Ü‚¹‚ñB
+### å…è²¬äº‹é …
+* æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ä½¿ç”¨ã—ã¦ç”Ÿã˜ãŸã„ã‹ãªã‚‹ä¸å…·åˆã«ã¤ã„ã¦ã‚‚ã€ä½œè€…ã¯è²¬ä»»ã‚’è² ã„ã¾ã›ã‚“ã€‚
+* ä½œè€…ã¯ã€æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ä¸å…·åˆã‚’ä¿®æ­£ã™ã‚‹è²¬ä»»ã‚’è² ã„ã¾ã›ã‚“ã€‚
 
 ***
 
-### ƒ‚ƒWƒ…[ƒ‹‚Ìg‚¢•û
-#### ƒCƒ“ƒXƒg[ƒ‹
+### ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®ä½¿ã„æ–¹
+#### ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 ``` pip install PyUtauCli```
 
 
-#### g‚¢•û(ustƒtƒ@ƒCƒ‹‚©‚çwav‚ğ¶¬‚·‚é)
+#### ä½¿ã„æ–¹(ustãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰wavã‚’ç”Ÿæˆã™ã‚‹)
 ```Python
 from PyUtauCli.projects.Render import Render
 from PyUtauCli.projects.Ust import Ust
 
-#ustƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+#ustãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 ust = Ust("ustpath.ust")
 ust.load()
 
-#Šeíƒpƒ‰ƒ[ƒ^‚Ì•ÏŠ·
+#å„ç¨®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å¤‰æ›
 render = Render(ust, cache_dir="cache", output_file="output.wav")
-#ƒLƒƒƒbƒVƒ…‚Ìíœ
+#ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®å‰Šé™¤
 render.clean()
-#PyRwu‚ğ—p‚¢‚ÄƒLƒƒƒbƒVƒ…ƒtƒ@ƒCƒ‹‚Ì¶¬
+#PyRwuã‚’ç”¨ã„ã¦ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
 render.resamp()
-#ƒLƒƒƒbƒVƒ…ƒtƒ@ƒCƒ‹‚ğg—p‚µ‚Äoutput.wav‚Ì¶¬
+#ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ç”¨ã—ã¦output.wavã®ç”Ÿæˆ
 render.append()
 ```
 
-#### g‚¢•û(ustƒvƒ‰ƒOƒCƒ“ -‘I‘ğƒm[ƒg‚ğ”¼‰¹ã‚°‚éƒvƒ‰ƒOƒCƒ“-)
+#### ä½¿ã„æ–¹(ustãƒ—ãƒ©ã‚°ã‚¤ãƒ³ -é¸æŠãƒãƒ¼ãƒˆã‚’åŠéŸ³ä¸Šã’ã‚‹ãƒ—ãƒ©ã‚°ã‚¤ãƒ³-)
 ```Python
 import sys
 from PyUtauCli.projects.UtauPlugin import UtauPlugin
@@ -65,24 +65,24 @@ from PyUtauCli.projects.UtauPlugin import UtauPlugin
 print(sys.argv)
 #['plugin.py', 'C:\User\username\AppData\Local\Temp\utau1\tmp****.tmp']
 
-#ƒvƒ‰ƒOƒCƒ“ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+#ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 plugin = UtauPlugin(sys.argv[1])
 plugin.load()
 
-#”¼‰¹ã‚°‚éˆ—
+#åŠéŸ³ä¸Šã’ã‚‹å‡¦ç†
 for note in plugin.notes:
     note.notenum.value += 1
 
-#ƒvƒ‰ƒOƒCƒ“ƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ
+#ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿
 plugin.save()
 ```
 ***
 
-### ‹Zpd—l
-* ƒhƒLƒ…ƒƒ“ƒg(https://delta-kimigatame.github.io/PyUtauCli/index.html)
+### æŠ€è¡“ä»•æ§˜
+* ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ(https://delta-kimigatame.github.io/PyUtauCli/index.html)
 
 ***
 
-### ƒŠƒ“ƒN
+### ãƒªãƒ³ã‚¯
 * twitter(https://twitter.com/delta_kuro)
 * github(https://github.com/delta-kimigatame/PyUtauCli)

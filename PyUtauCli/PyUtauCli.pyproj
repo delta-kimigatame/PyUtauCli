@@ -55,6 +55,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PyUtauCli.py" />
+    <Compile Include="release.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="settings\logger.py">
       <SubType>Code</SubType>
     </Compile>
@@ -150,7 +153,6 @@
     <Content Include="docsource\index.rst" />
     <Content Include="docsource\make.bat" />
     <Content Include="docsource\Makefile" />
-    <Content Include="README.md" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
