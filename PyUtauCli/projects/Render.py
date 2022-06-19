@@ -1,5 +1,6 @@
 ﻿import os
 import os.path
+import shutil
 from logging import Logger
 
 import PyRwu
@@ -91,6 +92,14 @@ class Render:
         return voice_dir
 
     def resamp(self, * , force:bool = False):
+        '''
+        PyRwu.Resampを使用してキャッシュファイルを生成する。
+
+        Parameters
+        ----------
+        force: bool, default False
+            Trueの場合、キャッシュファイルがあっても生成する。
+        '''
         os.makedirs(self._cache_dir, exist_ok=True)
         for note in self.notes:
             if not note.require_resamp:
@@ -107,6 +116,9 @@ class Render:
                 self.logger.info("{} have be cached".format(note.cache_path))
 
     def append(self):
+        '''
+        PyWavToolを使用してキャッシュファイルから出力ファイルを合成する。
+        '''
         output_dir: str = os.path.split(self._output_file)[0]
         if output_dir != "":
             os.makedirs(output_dir, exists_ok=True)
@@ -135,3 +147,12 @@ class Render:
 
         if os.path.isfile(self._output_file+".dat"):
             os.remove(self._output_file+".dat")
+
+    def clean(self):
+        '''
+        self._cache_dirとself._output_fileが存在すれば削除する。
+        '''
+        if os.path.isdir(self._cache_dir):
+            shutil.rmtree(self._cache_dir)
+        if os.path.isfile(self._output_file):
+            os.remove(self._output_file)

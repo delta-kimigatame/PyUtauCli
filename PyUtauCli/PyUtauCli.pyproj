@@ -39,6 +39,9 @@
     <Compile Include="projects\Note.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="projects\Render.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="projects\RenderNote.py">
       <SubType>Code</SubType>
     </Compile>

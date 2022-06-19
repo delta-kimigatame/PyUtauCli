@@ -365,3 +365,8 @@ FodyWeavers.xsd
 /PyUtauCli/docs/_sources
 /PyUtauCli/docs/.doctrees
 /PyUtauCli/log.txt
+/PyUtauCli/test.cache
+/PyUtauCli/cache
+/PyUtauCli/tmp.py
+/PyUtauCli/test.ust
+/PyUtauCli/output.wav

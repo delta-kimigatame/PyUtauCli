@@ -28,6 +28,14 @@ tests.test\_note module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_note2render module
+------------------------------
+
+.. automodule:: tests.test_note2render
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_oto module
 ----------------------
 
