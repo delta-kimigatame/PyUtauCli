@@ -207,6 +207,8 @@ class PBSEntry(EntryBase):
 class PBYEntry(ListEntry):
     def _check_value(self, value):
         try:
+            if value == " ":
+                value = 0
             return float(value)
         except:
             raise ValueError("{} is not float".format(value))
