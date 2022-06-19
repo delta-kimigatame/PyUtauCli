@@ -217,6 +217,7 @@ class Note:
         self.region = RegionEntry()
         self.region_end = RegionEndEntry()
         self.flags = FlagsEntry()
+        self.autoren= bool = False
         self.prev = None
         self.next = None
 
@@ -267,16 +268,27 @@ class Note:
         -------
         alias: str, default ""
         '''
+
+        lyric: str = self.lyric.value
+        no_prefix: bool = False
+        if "?" in lyric:
+            lyryc = lyric.replace("?","")
+            no_prefix = True
+            
+        if "!" in lyric:
+            lyryc = lyric.replace("!","")
+            self.autoren = True
+
         if self.atAlias.hasValue:
             return self.atAlias.value
-        elif oto.haskey(prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix):
-            self.atAlias.value = prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix
+        elif not no_prefix and oto.haskey(prefix[self.notenum.value].prefix + lyric + prefix[self.notenum.value].suffix):
+            self.atAlias.value = prefix[self.notenum.value].prefix + lyric + prefix[self.notenum.value].suffix
             self.atFileName.value = os.path.join(oto[self.atAlias.value].otopath, oto[self.atAlias.value].filename)
-            return prefix[self.notenum.value].prefix + self.lyric.value + prefix[self.notenum.value].suffix
-        elif oto.haskey(self.lyric.value):
-            self.atAlias.value = self.lyric.value
-            self.atFileName.value = os.path.join(oto[self.lyric.value].otopath, oto[self.lyric.value].filename)
-            return self.lyric.value
+            return prefix[self.notenum.value].prefix + lyric + prefix[self.notenum.value].suffix
+        elif oto.haskey(lyric):
+            self.atAlias.value = lyric
+            self.atFileName.value = os.path.join(oto[lyric].otopath, oto[lyric].filename)
+            return lyric
         else:
             return ""
 
