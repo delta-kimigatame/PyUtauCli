@@ -331,8 +331,12 @@ class RenderNote:
                 start = 0
             else:
                 start = np.where(t >= note.prev.pbs.time + prev_offset)[0][0]
-            end = np.where(t < note.pbs.time + offset)[0][-1]
-            base_pitches[start:end] = (note.prev.notenum.value - note.notenum.value) * 100
+            if t[0]<=note.pbs.time + offset:
+                end = np.where(t < note.pbs.time + offset)[0][-1]
+            else:
+                end = 0
+            if start < end:
+                base_pitches[start:end] = (note.prev.notenum.value - note.notenum.value) * 100
         if note.next is not None and note.next.lyric.value != "R":
             next_offset: float = offset + note.msLength
             if t[-1] >= note.next.pbs.time + next_offset:
@@ -519,7 +523,12 @@ class RenderNote:
         start_ms: float = offset + note.msLength * (100 - note.vibrato.length) / 100
         end_ms: float = offset + note.msLength
         start: int = np.where(t>=start_ms)[0][0]
-        end: int = np.where(t<end_ms)[0][-1]
+        if t[0] < end_ms:
+            end: int = np.where(t<end_ms)[0][-1]
+        else:
+            end: int =0
+        if start >= end:
+            return pitches
                 
         phase: np.ndarray = t[start:end + 1] - start_ms
         phase_offset: float = 2 * np.pi * note.vibrato.phase /100
