@@ -209,6 +209,8 @@ class PBYEntry(ListEntry):
         try:
             if value == " ":
                 value = 0
+            if value == "":
+                value = 0
             return float(value)
         except:
             raise ValueError("{} is not float".format(value))
