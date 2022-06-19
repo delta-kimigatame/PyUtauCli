@@ -1,6 +1,6 @@
 ﻿import os.path
 
-import common.convert_notenum
+import common.convert_notenum as convert_notenum
 
 
 class MapRecord:
@@ -61,14 +61,14 @@ class PrefixMap:
             load実行時ファイルがcp932でもutf-8でもなかった場合
         '''
         for i in self._key:
-            self._values[i] = MapRecord(common.convert_notenum.toStr(i) + "\t\t")
+            self._values[i] = MapRecord(convert_notenum.toStr(i) + "\t\t")
         if dirpath != "":
             self.load(dirpath)
 
     def __getitem__(self, key) -> MapRecord:
         if key in self._values:
             return self._values[key]
-        return self._values[common.convert_notenum.toInt(key)]
+        return self._values[convert_notenum.toInt(key)]
 
     def load(self, dirpath: str, filename: str = "prefix.map"):
         '''
@@ -110,7 +110,7 @@ class PrefixMap:
                 continue
             if "\t" not in line:
                 continue
-            self._values[common.convert_notenum.toInt(line.split("\t")[0])] = MapRecord(line)
+            self._values[convert_notenum.toInt(line.split("\t")[0])] = MapRecord(line)
 
     def save(self, dirpath: str, filename: str = "prefix.map", encoding: str = "cp932"):
         '''

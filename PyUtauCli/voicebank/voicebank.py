@@ -3,13 +3,13 @@ import os.path
 import traceback
 from logging import Logger
 
-import settings.logger
+import settings.logger as mylogger
 from .character import Character
 from .prefixmap import PrefixMap
 from .oto import Oto
 
 
-default_logger = settings.logger.get_logger(__name__, False)
+default_logger = mylogger.get_logger(__name__, False)
 
 
 class VoiceBank:

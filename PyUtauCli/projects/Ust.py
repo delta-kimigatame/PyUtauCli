@@ -1,18 +1,14 @@
 ﻿import os
 import os.path
 import locale
-import re
 import traceback
 from logging import Logger
 
-from voicebank.oto import Oto
-from voicebank.prefixmap import PrefixMap
 from .Note import Note
-import settings.logger
-import settings.settings
+import settings.logger as mylogger
 
 
-default_logger = settings.logger.get_logger(__name__, False)
+default_logger = mylogger.get_logger(__name__, False)
 
 
 class Ust:

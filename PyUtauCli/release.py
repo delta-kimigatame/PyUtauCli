@@ -28,8 +28,23 @@ LICENSE=os.path.join("..","LICENSE")
 for file in SOURCE_FILES:
     os.makedirs(os.path.join(PYPI_TEST_DIR, "src", PROJECTNAME, os.path.dirname(file)), exist_ok=True)
     os.makedirs(os.path.join(PYPI_DIR, "src", PROJECTNAME, os.path.dirname(file)), exist_ok=True)
-    shutil.copy(file, os.path.join(PYPI_TEST_DIR, "src", PROJECTNAME, file))
-    shutil.copy(file, os.path.join(PYPI_DIR, "src", PROJECTNAME, file))
+    with open(file, "r", encoding="utf-8") as fr:
+        lines = fr.readlines()
+    for i in range(len(lines)):
+        if("import settings." in lines[i]):
+            lines[i] = lines[i].replace("import settings.", "from ..settings import ")
+        if("import common." in lines[i]):
+            lines[i] = lines[i].replace("import common.", "from ..common import ")
+        if("from voicebank" in lines[i]):
+            lines[i] = lines[i].replace("from voicebank", "from ..voicebank")
+        if("import settings\n" in lines[i]):
+            lines[i] = lines[i].replace("import settings\n", "from .. import settings\n")
+        if("import voicebank\n" in lines[i]):
+            lines[i] = lines[i].replace("import voicebank\n", "from .. import voicebank\n")
+    with open(os.path.join(PYPI_TEST_DIR, "src", PROJECTNAME, file), "w", encoding="utf-8") as fw:
+        fw.write("".join(lines))
+        
+    shutil.copy(os.path.join(PYPI_TEST_DIR, "src", PROJECTNAME, file), os.path.join(PYPI_DIR, "src", PROJECTNAME, file))
 
 with open(os.path.join(PYPI_DIR, "src", PROJECTNAME, "__init__.py"),"w") as fw:
     fw.write("")

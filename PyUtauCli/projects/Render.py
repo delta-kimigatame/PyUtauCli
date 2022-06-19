@@ -9,10 +9,10 @@ import PyWavTool
 from .Ust import Ust
 from .RenderNote import RenderNote
 from voicebank import VoiceBank
-import settings.logger
+import settings.logger as mylogger
 import settings
 
-default_logger = settings.logger.get_logger(__name__, False)
+default_logger = mylogger.get_logger(__name__, False)
 
 class Render:
     '''

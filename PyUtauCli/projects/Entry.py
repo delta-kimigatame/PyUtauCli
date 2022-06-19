@@ -1,5 +1,5 @@
 ﻿from .EntryBase import EntryBase, IntEntry, StringEntry, FloatEntry, BoolEntry, ListEntry
-import common.convert_notenum
+import common.convert_notenum as convert_notenum
 
 
 class NumberEntry(StringEntry):
@@ -18,12 +18,12 @@ class NoteNumEntry(IntEntry):
     _value = 60
 
     def set_from_str(self, value: str):
-        self.value = common.convert_notenum.toInt(value)
+        self.value = convert_notenum.toInt(value)
         self._set_update()
         self._hasValue = True
 
     def get_tone_name(self) -> str:
-        return common.convert_notenum.toStr(self.value)
+        return convert_notenum.toStr(self.value)
 
 
 class TempoEntry(FloatEntry):
