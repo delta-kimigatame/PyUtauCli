@@ -5,6 +5,14 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PyUtauCli", "PyUtauCli\PyUtauCli.pyproj", "{880C49FE-4829-4AF4-9F65-7F39FA08756C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52F6B9BC-0DB1-4A84-ACB2-BAFAE34EFD14}"
+	ProjectSection(SolutionItems) = preProject
+		docsource\index.rst = docsource\index.rst
+		LICENSE = LICENSE
+		docsource\make.bat = docsource\make.bat
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
