@@ -356,7 +356,7 @@ class Note:
             self.atStp.value = realStp
 
     @property
-    def msLength(self) -> int:
+    def msLength(self) -> float:
         '''
         tempoとlengthからmsを計算して返します。
 
@@ -375,4 +375,4 @@ class Note:
         #if not self.tempo.hasValue:
         #    raise ValueError("tempo is not initial")
 
-        return int(60 / self.tempo.value * self.length.value / 480 * 1000)
+        return 60 / self.tempo.value * self.length.value / 480 * 1000
