@@ -1,7 +1,6 @@
 ﻿'''
 音名と音階番号の変換を扱います。
 '''
-from typing import Literal
 
 TONE_NUM: dict = {"C": 0, "C#": 1, "C♯": 1, "Db": 1, "D♭": 1,
                   "D": 2, "D#": 3, "D♯": 3, "Eb": 3, "E♭": 3,
@@ -44,7 +43,7 @@ def toInt(tone: str) -> int:
         raise ValueError("{} is not tone-name.".format(tone))
 
 
-def toStr(notenum: int, mark: Literal["#", "b", "＃", "♭"]="#") -> str:
+def toStr(notenum: int, mark: str="#") -> str:
     '''
     notenumを音名に変換します。
 
