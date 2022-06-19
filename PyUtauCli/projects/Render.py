@@ -130,10 +130,16 @@ class Render:
             os.remove(self._output_file+".dat")
         wavtool = PyWavTool.WavTool(self._output_file)
         for note in self.notes:
-            self.logger.info("{} {} {} {}".format(note.cache_path, note.envelope, note.stp, note.output_ms))
-            wavtool.inputCheck(note.cache_path)
-            wavtool.setEnvelope([float(item) for item in note.envelope.split(" ")])
-            wavtool.applyData(note.stp, note.output_ms)
+            if note.direct:
+                self.logger.info("{} {} {} {}".format(note.input_path, note.envelope, note.stp+note.offset, note.output_ms))
+                wavtool.inputCheck(note.input_path)
+                wavtool.setEnvelope([float(item) for item in note.envelope.split(" ")])
+                wavtool.applyData(note.stp + note.offset, note.output_ms)
+            else:
+                self.logger.info("{} {} {} {}".format(note.cache_path, note.envelope, note.stp, note.output_ms))
+                wavtool.inputCheck(note.cache_path)
+                wavtool.setEnvelope([float(item) for item in note.envelope.split(" ")])
+                wavtool.applyData(note.stp, note.output_ms)
         wavtool.write()
             
         with open(self._output_file, "wb") as fw:

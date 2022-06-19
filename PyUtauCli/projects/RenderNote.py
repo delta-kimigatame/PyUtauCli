@@ -106,6 +106,7 @@ class RenderNote:
     _cache_path: str
     _output_ms: float
     _require_resamp: bool = True
+    _direct: bool = False
 
     @property
     def input_path(self) -> str:
@@ -179,6 +180,10 @@ class RenderNote:
     def require_resamp(self) -> bool:
         return self._require_resamp
 
+    @property
+    def direct(self) -> bool:
+        return self._direct
+
     def __init__(self, note: Note, vb: VoiceBank, cachedir: str, output: str, mode2: bool = True):
         '''
         Parameters
@@ -239,6 +244,10 @@ class RenderNote:
                                                 note.atAlias.value.replace(" ","+"),
                                                 note.notenum.get_tone_name(),
                                                 self._get_cache_hash(note)))
+        if note.direct.value:
+            self._require_resamp = False
+            self._direct = True
+
 
     def _get_cache_hash(self, note: Note) -> str:
         '''
