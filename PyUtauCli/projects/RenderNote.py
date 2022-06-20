@@ -652,4 +652,6 @@ class RenderNote:
                 result += value
             else:
                 num += 1
+        if num != 0:
+            result += "#{}#".format(num)
         return result
